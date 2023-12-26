@@ -1,0 +1,40 @@
+.site-banner__has-link {
+  display: flex;
+  background-color: #ffff;
+  justify-content: center;
+  gap: 3rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+@media (max-width: 730px) {
+  .site-banner__has-link {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem 0;
+  }
+  .redmi-note12 > .site-banner__image {
+    padding-right: 5rem;
+    width: 85%;
+  }
+
+  .redmi-note12pro > .site-banner__image {
+    padding-left: 3rem;
+    width: 90%;
+  }
+
+  .redmi-note12pro5g > .site-banner__image {
+    padding-right: 4rem;
+    width: 80%;
+  }
+
+  .redmi-note12,
+  .redmi-note12pro5g {
+    padding-bottom: 2rem;
+  }
+
+  .redmi-note12pro {
+    padding-bottom: 0;
+  }
+}

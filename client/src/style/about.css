@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tab.active {
+  font-weight: normal;
+  color: #ff6900;
+  border-color: #ff6900;
+  background-color: #ff6a002c;
+}

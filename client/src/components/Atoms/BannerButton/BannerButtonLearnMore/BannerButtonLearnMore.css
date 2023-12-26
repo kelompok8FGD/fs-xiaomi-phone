@@ -1,0 +1,38 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@200;400;500;600;700;800&display=swap);
+
+.banner-button {
+  border: none;
+  text-decoration: none;
+  padding: 9px 30px;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.btn-learn-more {
+  background-color: #ffff;
+  color: black;
+  border-radius: 5px;
+}
+
+.btn-arrow {
+  border: solid black;
+  border-width: 0 1.5px 1.5px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+@media (max-width: 1400px) {
+  .banner-button {
+    padding: 6.5px 20px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 1050px) {
+  .banner-button {
+    padding: 4.5px 14px;
+    font-size: 0.6rem;
+  }
+}

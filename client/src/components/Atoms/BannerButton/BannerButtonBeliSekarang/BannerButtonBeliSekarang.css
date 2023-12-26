@@ -1,0 +1,29 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@200;400;500;600;700;800&display=swap);
+
+.banner-button {
+  border: none;
+  text-decoration: none;
+  padding: 9px 30px;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.btn-beli-sekarang {
+  background-color: black;
+  color: #ffff;
+  border-radius: 5px;
+}
+
+@media (max-width: 1400px) {
+  .banner-button {
+    padding: 6.5px 20px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 1050px) {
+  .banner-button {
+    padding: 4.5px 14px;
+    font-size: 0.6rem;
+  }
+}

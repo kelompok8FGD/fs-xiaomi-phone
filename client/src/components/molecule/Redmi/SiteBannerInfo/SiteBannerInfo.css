@@ -1,0 +1,41 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@200;400;500;600;700;800&display=swap);
+
+/* ### BANNER INFO */
+.site-banner__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 500px;
+}
+
+.site-banner__info > * {
+  padding: 0;
+  margin: 0;
+}
+
+.site-banner__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 1400px) {
+  .site-banner__info {
+    width: 360px;
+  }
+}
+
+@media (max-width: 907px) {
+  .site-banner__info {
+    width: 252px;
+  }
+}
+
+@media (max-width: 730px) {
+  .site-banner__info {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+  }
+}

@@ -1,0 +1,135 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@200;400;500;600;700;800&display=swap);
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f1f1f1;
+  margin: 0;
+  padding: 0;
+}
+
+.banner-select-site {
+  font-weight: 600;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dropdown {
+  min-width: 11rem;
+  position: relative;
+  margin: 1rem;
+}
+
+.dropdown * {
+  box-sizing: border-box;
+}
+
+.select {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border: 2px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background-color: #2a2f3b solid;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  user-select: none;
+}
+
+.selected-clicked {
+  border: 2px #26489a solid;
+  box-shadow: 0 0 0.8rem #26489a;
+}
+
+.caret {
+  width: 0;
+  height: 0;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transition: 0.5s;
+  opacity: 1;
+}
+
+/* 
+      Rotate style 
+      (added later in JavaScript)
+  */
+
+.menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  background-color: #fff;
+  box-shadow: 0 0 0.5rem rgba(221, 221, 221, 0.735);
+  position: absolute;
+  top: 3rem;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  opacity: 0;
+  display: none;
+  transition: 0.2s;
+  z-index: 1;
+  font-weight: lighter;
+}
+
+.menu > li {
+  padding: 0.25rem;
+  margin: 0.3rem;
+  width: stretch;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.menu > li:hover {
+  background-color: rgb(218, 218, 218);
+  transition: background 0.3s;
+}
+
+.menu > li > a {
+  text-decoration: none;
+  color: black;
+}
+/* 
+      Active style
+      (Added later in JavaScript) 
+  */
+.active {
+  font-weight: bolder;
+}
+
+/* 
+      Open styles
+      (Later Added in JavaScript) 
+  */
+.menu-open {
+  display: block;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.caret-rotate {
+  width: 0;
+  height: 0;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transition: 0.5s;
+}

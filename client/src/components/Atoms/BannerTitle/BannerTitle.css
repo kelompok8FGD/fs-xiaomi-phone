@@ -1,0 +1,38 @@
+.site-banner__title {
+  max-width: 500px;
+  min-width: 250px;
+  padding: 0.8rem 0 !important;
+}
+
+.site-banner__title > img {
+  height: 2.5rem;
+  padding: 0 !important;
+}
+
+@media (max-width: 1400px) {
+  .site-banner__title {
+    max-width: 350px;
+    min-width: 175px;
+  }
+
+  .site-banner__title > img {
+    height: 1.75rem;
+  }
+}
+
+@media (max-width: 907px) {
+  .site-banner__title {
+    max-width: 245px;
+    min-width: 110px;
+  }
+
+  .site-banner__title > img {
+    height: 1.2rem;
+  }
+}
+
+@media (max-width: 730px) {
+  .site-banner__title > img {
+    width: 245px;
+  }
+}

@@ -1,0 +1,74 @@
+.site-banner__price {
+  padding-top: 3rem;
+}
+
+.site-banner__price > strong {
+  font-size: 1.8rem;
+}
+
+.site-banner__price > span {
+  font-weight: normal !important;
+  font-size: 1.5rem;
+}
+
+.site-banner__price del {
+  font-size: 1rem;
+  text-decoration: line-through;
+  color: grey;
+  margin-left: 0.8rem;
+}
+
+.site-banner__price > del {
+  font-size: 0.8rem !important;
+}
+
+@media (max-width: 1400px) {
+  .site-banner__price {
+    padding-top: 2rem;
+  }
+
+  .site-banner__price > strong {
+    font-size: 1.2rem;
+  }
+
+  .site-banner__price > span {
+    font-size: 1rem;
+  }
+  .site-banner__price > del {
+    font-size: 0.9rem;
+  }
+}
+
+/* @media (max-width: 907px) {
+  .site-banner__price {
+    padding-top: 1.6rem;
+  }
+
+  .site-banner__price > strong > small {
+    font-size: 1.1rem;
+  }
+
+  .site-banner__price > strong {
+    font-size: 1.5rem;
+  }
+
+  .site-banner__price > del {
+    font-size: 1.1rem;
+    margin-left: 8px;
+  }
+} */
+
+@media (max-width: 730px) {
+  .site-banner__price > strong > small {
+    font-size: 0.7rem;
+  }
+
+  .site-banner__price > strong {
+    font-size: 1rem;
+  }
+
+  .site-banner__price > del {
+    font-size: 0.8rem;
+    margin-left: 4px;
+  }
+}

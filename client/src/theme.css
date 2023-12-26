@@ -1,0 +1,33 @@
+/*
+ Theme Styles for Dynamic Theming with Tailwind CSS
+
+  This CSS file defines theme-related styles using CSS custom properties (variables).
+  The variables are dynamically set based on the user's theme preference.
+
+  How it works with Tailwind CSS:
+  
+1. `theme.css` contains CSS variables to define theme-related styles for both light and dark themes.
+2. The Tailwind CSS Configuration (`tailwind.config.js`) extends the default Tailwind color theme by utilizing the CSS variables declared in `theme.css`.
+3. The app theme is set to light or dark depending on the user's system setting, this is managed by DynamycThemeContext.
+4. Using the extended colors from tailwind.config.js to style components results in the theme of the app changing dynamically colors are set dynamically, based on the user using light or dark mode in their device.
+  */
+
+/* Light Theme */
+[data-theme="light"] {
+  --color-background: #f7f7f7;
+  --color-text: #191919;
+  --color-accent: #ff6900;
+  --color-contrast: #fff;
+  --color-input-background: #f9f9f9;
+  --color-form-background: #fff;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --color-background: #000000;
+  --color-text: #ffffff;
+  --color-accent: #ff6900;
+  --color-contrast: #000;
+  --color-input-background: #222222;
+  --color-form-background: #101010;
+}

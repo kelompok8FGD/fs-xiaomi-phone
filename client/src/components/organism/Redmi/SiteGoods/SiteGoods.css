@@ -1,0 +1,873 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@200;400;500;600;700;800&display=swap);
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f1f1f1;
+  margin: 0;
+  padding: 0;
+}
+
+main.redmi-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* -----subNAVBAR start----- */
+.banner-select-site {
+  font-weight: 600;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dropdown {
+  min-width: 11rem;
+  position: relative;
+  margin: 1rem;
+}
+
+.dropdown * {
+  box-sizing: border-box;
+}
+
+.select {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border: 2px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background-color: #2a2f3b solid;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  user-select: none;
+}
+
+.selected-clicked {
+  border: 2px #26489a solid;
+  box-shadow: 0 0 0.8rem #26489a;
+}
+
+.caret {
+  width: 0;
+  height: 0;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transition: 0.5s;
+  opacity: 1;
+}
+
+/* 
+    Rotate style 
+    (added later in JavaScript)
+*/
+
+.menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  background-color: #fff;
+  box-shadow: 0 0 0.5rem rgba(221, 221, 221, 0.735);
+  position: absolute;
+  top: 3rem;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  opacity: 0;
+  display: none;
+  transition: 0.2s;
+  z-index: 1;
+  font-weight: lighter;
+}
+
+.menu > li {
+  padding: 0.25rem;
+  margin: 0.3rem;
+  width: fill;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.menu > li:hover {
+  background-color: rgb(218, 218, 218);
+  transition: background 0.3s;
+}
+
+.menu > li > a {
+  text-decoration: none;
+  color: black;
+}
+/* 
+    Active style
+    (Added later in JavaScript) 
+*/
+.active {
+  font-weight: bolder;
+}
+
+/* 
+    Open styles
+    (Later Added in JavaScript) 
+*/
+.menu-open {
+  display: block;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.caret-rotate {
+  width: 0;
+  height: 0;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transition: 0.5s;
+}
+
+/* -----subNAVBAR end----- */
+
+/* # MAIN-CONTENT start */
+
+/* ## SITE BANNER start */
+.site-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* width: 100%; */
+}
+
+.site-banner__has-link {
+  display: flex;
+  background-color: #ffff;
+  justify-content: center;
+  gap: 3rem;
+  align-items: center;
+}
+
+.site-banner__has-link {
+  cursor: pointer;
+}
+
+/* ### BANNER INFO */
+.site-banner__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 500px;
+}
+
+.site-banner__info > * {
+  padding: 0;
+  margin: 0;
+}
+
+.site-banner__title {
+  max-width: 500px;
+  min-width: 250px;
+}
+
+.site-banner__title > img {
+  height: 2.5rem;
+}
+
+.site-banner__subtitle {
+  padding-top: 8px;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.site-banner__price {
+  padding-top: 3rem;
+}
+
+.site-banner__price > strong {
+  font-size: 1.8rem;
+}
+
+.site-banner__price > span {
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+
+.site-banner__price > strong > small,
+.site-banner__price > del {
+  font-size: 1rem;
+}
+
+.site-banner__price > del {
+  color: grey;
+  margin-left: 0.5rem;
+}
+
+.site-banner__image {
+  width: 40%;
+}
+
+.site-banner__button {
+  margin-top: 8px;
+}
+
+.banner-button {
+  border: none;
+  text-decoration: none;
+  padding: 9px 30px;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.site-banner__button .btn-beli-sekarang {
+  background-color: black;
+  color: #ffff;
+  border-radius: 5px;
+}
+
+.site-banner__button .btn-learn-more {
+  background-color: #ffff;
+}
+
+.btn-arrow {
+  border: solid black;
+  border-width: 0 1.5px 1.5px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.site-goods {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0.75rem;
+  margin-left: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.site-goods-half {
+  grid-column: span 2;
+  width: auto;
+  background-color: #ffff;
+}
+
+.site-goods-quarter {
+  width: auto;
+  background-color: #ffff;
+}
+
+.site-goods-half,
+.site-goods-quarter {
+  padding: 25px;
+  margin: 0;
+  position: relative;
+}
+
+.site-goods-half:hover,
+.site-goods-quarter:hover {
+  box-shadow: 0 0 1rem rgba(221, 221, 221, 0.735);
+}
+
+.site-goods__info__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.site-banner__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.site-goods__diskon {
+  padding: 0 7px;
+  border: 0.7px solid #ff6900;
+  font-size: 0.75rem;
+  width: fit-content;
+  border-radius: 4px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 2;
+  background-color: #ff69001a;
+  color: #ff6900;
+}
+
+.site-goods__title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 3rem;
+}
+
+.site-goods__subtitle {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.site-goods__price {
+  padding-top: 0.2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.site-goods__price > * {
+  font-weight: normal;
+  text-align: center;
+}
+
+.site-goods__price > strong {
+  font-size: 1rem;
+}
+
+.site-goods__price > span {
+  font-size: 0.9rem;
+  margin-right: 0.2rem;
+}
+
+.site-goods__price > strong > small,
+.site-banner__price > del {
+  font-size: 0.6rem;
+}
+
+.site-goods__price > del {
+  color: grey;
+  margin-left: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.site-goods__button-container {
+  margin: 0.65rem 0;
+  padding-top: 1.5rem;
+}
+
+.site-goods__button-container > * {
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+.site-goods__button-container > button {
+  padding: 7px 21px;
+  border-radius: 7px;
+  text-decoration: none;
+  border: none;
+  border: 0.5px solid black;
+}
+
+.site-goods__button-container .btn-beli-sekarang {
+  margin-right: 0.5rem;
+  background-color: black;
+  color: #ffff;
+}
+
+.site-goods__button-container .btn-learn-more {
+  background-color: #ffff;
+  color: black;
+}
+
+.site-goods__img-product > img {
+  height: 200px;
+}
+
+.second-grid .site-goods-half {
+  grid-column: span 2;
+}
+
+.goods-redmi-note11pro
+  > .site-goods__info__wrapper
+  > .site-goods__button-container {
+  padding-top: 0.5rem;
+}
+
+.site-goods__price > br {
+  display: none;
+}
+
+@media (max-width: 1400px) {
+  .site-banner__info {
+    width: 360px;
+  }
+
+  .site-banner__title {
+    max-width: 350px;
+    min-width: 175px;
+  }
+
+  .site-banner__title > img {
+    height: 1.75rem;
+  }
+
+  .site-banner__subtitle {
+    padding-top: 6px;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .site-banner__price {
+    padding-top: 2rem;
+  }
+
+  .site-banner__price > strong {
+    font-size: 1.2rem;
+  }
+
+  .site-banner__price > span {
+    font-size: 1rem;
+  }
+
+  .banner-button {
+    padding: 6.5px 20px;
+    font-size: 0.8rem;
+  }
+
+  /* .site-goods__diskon {
+        padding: 0 5px;
+        border: 0.5px solid #ff6900;
+        font-size: 0.53rem;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    } */
+
+  .site-goods__title {
+    font-size: 1.12rem;
+    padding-top: 2rem;
+  }
+
+  .site-goods__subtitle {
+    font-size: 0.6rem;
+  }
+
+  .site-goods__price > strong {
+    font-size: 0.67rem;
+  }
+
+  .site-goods__price > span {
+    font-size: 0.6rem;
+  }
+
+  .site-goods__price > strong > small,
+  .site-banner__price > del {
+    font-size: 0.45rem;
+  }
+
+  .site-goods__price > del {
+    font-size: 0.56rem;
+  }
+
+  .site-goods__button-container {
+    margin: 0.65rem 0;
+    padding-top: 0.8rem;
+  }
+
+  .site-goods__button-container > * {
+    font-size: 0.6rem;
+  }
+
+  .site-goods__button-container > button {
+    padding: 4.9px 14.7px;
+    border-radius: 7px;
+    text-decoration: none;
+    border: none;
+    border: 0.5px solid black;
+  }
+
+  .site-goods__button-container .btn-beli-sekarang {
+    margin-right: 0.5rem;
+    background-color: black;
+    color: #ffff;
+  }
+
+  .site-goods__button-container .btn-learn-more {
+    background-color: #ffff;
+    color: black;
+  }
+
+  .site-goods__img-product > img {
+    height: 200px;
+  }
+
+  .second-grid .site-goods-half {
+    grid-column: span 2;
+  }
+
+  .goods-redmi-note11pro
+    > .site-goods__info__wrapper
+    > .site-goods__button-container {
+    padding-top: 0.1rem;
+  }
+
+  .site-goods__price > br {
+    display: none;
+  }
+}
+
+@media (max-width: 1050px) {
+  .first-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .first-grid > .goods-redmi-note11 {
+    grid-column: span 1;
+  }
+
+  .goods-redmi-note11pro
+    > .site-goods__info__wrapper
+    > .site-goods__button-container {
+    padding-top: 0.8rem;
+  }
+
+  .last-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .site-goods__price > br {
+    display: none;
+  }
+}
+
+@media (max-width: 907px) {
+  .site-banner__info {
+    width: 252px;
+  }
+
+  .site-banner__title {
+    max-width: 245px;
+    min-width: 110px;
+  }
+
+  .site-banner__title > img {
+    height: 1.2rem;
+  }
+
+  .site-banner__subtitle {
+    padding-top: 4px;
+    font-size: 0.65rem;
+  }
+
+  .site-banner__price {
+    padding-top: 1.6rem;
+  }
+
+  .site-banner__price > strong > small {
+    font-size: 1.1rem;
+  }
+
+  .site-banner__price > strong {
+    font-size: 1.5rem;
+  }
+
+  .site-banner__price > del {
+    font-size: 1.1rem;
+    margin-left: 8px;
+  }
+
+  .banner-button {
+    padding: 4.5px 14px;
+    font-size: 0.6rem;
+  }
+
+  .site-goods__diskon {
+    padding: 0 5px;
+    border: 0.5px solid #ff6900;
+    font-size: 0.53rem;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  .goods-redmi-note11pro
+    > .site-goods__info__wrapper
+    > .site-goods__button-container {
+    padding-top: 0;
+  }
+
+  .site-goods__price > br {
+    display: none;
+  }
+}
+
+@media (max-width: 730px) {
+  h4 > br {
+    display: none;
+  }
+
+  .btn-arrow {
+    border: solid black;
+    border-width: 0 0.5px 0.5px 0;
+    display: inline-block;
+    padding: 2px;
+  }
+
+  .first-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .second-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .third-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .last-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .first-grid > .goods-redmi-note11 {
+    grid-column: span 2;
+  }
+
+  .site-banner > .thrid-grid > .goods-redmi10a {
+    grid-column: span 2;
+  }
+
+  .site-goods-half {
+    grid-column: span 2;
+  }
+
+  .site-banner__has-link {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem 0;
+  }
+
+  .redmi-note12 > .site-banner__image {
+    padding-right: 5rem;
+    width: 85%;
+  }
+
+  .redmi-note12pro > .site-banner__image {
+    padding-left: 3rem;
+    width: 90%;
+  }
+
+  .redmi-note12pro5g > .site-banner__image {
+    padding-right: 4rem;
+    width: 80%;
+  }
+
+  .redmi-note12,
+  .redmi-note12pro5g {
+    padding-bottom: 2rem;
+  }
+
+  .redmi-note12pro {
+    padding-bottom: 0;
+  }
+
+  .site-banner__info {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+  }
+
+  .site-banner__title > img {
+    width: 245px;
+    padding: 1.2rem 0;
+  }
+
+  .site-banner__subtitle {
+    text-align: center;
+    font-size: 1rem;
+    padding: 0;
+  }
+
+  .site-banner__price > strong > small {
+    font-size: 0.7rem;
+  }
+
+  .site-banner__price > strong {
+    font-size: 1rem;
+  }
+
+  .site-banner__price > del {
+    font-size: 0.8rem;
+    margin-left: 4px;
+  }
+
+  .site-goods__price > br {
+    display: none;
+  }
+}
+
+@media (max-width: 490px) {
+  .site-goods__button-container > button {
+    padding: 0;
+    text-decoration: none;
+    border: none;
+  }
+
+  .site-goods__button-container > .btn-beli-sekarang {
+    background-color: #ffff;
+    color: #ff6900;
+  }
+
+  .site-goods-quarter
+    > .site-goods__info__wrapper
+    > .site-goods__button-container {
+    display: none;
+  }
+
+  .site-goods__button-container
+    > .btn-beli-sekarang
+    > .beli-sekarang-btn-arrow {
+    border: solid #ff6900;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+
+  .goods-btn-arrow {
+    border: solid black;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+
+  .site-goods-half
+    > .site-goods__info__wrapper
+    > .site-goods__info
+    > .site-goods__title {
+    font-size: 1.8rem;
+    padding-top: 0;
+  }
+
+  .site-goods-half
+    > .site-goods__info__wrapper
+    > .site-goods__info
+    > .site-goods__price
+    > span {
+    font-size: 1.07rem;
+  }
+
+  .site-goods-half
+    > .site-goods__info__wrapper
+    > .site-goods__info
+    > .site-goods__price
+    > strong {
+    font-size: 1.07rem;
+  }
+
+  .site-goods-half
+    > .site-goods__info__wrapper
+    > .site-goods__info
+    > .site-goods__price
+    > strong
+    > small {
+    font-size: 0.7rem;
+  }
+
+  .site-goods-half
+    > .site-goods__info__wrapper
+    > .site-goods__info
+    > .site-goods__price
+    > del {
+    font-size: 0.7rem;
+  }
+
+  .site-goods-quarter
+    > .site-goods__info__wrapper
+    > .site-goods__info
+    > .site-goods__title {
+    font-size: 1rem;
+    padding-top: 0;
+  }
+
+  .site-goods-quarter
+    > .site-goods__info__wrapper
+    > .site-goods__info
+    > .site-goods__subtitle {
+    font-size: 0.8rem;
+  }
+
+  .site-goods-quarter
+    > .site-goods__info__wrapper
+    > .site-goods__img-product
+    > img {
+    width: 125px;
+    height: auto;
+  }
+
+  .site-goods__subtitle {
+    font-size: 1rem;
+  }
+
+  .site-goods-half
+    > .site-goods__info__wrapper
+    > .site-goods__button-container {
+    padding: 0;
+  }
+
+  .site-goods-half
+    > .site-goods__info__wrapper
+    > .site-goods__button-container
+    > button {
+    font-size: 0.781rem;
+  }
+
+  .site-goods__info__wrapper > .site-goods__info > .site-goods__price {
+    margin-top: 0.5rem;
+  }
+
+  .site-goods__diskon {
+    display: none;
+  }
+
+  .site-goods-quarter
+    > .site-goods__info__wrapper
+    > .site-goods__info
+    > .site-goods__price
+    > del {
+    display: none;
+  }
+
+  /* .site-goods__diskon {
+        padding: 0 7px;
+        border: 0.7px solid #ff6900;
+        font-size: 0.75rem;
+        width: fit-content;
+        border-radius: 4px;
+        position: absolute;
+        top: 22.5%;
+        left: 40%;
+        z-index: 2;
+        background-color: #ff69001A;
+        color: #ff6900;
+    }
+
+    .site-goods-quarter > .site-goods__diskon {
+        top: 25%;
+        left: 33%;
+    } */
+}

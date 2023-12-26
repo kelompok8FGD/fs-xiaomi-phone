@@ -1,0 +1,28 @@
+.site-banner__subtitle {
+  padding-top: 8px;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+@media (max-width: 1400px) {
+  .site-banner__subtitle {
+    padding-top: 6px;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 907px) {
+  .site-banner__subtitle {
+    padding-top: 4px;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 730px) {
+  .site-banner__subtitle {
+    text-align: center;
+    font-size: 1rem;
+    padding: 0;
+  }
+}
