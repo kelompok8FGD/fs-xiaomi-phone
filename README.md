@@ -3,7 +3,8 @@ Melakukan update pada frontend dan backend
 1. Lakukan Forking seperti biasa
 2. clone di direktori yang di inginkan
 3. lalu jika sudah, buka repositori yang sudah di clone
-   Note: jika ingin melakukan update pada frontend masuk terlebih dahulu ke dalam directori client  >>  cd client
+   
+Note: jika ingin melakukan update pada frontend masuk terlebih dahulu ke dalam directori client  >>  cd client
          jika ingin melakukan update pada backend masuk terlebih dahulu ke dalam directori server  >>  cd server
          -- lakukan cd .. untuk mundur ke direktori sebelumnya untuk masuk ke direktori lain contoh saat dalam client maka jika ingin masuk ke direktory server perlu mundur ke direktori sebelumnya >> cd .. lalu baru lakukan >> cd server
 
