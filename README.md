@@ -10,7 +10,8 @@ Melakukan update pada frontend dan backend
    -- Melakukan update pada frontend (jangan lupa cek apakah direktori sudah benar di /client)
    1. install NPN package dengan cara >> npm Install
    2. test dengan cara >> npm run dev
-   3. jika saat run atau melakukan update pada frontend terdapat error maka cek pada error apakah ada error pada framework atau plugin maka solusinya bisa coba install framework atau plugin tersebut,, seperti contoh tailwind, vite redux, dll.
+   3. jika terjadi error seperti contoh 1 moderate severity vulnerability bisa fix dengan cara >> npm audit fix seperti yang disarankan pada terminalnya
+   4. jika saat run atau melakukan update pada frontend terdapat error maka cek pada error apakah ada error pada framework atau plugin maka solusinya bisa coba install framework atau plugin tersebut,, seperti contoh tailwind, vite redux, dll.
   
    -- Melakukan update pada backend (jangan lupa cek apakah direktori sudah benar di /server)
    1. install NPN package dengan cara >> npm Install
