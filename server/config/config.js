@@ -3,10 +3,10 @@ const fs = require("fs");
 
 module.exports = {
   development: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
+    username: "root",
+    password: "",
     database: "xiaomi_dev",
-    host: process.env.DB_HOST,
+    host: "127.0.0.1",
     dialect: "mysql",
     dialectOptions: {
       bigNumberStrings: true,
