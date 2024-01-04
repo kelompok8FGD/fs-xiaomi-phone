@@ -102,7 +102,7 @@ const createNewProduct = async (req, res) => {
   }
 };
 
-// Update Product baru
+// Update Product
 const updateProduct = async (req, res, next) => {
   try {
     const productId = req.params.id;

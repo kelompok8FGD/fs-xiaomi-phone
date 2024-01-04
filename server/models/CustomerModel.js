@@ -31,12 +31,12 @@ const CustomerModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-CustomerModel.sync({ force: true })
-  .then(() => {
-    console.log("Table created successfully");
-  })
-  .catch((err) => {
-    console.error("Error creating table:", err.message);
-  });
+// CustomerModel.sync({ force: true })
+//   .then(() => {
+//     console.log("Table created successfully");
+//   })
+//   .catch((err) => {
+//     console.error("Error creating table:", err.message);
+//   });
 
 module.exports = CustomerModel;

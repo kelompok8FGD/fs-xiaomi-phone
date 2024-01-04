@@ -28,13 +28,13 @@ const CustomerAddressModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-CustomerAddressModel.sync({ force: true })
-  .then(() => {
-    console.log("Table created successfully");
-  })
-  .catch((err) => {
-    console.error("Error creating table:", err.message);
-  });
+// CustomerAddressModel.sync({ force: true })
+//   .then(() => {
+//     console.log("Table created successfully");
+//   })
+//   .catch((err) => {
+//     console.error("Error creating table:", err.message);
+//   });
 
 // Definisikan relasi
 

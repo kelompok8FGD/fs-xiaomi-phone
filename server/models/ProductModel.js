@@ -12,6 +12,7 @@ const ProductModel = sequelize.define(
     },
     name_product: {
       type: DataTypes.STRING(255),
+      unique: true,
       allowNull: false,
     },
     category_product: {
@@ -47,7 +48,7 @@ const ProductModel = sequelize.define(
   }
 );
 
-// Menambahkan pemanggilan sync
+// Menambahkan data
 // ProductModel.sync({ alter: true })
 //   .then(() => {
 //     //update table

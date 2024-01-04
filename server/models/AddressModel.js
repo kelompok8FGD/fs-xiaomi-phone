@@ -44,13 +44,13 @@ const AddressModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-AddressModel.sync({ force: true })
-  .then(() => {
-    console.log("Table created successfully");
-  })
-  .catch((err) => {
-    console.error("Error creating table:", err.message);
-  });
+// AddressModel.sync({ force: true })
+//   .then(() => {
+//     console.log("Table created successfully");
+//   })
+//   .catch((err) => {
+//     console.error("Error creating table:", err.message);
+//   });
 
 // AddressModel.belongsTo(CustomerModel);
 
