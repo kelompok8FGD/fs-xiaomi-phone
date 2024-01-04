@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
+const CustomerModel = require("./CustomerModel");
 
 const AddressModel = sequelize.define(
   "AddressModel",
@@ -50,5 +51,7 @@ AddressModel.sync({ force: true })
   .catch((err) => {
     console.error("Error creating table:", err.message);
   });
+
+// AddressModel.belongsTo(CustomerModel);
 
 module.exports = AddressModel;
