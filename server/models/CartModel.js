@@ -37,13 +37,13 @@ const CartModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-CartModel.sync({ force: true })
-  .then(() => {
-    console.log("Table created successfully");
-  })
-  .catch((err) => {
-    console.error("Error creating table:", err.message);
-  });
+// CartModel.sync({ force: true })
+//   .then(() => {
+//     console.log("Table created successfully");
+//   })
+//   .catch((err) => {
+//     console.error("Error creating table:", err.message);
+//   });
 
 // // Define relationships
 ProductModel.hasOne(CartModel, {
