@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
+const { Op } = require("sequelize");
 
 const ProductModel = sequelize.define(
   "ProductModel",
@@ -47,12 +48,26 @@ const ProductModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-ProductModel.sync({ force: true })
-  .then(() => {
-    console.log("Table created successfully");
-  })
-  .catch((err) => {
-    console.error("Error creating table:", err.message);
-  });
+// ProductModel.sync({ alter: true })
+//   .then(() => {
+//     //update table
+//     return ProductModel.create({
+//       name_product: "POCO X5 Pro 5G",
+//       category_product: "POCO Phone",
+//       image:
+//         "https://firebasestorage.googleapis.com/v0/b/xiaomi-phone-e544c.appspot.com/o/poco_x5_pro_5g%2Fimage_poco_x5_pro_5g_black.png?alt=media&token=9c536bab-f6ca-448a-a6de-aa00400c471d",
+//       specification: "Snapdragon 778G | 108MP",
+//       price: 3799000,
+//       stock: 6,
+//       discount: 5,
+//     });
+//   })
+//   .then((data) => {
+//     console.log(data);
+//     console.log("Table created successfully");
+//   })
+//   .catch((err) => {
+//     console.error("Error creating table:", err.message);
+//   });
 
 module.exports = ProductModel;

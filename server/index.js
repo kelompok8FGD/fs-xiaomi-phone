@@ -8,6 +8,8 @@ const bodyParser = require("body-parser"); // atau const express = require("expr
 // Menggunakan middleware body-parser untuk mengurai body dari permintaan HTTP
 app.use(bodyParser.json()); // atau app.use(express.json()) jika versi Express 4.16+
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Hi there");
 });
