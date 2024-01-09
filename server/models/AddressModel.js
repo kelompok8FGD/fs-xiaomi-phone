@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-const CustomerModel = require("./CustomerModel");
+// const CustomerModel = require("./CustomerModel");
 
 const AddressModel = sequelize.define(
   "AddressModel",
@@ -44,13 +44,18 @@ const AddressModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-// AddressModel.sync({ force: true })
-//   .then(() => {
-//     console.log("Table created successfully");
-//   })
-//   .catch((err) => {
-//     console.error("Error creating table:", err.message);
-//   });
+async function createTableIfNotExists() {
+  try {
+    // Sinkronkan model dengan database
+    await AddressModel.sync({ force: false });
+
+    console.log("Table created successfully");
+  } catch (err) {
+    console.error("Error creating table:", err.message);
+  }
+}
+
+createTableIfNotExists();
 
 // AddressModel.belongsTo(CustomerModel);
 
