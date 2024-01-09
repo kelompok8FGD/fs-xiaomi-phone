@@ -14,7 +14,8 @@ Note: jika ingin melakukan update pada frontend masuk terlebih dahulu ke dalam d
    3. jika terjadi error seperti contoh 1 moderate severity vulnerability bisa fix dengan cara >> npm audit fix seperti yang disarankan pada terminalnya
    4. jika saat run atau melakukan update pada frontend terdapat error maka cek pada error apakah ada error pada framework atau plugin maka solusinya bisa coba install framework atau plugin tersebut,, seperti contoh tailwind, vite redux, dll.
   
-   -- Melakukan update pada backend (jangan lupa cek apakah direktori sudah benar di /server)
+   -- Melakukan update pada backend (jangan lupa cek apakah direktori sudah benar di /server) 
+      note: Sebelum run buatlah dahulu databasenya di mysql masing2 dengan nama xiaomi_dev
    1. install NPN package dengan cara >> npm Install
    2. Koneksi dengan database mysql pada direktori config/config.json
 "development": {
