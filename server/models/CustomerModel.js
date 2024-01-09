@@ -31,12 +31,18 @@ const CustomerModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-// CustomerModel.sync({ force: true })
-//   .then(() => {
-//     console.log("Table created successfully");
-//   })
-//   .catch((err) => {
-//     console.error("Error creating table:", err.message);
-//   });
+// Menambahkan pemanggilan sync
+async function createTableIfNotExists() {
+  try {
+    // Sinkronkan model dengan database
+    await CustomerModel.sync({ force: false });
+
+    console.log("Table created successfully");
+  } catch (err) {
+    console.error("Error creating table:", err.message);
+  }
+}
+
+createTableIfNotExists();
 
 module.exports = CustomerModel;

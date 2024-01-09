@@ -39,13 +39,18 @@ const CheckoutModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-// CheckoutModel.sync({ force: true })
-//   .then(() => {
-//     console.log("Table created successfully");
-//   })
-//   .catch((err) => {
-//     console.error("Error creating table:", err.message);
-//   });
+async function createTableIfNotExists() {
+  try {
+    // Sinkronkan model dengan database
+    await CheckoutModel.sync({ force: false });
+
+    console.log("Table created successfully");
+  } catch (err) {
+    console.error("Error creating table:", err.message);
+  }
+}
+
+createTableIfNotExists();
 
 // Definisikan relasi
 CheckoutModel.belongsTo(AddressModel, { foreignKey: "id_address" });

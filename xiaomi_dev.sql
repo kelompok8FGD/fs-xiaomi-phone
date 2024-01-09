@@ -91,6 +91,34 @@ CREATE TABLE checkout (
 
 
 
+SELECT
+    customers.fullname,
+    address.address_name,
+    address.address_line1,
+    address.address_line2,
+    address.city,
+    address.region,
+    address.postal_code
+FROM
+    customer_address
+INNER JOIN customers ON customer_address.id_customer = customers.id_customer
+INNER JOIN address ON customer_address.id_address = address.id_address
+GROUP BY
+    customers.fullname,
+    address.address_name,
+    address.address_line1,
+    address.address_line2,
+    address.city,
+    address.region,
+    address.postal_code;
+
+
+
+
+SELECT name_product
+FROM products
+WHERE category_product like '%POCO%';
+
 
 
 
