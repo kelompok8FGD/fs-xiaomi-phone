@@ -36,13 +36,19 @@ const PaymentMethodModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-PaymentMethodModel.sync({ force: true })
-  .then(() => {
+// Menambahkan pemanggilan sync
+async function createTableIfNotExists() {
+  try {
+    // Sinkronkan model dengan database
+    await PaymentMethodModel.sync({ force: false });
+
     console.log("Table created successfully");
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error("Error creating table:", err.message);
-  });
+  }
+}
+
+createTableIfNotExists();
 
 // Definisikan relasi
 CustomerModel.hasOne(PaymentMethodModel, {

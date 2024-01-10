@@ -37,13 +37,18 @@ const CartModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-CartModel.sync({ force: true })
-  .then(() => {
+async function createTableIfNotExists() {
+  try {
+    // Sinkronkan model dengan database
+    await CartModel.sync({ force: false });
+
     console.log("Table created successfully");
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error("Error creating table:", err.message);
-  });
+  }
+}
+
+createTableIfNotExists();
 
 // // Define relationships
 ProductModel.hasOne(CartModel, {
