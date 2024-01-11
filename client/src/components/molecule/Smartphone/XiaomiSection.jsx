@@ -6,7 +6,7 @@ import ShortCard from "./../../Atoms/ShortCard.jsx/index";
 const XiaomiSection = () => {
     return (
         <>
-            <BannerSeeAll SeriesName="Seri Xiaomi" Motto="Leading technology and innovation" />
+            <BannerSeeAll SeriesName="Seri Xiaomi" Motto="Leading technology and innovation" redirect="/Xiaomi" />
             <BannerFlagship Title="XIAOMI 12T 5G" Specs="Ultra Steady 108MP with OIS | Dimensity 8100-Ultra" CurrentPrice="Rp 5.999.000" PreviousPrice="Rp 6.599.000" PhonePicDesktop="/smartphone/1desktop.webp" PhonePicMobile="/smartphone/1mobile.webp"></BannerFlagship>
             <section className="m-[9px] md:my-0 md:px-2 md:flex md:justify-evenly md:hover:cursor-pointer md:w-full sm:w-full md:max-h-[492px] md:mt-2">
                 <LongCard Title="Xioami 12" Specs="50MP Pro-grade camera | Snapdragon® 8 Gen 1" Discount="Diskon 30%" CurrentPrice="6.999.000" PreviousPrice="Rp9.999.000" classname="md:bg-[#D0D0D0] md:text-white" Status="Habis" PhonePic="/smartphone/2mobile.webp"></LongCard>
