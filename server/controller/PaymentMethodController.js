@@ -127,7 +127,18 @@ const updatePayment = async (req, res, next) => {
       });
     }
 
-    const updatedPayment = await existingPaymentMethod.update(req.body);
+    // Retrieve the existing product data
+    const existingPayment = await PaymentMethod.findByPk(paymentId);
+
+    // Check if the product exists
+    if (!existingPayment) {
+      return res.status(404).json({
+        status: "failed",
+        message: `Payment with ID ${paymentId} not found`,
+      });
+    }
+
+    const updatedPayment = await existingPayment.update(req.body);
 
     res.json({
       status: "success",
