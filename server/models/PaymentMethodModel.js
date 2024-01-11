@@ -23,7 +23,7 @@ const PaymentMethodModel = sequelize.define(
       allowNull: false,
     },
     account_number: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
