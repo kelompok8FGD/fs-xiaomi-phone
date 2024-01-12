@@ -45,7 +45,7 @@ const addToCart = async (req, res) => {
 
 const getCartItems = async (req, res) => {
   try {
-      const id_customer = req.user.id; //  customer ID  in req.user
+      const id_customer = req.id_customer;
 
       const cartItems = await Cart.findAll({
           where: {
