@@ -6,22 +6,13 @@ import CartItem from '../components/molecule/Cart/CartItem'
 import CheckoutNavbar from '../components/organism/Navbar/CheckoutNavbar'
 import EmptyCart from '../components/molecule/Cart/EmptyCart'
 import CustomButton from '../components/Atoms/WithCVA/CustomButton'
+import { calculateTotal } from '../redux/cart/cartUtils'
 
 
 const Cart = () => {
-
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch()
-  const getTotal = () => {
-    let totalQuantity = 0
-    let totalPrice = 0
-    cart.forEach(item => {
-      totalQuantity += item.quantity
-      totalPrice += item.price * item.quantity
-    })
-    const formattedTotalPrice = totalPrice.toLocaleString(undefined, { maximumFractionDigits: 0 })
-    return {formattedTotalPrice, totalQuantity}
-  }
+  const { formattedTotalPrice, totalQuantity } = calculateTotal(cart);
 
   const handleCart = async () => {
     setCheckoutLoading(true);
@@ -89,8 +80,8 @@ const Cart = () => {
     </div>
     <div className='flex items-center gap-4'>
     <p className="total__p">
-  total ({getTotal().totalQuantity} items)
-  : <strong>Rp {getTotal().formattedTotalPrice}</strong>
+  total ({totalQuantity} items)
+  : <strong>Rp {formattedTotalPrice}</strong>
 </p>
     <CustomButton to="/checkout" text="Bayar" intent="accent_bg"/></div>
   </div></div>
