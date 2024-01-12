@@ -43,7 +43,7 @@ const CardXiaomi = () => {
           <div
             key={xiaomi.id_product}
             className={`flex flex-col bg-[#ffffff] items-center md:relative font-inter pt-10 px-5 text-center gap-2 md:hover:shadow-lg md:hover:ease-out md:duration-[250ms] pb-5 `}
-          > <h1>Test</h1>
+          >
             <TitleCard
               Title={xiaomi.name_product}
               Specs={xiaomi.specification}
