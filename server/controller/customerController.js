@@ -51,11 +51,14 @@ const findAllCustomers = async (req, res) => {
             return res.json({ message: 'Please enter all the details' });
         }
 
-        // Check if the user already exists
-        const userExists = await Customer.findOne({ email });
-        if (userExists) {
-            return res.json({ message: 'This email is already in use. Use a different one.' });
-        }
+         // Check if the user already exists
+    const userExists = await Customer.findOne({ where: { email } });
+
+    if (userExists) {
+      return res.status(400).json({
+        message: "This email is already in use. Use a different one.",
+      });
+    }
 
         // Hash the password
         const hashPassword = await bcrypt.hash(password, 10);
@@ -98,10 +101,10 @@ const findAllCustomers = async (req, res) => {
             return res.json({ message: 'Please enter all the details' });
         }
 
-        // Check if the user exists
-        const user = await Customer.findOne({ email });
+        //Check email match
+        const user = await Customer.findOne({ where: { email } });
         if (!user) {
-            return res.json({ message: 'Wrong credentials' });
+          return res.status(400).json({ message: "Wrong credentials" });
         }
 
         // Check password match
