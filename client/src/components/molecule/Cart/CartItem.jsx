@@ -5,6 +5,7 @@ import CustomButton from '../../Atoms/WithCVA/CustomButton'
 {/*Design will be improved before the final presentation week*/}
 
 const CartItem = ({id, name, image, price, quantity=0}) => {
+    const formattedPrice = price.toLocaleString(undefined, { maximumFractionDigits: 0 })
     const dispatch = useDispatch()
   return (
     <div className="flex justify-between items-center p-10 bg-white" key={id}>
@@ -16,8 +17,8 @@ const CartItem = ({id, name, image, price, quantity=0}) => {
         <div>
         <p className="cartItem__title">{name}</p>
         <p className="cartItem__price">
-          <small>$</small>
-          <strong>{price}</strong>
+          <small>Rp </small>
+          <strong>{formattedPrice}</strong>
         </p></div>
         <div className='flex gap-4'>
         <div id='cart-quantity-buttons' className='flex items-center justify-end'>

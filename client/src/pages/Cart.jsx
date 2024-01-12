@@ -19,7 +19,8 @@ const Cart = () => {
       totalQuantity += item.quantity
       totalPrice += item.price * item.quantity
     })
-    return {totalPrice, totalQuantity}
+    const formattedTotalPrice = totalPrice.toLocaleString(undefined, { maximumFractionDigits: 0 })
+    return {formattedTotalPrice, totalQuantity}
   }
 
   const handleCart = async () => {
@@ -88,8 +89,8 @@ const Cart = () => {
     </div>
     <div className='flex items-center gap-4'>
     <p className="total__p">
-  total ({getTotal().totalQuantity} items) 
-  : <strong>Rp {getTotal().totalPrice}</strong>
+  total ({getTotal().totalQuantity} items)
+  : <strong>Rp {getTotal().formattedTotalPrice}</strong>
 </p>
     <CustomButton to="/checkout" text="Bayar" intent="accent_bg"/></div>
   </div></div>
