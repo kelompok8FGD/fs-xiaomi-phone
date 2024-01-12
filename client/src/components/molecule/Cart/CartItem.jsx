@@ -8,32 +8,6 @@ const CartItem = ({id, name, image, price, quantity=0}) => {
     const dispatch = useDispatch()
   return (
     <div className="flex justify-between items-center p-10 bg-white" key={id}>
-        {/* Previous design
-          <div className="flex justify-between items-center p-10 bg-white" key={item.id}>
-        <div className="flex gap-4 items-center">
-          <div className='flex flex-col md:flex-row'>
-            <div className='min-w-max border-[1px] border-gray-200 p-1 rounded-md'>
-          <img src={item.image} alt={item.name} className="rounded-md h-24" />
-          </div>
-          <div className="flex flex-col">
-            <h1 className="text-lg font-medium">{item.name}</h1>
-          </div>
-          </div>
-        </div>
-        <div className="flex gap-4 items-center">
-          <div>
-          <p className="text-black-600">{item.price}</p>
-          </div>
-          <div id='cart-quantity-buttons' className='flex items-center'>
-        <CustomButton onClick={() => {addToCart(item)}} text="+" intent="light"/>
-          <p>{item.quantity}</p>
-        <CustomButton onClick={() => {removeFromCart(item)}} text="-" intent="light"/>
-        </div>
-        <h1 className="text-md text-accent font-medium"> Rp {getCartTotal()}</h1>
-        </div>
-      </div>
-        
-        */}
         <div className="flex flex-col lg:flex-row  gap-4 items-center w-full justify-between">
         <div className='w-[60vw] lg:min-w-max border-[1px] border-gray-200 p-1 rounded-md'>
      <img className="cartItem__image" src={image} alt='item'/>

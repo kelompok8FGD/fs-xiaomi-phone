@@ -89,7 +89,7 @@ const Cart = () => {
     <div className='flex items-center gap-4'>
     <p className="total__p">
   total ({getTotal().totalQuantity} items) 
-  : <strong>${getTotal().totalPrice}</strong>
+  : <strong>Rp {getTotal().totalPrice}</strong>
 </p>
     <CustomButton to="/checkout" text="Bayar" intent="accent_bg"/></div>
   </div></div>
