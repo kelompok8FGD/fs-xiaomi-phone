@@ -26,8 +26,6 @@ const CustomerAddressModel = sequelize.define(
     timestamps: false,
   }
 );
-
-// Menambahkan pemanggilan sync
 // Menambahkan pemanggilan sync
 async function createTableIfNotExists() {
   try {
@@ -51,14 +49,5 @@ CustomerAddressModel.belongsTo(CustomerModel, { foreignKey: "id_customer" });
 // Hubungan antara AddressModel dan CustomerAddressModel
 AddressModel.hasMany(CustomerAddressModel, { foreignKey: "id_address" });
 CustomerAddressModel.belongsTo(AddressModel, { foreignKey: "id_address" });
-
-// CustomerModel.belongsToMany(AddressModel, {
-//   through: CustomerAddressModel,
-//   foreignKey: "id_customer",
-// });
-// AddressModel.belongsToMany(CustomerModel, {
-//   through: CustomerAddressModel,
-//   foreignKey: "id_address",
-// });
 
 module.exports = CustomerAddressModel;

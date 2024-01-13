@@ -3,7 +3,6 @@ const sequelize = require("../config/database");
 const AddressModel = require("./AddressModel");
 const CustomerModel = require("./CustomerModel");
 const PaymentMethodModel = require("./PaymentMethodModel");
-const CartModel = require("./CartModel");
 const ProductModel = require("./ProductModel");
 
 const CheckoutModel = sequelize.define(
@@ -43,7 +42,7 @@ const CheckoutModel = sequelize.define(
 async function createTableIfNotExists() {
   try {
     // Sinkronkan model dengan database
-    await CheckoutModel.sync({ force: false });
+    await CheckoutModel.sync({ force: true });
 
     console.log("Table created successfully");
   } catch (err) {
