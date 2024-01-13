@@ -1,13 +1,16 @@
-const cart = require("../controller/cartsController");
-
+const cart = require("../controller/cartController");
 const router = require("express").Router();
 const AuthMiddleware = require('../middleware/AuthMiddleware');
 
-// Necessary change: Adding and Deleting products from the carts table before checkout
 
-// Route to add item to cart
-//router.post("/add", validateToken, cart.addToCart);
+// Route to add product to carts table
+router.post('/addToCart', AuthMiddleware, cart.addToCart);
+
 // Route to get cart items
-router.get("/get", AuthMiddleware, cart.getCartItems);
+router.get('/getCartItems', AuthMiddleware, cart.getCartItems);
+
+// Route to delete product from carts table
+router.delete('/deleteFromCart/:id_product', AuthMiddleware, cart.deleteFromCart);
+
 
 module.exports = router;
