@@ -1,4 +1,4 @@
-const customerAddress = require("../controller/customerAddressController");
+const customerAddress = require("../controller/CustomerAddressController");
 const address = require("../controller/addressController");
 const AuthMiddleware = require("../middleware/AuthMiddleware");
 
