@@ -4,6 +4,7 @@ const AddressModel = require("./AddressModel");
 const CustomerModel = require("./CustomerModel");
 const PaymentMethodModel = require("./PaymentMethodModel");
 const CartModel = require("./CartModel");
+const ProductModel = require("./ProductModel");
 
 const CheckoutModel = sequelize.define(
   "CheckoutModel",
@@ -25,7 +26,7 @@ const CheckoutModel = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    id_cart: {
+    id_product: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -58,6 +59,6 @@ CheckoutModel.belongsTo(CustomerModel, { foreignKey: "id_customer" });
 CheckoutModel.belongsTo(PaymentMethodModel, {
   foreignKey: "id_payment_method",
 });
-CheckoutModel.belongsTo(CartModel, { foreignKey: "id_cart" });
+CheckoutModel.belongsTo(ProductModel, { foreignKey: "id_product" });
 
 module.exports = CheckoutModel;
