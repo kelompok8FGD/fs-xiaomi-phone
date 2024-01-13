@@ -1,4 +1,5 @@
 const paymentMethod = require("../controller/PaymentMethodController");
+const AuthMiddleware = require("../middleware/AuthMiddleware");
 
 const router = require("express").Router();
 
@@ -18,10 +19,18 @@ router.get(
   paymentMethod.getPaymentMethodByProvider
 );
 // create payment method
-router.post("/paymentMethods", paymentMethod.createNewPaymentMethod);
+router.post(
+  "/paymentMethods",
+  AuthMiddleware,
+  paymentMethod.createNewPaymentMethod
+);
 // update payment method
-router.put("/paymentMethods/:id", paymentMethod.updatePayment);
+router.put("/paymentMethods/:id", AuthMiddleware, paymentMethod.updatePayment);
 // delete payment method
-router.delete("/paymentMethods/:id", paymentMethod.deletePayment);
+router.delete(
+  "/paymentMethods/:id",
+  AuthMiddleware,
+  paymentMethod.deletePayment
+);
 
 module.exports = router;
