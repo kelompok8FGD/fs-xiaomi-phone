@@ -94,14 +94,24 @@ const getPaymentMethodByProvider = async (req, res) => {
 // Create a payment method
 const createNewPaymentMethod = async (req, res) => {
   try {
-    const { id_customer, payment_type, provider, account_number } = req.body;
+    const {
+      id_customer: id_customer,
+      payment_type,
+      provider,
+      account_number,
+    } = req.body;
 
-    const newPaymentMethod = await PaymentMethod.create({
+    details = {
       id_customer,
       payment_type,
       provider,
       account_number,
+    };
+
+    const newPaymentMethod = await PaymentMethod.create(details, {
+      where: { id_customer: id_customer },
     });
+
     if (newPaymentMethod) {
       res.status(201).json({
         status: "ok",
@@ -110,7 +120,11 @@ const createNewPaymentMethod = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.log(error, "<<<- Error create new product");
+    res.status(500).json({
+      status: "failed",
+      message: "Internal Server Error",
+    });
   }
 };
 
