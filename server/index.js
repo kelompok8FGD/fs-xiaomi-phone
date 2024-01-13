@@ -5,6 +5,7 @@ const customerRouter = require("./routes/customerRouter");
 const productRouter = require("./routes/productRouter");
 const addressRouter = require("./routes/addressRouter");
 const cartRouter = require("./routes/cartRouter");
+const checkoutRouter = require("./routes/checkoutRouter");
 const paymentRouter = require("./routes/paymentRouter");
 const cors = require("cors");
 const {
@@ -27,6 +28,7 @@ app.use("/api/v1/", customerRouter);
 app.use("/api/v1/", productRouter);
 app.use("/api/v1/", addressRouter);
 app.use("/api/v1/", cartRouter);
+app.use("/api/v1", checkoutRouter);
 app.use("/api/v1/", paymentRouter);
 
 // Middlewares
