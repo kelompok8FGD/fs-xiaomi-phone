@@ -4,13 +4,17 @@ import Logo from '../../Atoms/Logo';
 import List from '../../Atoms/Global/ListItem';
 import SearchButton from '../../molecule/Search/SearchButton';
 import ThemeSwitch from '../../molecule/ThemeSwitch';
-
+import { useSelector } from 'react-redux';
+import { calculateTotal } from '../../../redux/cart/cartUtils';
 const SiteNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const cart = useSelector((state) => state.cart);
+  const { totalQuantity } = calculateTotal(cart);
 
   return (
     <nav className="relative h-full w-full flex mx-auto items-center justify-between">
@@ -30,7 +34,13 @@ const SiteNavbar = () => {
         <List redirect="#" text="Support" className="h-full px-[8px] lg:px-[16px]" title="Support" />
         </div>
         <SearchButton />
-        <Icon redirect="/cart" classname="shopping-cart" />
+        <div id='cartamount' className='relative'>
+          <Icon redirect="/cart" classname="shopping-cart" />
+        <div className="absolute top-[-10px] right-0 h-auto bg-accent px-2 py-1 rounded-full">
+                        <p className="mx-auto text-text text-xs">{totalQuantity}</p>
+                    </div>
+        </div>
+        
         <div className="only-medium flex items-center">
           <Icon redirect="/account" classname="account" />
         </div>

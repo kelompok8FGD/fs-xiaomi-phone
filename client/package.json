@@ -11,6 +11,7 @@
     "build:css": "postcss src/styles/about.css -o public/build/output.css"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.0.1",
     "aos": "^3.0.0-beta.6",
     "axios": "^1.6.2",
     "class-variance-authority": "^0.7.0",
@@ -18,7 +19,9 @@
     "flowbite-react": "^0.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.19.0"
+    "react-redux": "^9.0.4",
+    "react-router-dom": "^6.19.0",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

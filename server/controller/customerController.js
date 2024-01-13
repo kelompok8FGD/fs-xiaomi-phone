@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 
-//Menampilkan semua product
+//Menampilkan semua customer
 const findAllCustomers = async (req, res) => {
   try {
     const dataCustomers = await Customer.findAll();
@@ -19,7 +19,7 @@ const findAllCustomers = async (req, res) => {
   }
 };
 
-//Menampilkan product berdasarkan ID
+//Menampilkan customer berdasarkan ID
 const getCustomerById = async (req, res) => {
   try {
     //mendapatkan req params
@@ -69,18 +69,7 @@ const createNewCustomer = async (req, res) => {
       fullname,
     });
 
-    // Generate a JWT token for the new customer
-    const token = sign({ id: newCustomer._id }, process.env.SECRET_KEY, {
-      expiresIn: process.env.JWT_EXPIRE,
-    });
-
-    // Send a success response with the token in the headers
-    res.header("accessToken", token).json({
-      status: "ok",
-      message: "Customer registered successfully",
-      data: newCustomer,
-      token: token,
-    });
+    res.json(newCustomer);
   } catch (error) {
     console.error("Error creating new customer:", error);
     res.status(500).json({
@@ -99,28 +88,32 @@ const loginCustomer = async (req, res) => {
       return res.json({ message: "Please enter all the details" });
     }
 
-    // Check if the user exists
+    // Check email match
     const user = await Customer.findOne({ where: { email } });
-    if (!user) {
-      return res.status(400).json({ message: "Wrong credentials" });
-    }
 
-    // Check password match
-    const isPasswordMatched = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatched) {
-      return res.json({ message: "Wrong credentials" });
+    const passwordMatched =
+      user === null
+        ? false
+        : // COMPARE USER PASSWORD WITH USER HASPASSWORD IN DB
+          await bcrypt.compare(password, user.password);
+    if (!(user && passwordMatched)) {
+      res.status(401).json({
+        error: "User or password is invalid",
+      });
     }
-
+    const userForToken = {
+      id: user.id_customer,
+      email: user.email,
+    };
     // Generate a JWT token for the authenticated customer
-    const token = sign({ id: user._id }, process.env.SECRET_KEY, {
+    const token = sign(userForToken, process.env.SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRE,
     });
 
-    // Send a success response with the token in the headers
-    res.header("accessToken", token).json({
-      success: true,
-      message: "LoggedIn Successfully",
-      token: token,
+    res.send({
+      email: user.email,
+      fullname: user.fullname,
+      token,
     });
   } catch (error) {
     console.error("Error during login:", error);
