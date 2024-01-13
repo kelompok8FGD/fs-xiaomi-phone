@@ -10,10 +10,9 @@ const paymentRouter = require("./routes/paymentRouter");
 const cors = require("cors");
 const { notFoundHandler, globalErrorHandler } = require("./middleware/globalErrorHandler");
 
-const bodyParser = require("body-parser"); // atau const express = require("express"); jika versi Express 4.16+
+const bodyParser = require("body-parser");
 
-// Menggunakan middleware body-parser untuk mengurai body dari permintaan HTTP
-app.use(bodyParser.json()); // atau app.use(express.json()) jika versi Express 4.16+
+app.use(bodyParser.json());
 
 app.use(express.json());
 
