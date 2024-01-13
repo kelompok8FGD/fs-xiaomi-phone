@@ -1,9 +1,12 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { DynamicThemeProvider } from "./context/DynamicThemeContext";
-import { CartProvider } from "./context/CartProvider";
+{/*Delete cart provider only after fully implementing redux*/}
+import { CartProvider } from "./context/CartProvider"; 
 import Header from "./components/organism/Header/Header";
 import Footer from "./components/organism/Footer";
-
+{/*Imports for redux cart*/}
+import { store } from './redux/store'
+import { Provider } from 'react-redux'
 function App() {
   // Use the useLocation hook to get the current location
   const location = useLocation();
@@ -17,13 +20,15 @@ function App() {
   return (
     <>
       <DynamicThemeProvider>
-        <CartProvider>
-          {showHeader && <Header />}
-          <main>
-            <Outlet />
-          </main>
-          {showFooter && <Footer />}
-        </CartProvider>
+        <Provider store={store}>
+          <CartProvider>
+            {showHeader && <Header />}
+            <main>
+              <Outlet />
+            </main>
+            {showFooter && <Footer />}
+          </CartProvider>
+        </Provider>
       </DynamicThemeProvider>
     </>
   );

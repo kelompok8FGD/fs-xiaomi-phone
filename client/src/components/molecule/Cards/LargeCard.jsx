@@ -14,9 +14,7 @@ export default function LargeCard() {
   const { cartItems, addToCart } = useContext(CartContext);
 
   const getApiPoco = async () => {
-    const response = await axios(
-      "https://6533becde1b6f4c59046358c.mockapi.io/Poco/Product/user/"
-    );
+    const response = await axios("http://localhost:5000/products");
 
     setDataPoco(response.data);
   };
@@ -25,28 +23,35 @@ export default function LargeCard() {
     getApiPoco();
   }, []);
 
+  const productPoco = dataPoco.data || []; // cek apakah properti data ada
+  console.log(productPoco);
+  const currentLargeCard = productPoco.slice(
+    currentPage,
+    currentPage + postsPerPage
+  );
+
   // const firstPostIndex = currentPage - 1; // 0 = 1 - 1
   // const lastPostIndex = postsPerPage - 6; // 2 = 8 - 6
-  const currentLargCard = dataPoco.slice(currentPage, postsPerPage); // index ke 7, (sampai) index ke 8
+  // const currentLargCard = dataPoco.data.slice(currentPage, postsPerPage); // index ke 7, (sampai) index ke 8
 
   return (
     <>
       <div className="grid grid-cols-1 w-full md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 items-center gap-2 mt-2 mb-3 mx-2">
-        {currentLargCard.map((poco) => (
+        {currentLargeCard.map((poco) => (
           <div
-            key={poco.id}
+            key={poco.id_product}
             className={`flex flex-col bg-[#ffffff] items-center md:relative font-inter pt-10 px-5 text-center gap-2 md:hover:shadow-lg md:hover:ease-out md:duration-[250ms] pb-5 `}
           >
             <TitleCard
               id="1"
-              Title={poco.name}
-              Specs={poco.specs}
+              Title={poco.name_product}
+              Specs={poco.specification}
               StartingPrice={poco.price}
-              PreviousPrice={poco.before_discount}
+              PreviousPrice={poco.price}
               PhonePic={poco.image}
               Button="md:my-[14px] md:flex md:gap-1"
               rating={poco.rating}
-              Discount={poco.discountPercentage}
+              Discount={poco.discount}
               className="pb-5"
               Status="Habis"
             />
@@ -72,7 +77,7 @@ export default function LargeCard() {
                 />
               </div>
             </div>
-            <ImgCard id={poco.id} PhonePic={poco.image} />
+            <ImgCard id={poco.id_product} PhonePic={poco.image} />
           </div>
         ))}
       </div>

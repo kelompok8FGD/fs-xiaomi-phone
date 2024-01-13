@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
+import {addToCart} from '../../../redux/cart/cartSlice';
 import axios from "axios";
-import { CartContext } from "../../../context/CartProvider.jsx";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
 import TitleCard from "../../Atoms/InsideCard/TitleCard.jsx";
 import ImgCard from "../../Atoms/InsideCard/ImgCard.jsx";
@@ -11,14 +12,19 @@ const CardXiaomi = () => {
   const [currentPage] = useState(0);
   const [postsPerPage] = useState(2);
 
-  const { addToCart } = useContext(CartContext);
+  const dispatch = useDispatch()
+  const API_URL = "https://6551cffe5c69a77903291de6.mockapi.io/xiaomi";
+  //const API_URL = "http://localhost:5000/api/v1/products";
+  
 
   const getApiXiaomi = async () => {
     const response = await axios(
-      "https://6555a21884b36e3a431e0535.mockapi.io/xiaomi"
+      API_URL
     );
-
-    setDataXiaomi(response.data);
+     // Choose the one that matches the api
+     const data = response.data //for data from mockapi
+     //const data = response.data.data // for data from localhost
+    setDataXiaomi(data);
   };
 
   useEffect(() => {
@@ -27,28 +33,28 @@ const CardXiaomi = () => {
 
   // const firstPostIndex = currentPage - 1; // 0 = 1 - 1
   // const lastPostIndex = postsPerPage - 6; // 2 = 8 - 6
-  const currentCard = dataXiaomi.slice(currentPage, postsPerPage);
+  const currentCard = dataXiaomi.filter((xiaomi) => xiaomi.category_product === 'Xiaomi').slice(currentPage, postsPerPage);
 
   return (
     <>
       <div className="grid grid-cols-1 w-full md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 items-center gap-2 mt-2 mb-3 mx-2">
         {currentCard.map((xiaomi) => (
+         
           <div
-            key={xiaomi.id}
+            key={xiaomi.id_product}
             className={`flex flex-col bg-[#ffffff] items-center md:relative font-inter pt-10 px-5 text-center gap-2 md:hover:shadow-lg md:hover:ease-out md:duration-[250ms] pb-5 `}
           >
             <TitleCard
-              Title={xiaomi.name}
-              Specs={xiaomi.specs}
+              Title={xiaomi.name_product}
+              Specs={xiaomi.specification}
               StartingPrice={xiaomi.price}
-              PreviousPrice={xiaomi.before_discount}
+              PreviousPrice={xiaomi.price - (xiaomi.price * (xiaomi.discount / 100))}
               PhonePic={xiaomi.image}
               Button="md:my-[14px] md:flex md:gap-1"
-              rating={xiaomi.rating}
-              Discount={xiaomi.discountPercentage}
+              Discount={xiaomi.discount}
               className="pb-5"
-              Status="Habis"
-            />
+              Status={xiaomi.stock === 0 ? "Habis" : "Available"}
+/>
             <div className="flex flex-row gap-2">
               <CustomButton
                 to="/cart"
@@ -58,11 +64,18 @@ const CardXiaomi = () => {
                 intent="accent_nobg"
                 hover="bg_soft"
                 media="mediumDark"
-                onClick={() => addToCart(xiaomi)}
+                onClick={() => 
+          dispatch(addToCart({
+            id: xiaomi.id_product,
+            name: xiaomi.name_product,
+            image: xiaomi.image,
+            price: xiaomi.price
+          }))
+        }
               />
               <div className="toogle_icon">
                 <LearnMoreButton
-                  id={xiaomi.id}
+                  id={xiaomi.id_product}
                   text="Learn More"
                   icon=">"
                   order="text_first"
@@ -71,7 +84,7 @@ const CardXiaomi = () => {
                 />
               </div>
             </div>
-            <ImgCard id={xiaomi.id} PhonePic={xiaomi.image} />
+            <ImgCard id={xiaomi.id_product} PhonePic={xiaomi.image} />
           </div>
         ))}
       </div>
