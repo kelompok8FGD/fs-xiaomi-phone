@@ -105,9 +105,41 @@ const deleteFromCart = async (req, res) => {
     }
   };
 
+  const clearCart = async (req, res) => {
+    try {
+        const id_customer = req.id_customer; // Extracted from the token in the middleware
+
+        // Find and delete all cart items for the specified customer
+        const deletedCartItems = await Cart.destroy({
+            where: {
+                id_customer,
+            },
+        });
+
+        if (!deletedCartItems) {
+            res.status(404).json({
+                status: 'failed',
+                message: 'No items found in the cart',
+            });
+        } else {
+            res.json({
+                status: 'ok',
+                message: 'Cart cleared successfully',
+            });
+        }
+    } catch (error) {
+        console.error('Error clearing the cart:', error);
+        res.status(500).json({
+            status: 'failed',
+            message: 'Internal Server Error',
+        });
+    }
+};
+
 module.exports = {
   getCartItems, 
   addToCart, 
-  deleteFromCart
+  deleteFromCart,
+  clearCart
   };
   

@@ -12,5 +12,7 @@ router.get('/getCartItems', AuthMiddleware, cart.getCartItems);
 // Route to delete product from carts table
 router.delete('/deleteFromCart/:id_product', AuthMiddleware, cart.deleteFromCart);
 
+// Route to clear user cart
+router.delete('/clearCart', AuthMiddleware, cart.clearCart);
 
 module.exports = router;
