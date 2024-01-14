@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { CartContext } from "../../../context/CartProvider.jsx";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/cart/cartSlice";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
 import TitleFlagship from "../../Atoms/InsideCard/TitleFlagship.jsx";
 import ImgFlagship from "../../Atoms/InsideCard/ImgFlagship.jsx";
@@ -12,7 +13,7 @@ export default function BannerCard() {
   const [currentPage, setCurrentPage] = useState(7);
   const [postsPerPage, setPostPerPage] = useState(8);
 
-  const { cartItems, addToCart } = useContext(CartContext);
+  const dispatch = useDispatch();
 
   const getApiPoco = async () => {
     const response = await axios(
@@ -57,7 +58,16 @@ export default function BannerCard() {
                     intent="light"
                     rounded="yes"
                     hover="bg_soft"
-                    onClick={() => addToCart(poco)}
+                    onClick={() =>
+                      dispatch(
+                        addToCart({
+                          id: poco.id_product,
+                          name: poco.name_product,
+                          image: poco.image,
+                          price: poco.price,
+                        })
+                      )
+                    }
                   />
                   <LearnMoreButton
                     id={poco.id_product}

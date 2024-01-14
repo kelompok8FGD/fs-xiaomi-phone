@@ -9,9 +9,9 @@ export default function DetailPoco() {
 
   const getDetailApiPoco = async () => {
     const response = await axios(
-      `https://6533becde1b6f4c59046358c.mockapi.io/Poco/Product/user/${params.id}`
+      `https://xiaomi-phone-api.onrender.com/api/v1/products/${params.id}`
     );
-    setDataDetail(response.data);
+    setDataDetail(response.data.data);
   };
 
   useEffect(() => {
@@ -27,8 +27,10 @@ export default function DetailPoco() {
             <img src={dataDetail.image} />
           </div>
           <div className="items-start">
-            <h1 className="text-3xl font-semibold mb-2">{dataDetail.name}</h1>
-            <p className="text-gray-500 mb-2">{dataDetail.specs}</p>
+            <h1 className="text-3xl font-semibold mb-2">
+              {dataDetail.name_product}
+            </h1>
+            <p className="text-gray-500 mb-2">{dataDetail.specification}</p>
             <p className="text-gray-700 text-2xl mb-2">
               Mulai Dari Rp.{dataDetail.price}
             </p>
