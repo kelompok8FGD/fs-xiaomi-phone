@@ -51,7 +51,7 @@ async function createTableIfNotExists() {
 createTableIfNotExists();
 
 // // Define relationships
-ProductModel.hasOne(CartModel, {
+ProductModel.hasMany(CartModel, {
   foreignKey: {
     name: "id_product",
     field: "id_product",

@@ -14,7 +14,9 @@ export default function LargeCard() {
   const { cartItems, addToCart } = useContext(CartContext);
 
   const getApiPoco = async () => {
-    const response = await axios("http://localhost:5000/products");
+    const response = await axios(
+      "https://xiaomi-phone-api.onrender.com/api/v1/products"
+    );
 
     setDataPoco(response.data);
   };
@@ -50,7 +52,6 @@ export default function LargeCard() {
               PreviousPrice={poco.price}
               PhonePic={poco.image}
               Button="md:my-[14px] md:flex md:gap-1"
-              rating={poco.rating}
               Discount={poco.discount}
               className="pb-5"
               Status="Habis"
@@ -68,7 +69,7 @@ export default function LargeCard() {
               />
               <div className="toogle_icon">
                 <LearnMoreButton
-                  id={poco.id}
+                  id={poco.id_product}
                   text="Learn More"
                   icon=">"
                   order="text_first"
