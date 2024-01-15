@@ -5,15 +5,13 @@ const PaymentMethod = db.PaymentMethodModel;
 const CartModel = db.CartModel;
 const ProductModel = db.ProductModel;
 const AddressModel = db.AddressModel;
+const flat = require("flat");
 // const { getCartItems } = require("./cartController");
 
 const checkoutController = async (req, res) => {
   try {
     const id_customer = req.id_customer; // Diambil dari token di middleware
     // const id_product = req.id_product; // Diambil dari token di middleware
-
-    // Mendapatkan product di cart
-    // const product = await ProductModel.findByPk(id_product);
 
     // Mendapatkan data pelanggan
     const customer = await Customer.findByPk(id_customer);
@@ -72,41 +70,26 @@ const checkoutController = async (req, res) => {
     // });
 
     // Memberikan respons dengan data yang telah ditemukan
-    const sanitizedResponse = {
+    const flattenedData = {
       status: "ok",
-      data: {
-        customer: {
-          id_customer: customer.id_customer,
-          fullname: customer.fullname,
-          // Anda dapat menambahkan properti lain yang ingin Anda tampilkan
-        },
-        customerAddress: customerAddress.map((address) => ({
-          AddressModel: {
-            address_name: address.AddressModel.address_name,
-            address_line1: address.AddressModel.address_line1,
-            address_line2: address.AddressModel.address_line2,
-            city: address.AddressModel.city,
-            region: address.AddressModel.region,
-            postal_code: address.AddressModel.postal_code,
-          },
-        })),
-        paymentMethod: {
-          payment_type: paymentMethod.payment_type,
-          provider: paymentMethod.provider,
-          account_number: paymentMethod.account_number,
-        },
-        cartItems: cartItems.map((cartItem) => ({
-          qty: cartItem.qty,
-          price: cartItem.price,
-          ProductModel: {
-            name_product: cartItem.ProductModel.name_product,
-            image: cartItem.ProductModel.image,
-          },
-        })),
-      },
+      id_customer: customer.id_customer,
+      fullname: customer.fullname,
+      address_name: customerAddress[0].AddressModel.address_name,
+      address_line1: customerAddress[0].AddressModel.address_line1,
+      address_line2: customerAddress[0].AddressModel.address_line2,
+      city: customerAddress[0].AddressModel.city,
+      region: customerAddress[0].AddressModel.region,
+      postal_code: customerAddress[0].AddressModel.postal_code,
+      payment_type: paymentMethod.payment_type,
+      provider: paymentMethod.provider,
+      account_number: paymentMethod.account_number,
+      qty: cartItems[0].qty,
+      price: cartItems[0].price,
+      name_product: cartItems[0].ProductModel.name_product,
+      image: cartItems[0].ProductModel.image,
     };
 
-    res.json(sanitizedResponse);
+    res.json(flattenedData);
   } catch (error) {
     console.error("Error during checkout:", error);
     res.status(500).json({

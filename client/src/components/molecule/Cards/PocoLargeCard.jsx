@@ -1,17 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { CartContext } from "../../../context/CartProvider.jsx";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/cart/cartSlice.js";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
 import TitleCard from "../../Atoms/InsideCard/TitleCard.jsx";
 import ImgCard from "../../Atoms/InsideCard/ImgCard.jsx";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
 
-export default function LargeCard() {
+export default function PocoLargeCard() {
   const [dataPoco, setDataPoco] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [postsPerPage, setPostPerPage] = useState(2);
-
-  const { cartItems, addToCart } = useContext(CartContext);
+  const dispatch = useDispatch();
 
   const getApiPoco = async () => {
     const response = await axios(
@@ -65,7 +65,16 @@ export default function LargeCard() {
                 intent="accent_nobg"
                 hover="bg_soft"
                 media="mediumDark"
-                onClick={() => addToCart(poco)}
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      id: poco.id_product,
+                      name: poco.name_product,
+                      image: poco.image,
+                      price: poco.price,
+                    })
+                  )
+                }
               />
               <div className="toogle_icon">
                 <LearnMoreButton

@@ -2,13 +2,13 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/cart/cartSlice";
+import { addToCart } from "../../../redux/cart/cartSlice.js";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
 import TitleFlagship from "../../Atoms/InsideCard/TitleFlagship.jsx";
 import ImgFlagship from "../../Atoms/InsideCard/ImgFlagship.jsx";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
 
-export default function BannerCard() {
+export default function PocoBanner() {
   const [dataPoco, setDataPoco] = useState([]);
   const [currentPage, setCurrentPage] = useState(7);
   const [postsPerPage, setPostPerPage] = useState(8);

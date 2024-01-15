@@ -12,7 +12,8 @@ const Home = () => {
       </div>
       <div
         id="latestproduct"
-        className="max-w-full w-full flex flex-col sm:flex-row sm:space-y-[15px] lg:space-y-[0px] md:space-x-[15px]">
+        className="max-w-full w-full flex flex-col sm:flex-row sm:space-y-[15px] lg:space-y-[0px] md:space-x-[15px]"
+      >
         <LatestPhone
           title="Redmi 10 2022"
           subtitle="Harga super Hemat"
