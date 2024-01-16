@@ -4,8 +4,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cart/cartSlice.js";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import TitleFlagship from "../../Atoms/InsideCard/TitleFlagship.jsx";
-import ImgFlagship from "../../Atoms/InsideCard/productImgFlagship.jsx";
+import ProductTitleFlagship from "../../Atoms/InsideCard/ProductTitleFlagship.jsx";
+import ProductImgFlagship from "../../Atoms/InsideCard/ProductImgFlagship.jsx";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
 
 export default function PocoBanner() {
@@ -46,11 +46,11 @@ export default function PocoBanner() {
               className="flex flex-col items-center relative"
             >
               <div className="absolute text-center w-[370px] pt-10 md:text-start md:left-[10%] md:top-[60px] md:w-[600px]">
-                <TitleFlagship
+                <ProductTitleFlagship
                   Title={poco.name_product}
                   Specs={poco.specification}
                   CurrentPrice={poco.price}
-                ></TitleFlagship>
+                ></ProductTitleFlagship>
                 <div className="flex flex-row gap-2">
                   <CustomButton
                     to="/cart"
@@ -81,11 +81,11 @@ export default function PocoBanner() {
                 </div>
               </div>
             </div>
-            <ImgFlagship
+            <ProductImgFlagship
               id={poco.id_product}
               PhonePicDesktop="https://firebasestorage.googleapis.com/v0/b/xiaomi-phone-e544c.appspot.com/o/poco_f5%2Fbanner_poco_F5_panjang_desktop.jpg?alt=media&token=54a466d1-7760-40c2-ac1d-253a983e3eb4"
               PhonePicMobile="https://firebasestorage.googleapis.com/v0/b/xiaomi-phone-e544c.appspot.com/o/poco_f5%2Fbanner_poco_F5_panjang_mobile.jpg?alt=media&token=d09ec3e7-209b-44d9-8547-6c17198d4131"
-            ></ImgFlagship>
+            ></ProductImgFlagship>
           </>
         ))}
       </div>

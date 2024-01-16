@@ -3,8 +3,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cart/cartSlice.js";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import TitleCard from "../../Atoms/InsideCard/productTitle.jsx";
-import ImgCard from "../../Atoms/InsideCard/productImgCard.jsx";
+import ProductTitle from "../../Atoms/InsideCard/ProductTitle.jsx";
+import ProductImg from "../../Atoms/InsideCard/ProductImg.jsx";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
 
 export default function PocoSmallCard() {
@@ -46,7 +46,7 @@ export default function PocoSmallCard() {
                   key={i}
                   className={`flex flex-col bg-[#ffffff] items-center md:relative font-inter pt-10 px-5 text-center gap-2 md:hover:shadow-lg md:hover:ease-out md:duration-[250ms]`}
                 >
-                  <TitleCard
+                  <ProductTitle
                     Title={poco.name_product}
                     Specs={poco.specification}
                     StartingPrice={poco.price}
@@ -84,7 +84,7 @@ export default function PocoSmallCard() {
                       size="small"
                     />
                   </div>
-                  <ImgCard id={poco.id_product} PhonePic={poco.image} />
+                  <ProductImgCard id={poco.id_product} PhonePic={poco.image} />
                 </div>
               );
             })}
