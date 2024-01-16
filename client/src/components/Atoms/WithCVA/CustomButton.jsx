@@ -69,7 +69,7 @@ const cvaButton = cva(
 
 
 const CustomButton = ({ onClick, to, text, className, ...props }) => {
-  const cvaProps = cvaButton(props); // Assuming props include intent, border, hover, etc.
+  const cvaProps = cvaButton(props); // intent, border, hover, etc.
 
   const isIconFirst = cvaProps.order === "iconFirst";
 
@@ -82,7 +82,7 @@ const CustomButton = ({ onClick, to, text, className, ...props }) => {
       >
         {isIconFirst && cvaProps.icon && <div>{cvaProps.icon}&nbsp;</div>}
         {text}
-        {!isIconFirst && cvaProps.icon && <div>&nbsp;{icon}</div>}
+        {!isIconFirst && cvaProps.icon && <div>&nbsp;{cvaProps.icon}</div>}
       </button>
     </Link>
   );
