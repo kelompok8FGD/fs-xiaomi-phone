@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-const ImgCard = (props) => {
+const productImgCard = (props) => {
   const { PhonePic, id } = props;
   return (
     <>
@@ -18,4 +18,5 @@ const ImgCard = (props) => {
   );
 };
 
-export default ImgCard;
+export default productImgCard;
+  
