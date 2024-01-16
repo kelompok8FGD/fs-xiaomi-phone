@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import "../components/organism/Redmi/RedmiPhoneList.css";
 import SiteBanner from "../components/organism/Redmi/SiteBanner/SiteBanner";

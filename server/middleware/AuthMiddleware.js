@@ -19,7 +19,6 @@ module.exports = (req, res, next) => {
     token = authorization.substring(7)
   }
 
-  
   // Verify the token using the secret key
   try {
     const validToken = verify(token, process.env.SECRET_KEY);
@@ -34,7 +33,6 @@ module.exports = (req, res, next) => {
 
     // Call the next middleware or route handler in the chain
     next();
-    
   } catch (error) {
     // Handle errors during token verification
     return res.status(401).json({ error: 'Token is missing or invalid' });

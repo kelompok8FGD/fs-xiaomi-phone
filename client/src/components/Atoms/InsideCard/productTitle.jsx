@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-const TitleCard = (props) => {
+const productTitle = (props) => {
   const { Title, Specs, Discount, StartingPrice, PreviousPrice } = props;
   return (
     <>
@@ -35,4 +35,4 @@ const TitleCard = (props) => {
   );
 };
 
-export default TitleCard;
+export default productTitle;
