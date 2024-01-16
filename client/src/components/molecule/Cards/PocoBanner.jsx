@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cart/cartSlice.js";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
 import TitleFlagship from "../../Atoms/InsideCard/TitleFlagship.jsx";
-import ImgFlagship from "../../Atoms/InsideCard/productImgFlagship.jsx";
+import ImgFlagship from "../../Atoms/InsideCard/ImgFlagship.jsx";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
 
 export default function PocoBanner() {

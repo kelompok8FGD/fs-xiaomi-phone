@@ -3,8 +3,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cart/cartSlice.js";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import TitleCard from "../../Atoms/InsideCard/productTitle.jsx";
-import ImgCard from "../../Atoms/InsideCard/productImgCard.jsx";
+import TitleCard from "../../Atoms/InsideCard/ProductTitle.jsx";
+import ImgCard from "../../Atoms/InsideCard/ProductImg.jsx";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
 
 export default function PocoSmallCard() {
