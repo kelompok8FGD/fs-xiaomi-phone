@@ -2,9 +2,7 @@ import React from "react";
 import { cva } from "class-variance-authority";
 import { Link } from "react-router-dom";
 
-// ADD ANY EXTRA STYLYING USING styling= "" 
-
-const Variants = cva(
+const cvaButton = cva(
   /* button base style */
   "box-border align-middle p-[9px] px-[30px] flex h-auto w-auto  transition-colors duration-150 text-[18px] md:text-[16px] lg:text-[19px] font-normal leading-[14px] md:leading-[29px]",
   {
@@ -69,31 +67,22 @@ const Variants = cva(
   }
 );
 
-const CustomButton = ({
-  onClick,
-  to,
-  text,
-  intent,
-  border,
-  hover,
-  rounded,
-  icon,
-  order,
-  size,
-  media,
-  className, // Add custom styles not found in variants
-}) => {
-  const variants = { intent, border, hover, rounded, icon, order, size, media };
+
+const CustomButton = ({ onClick, to, text, className, ...props }) => {
+  const cvaProps = cvaButton(props); // Assuming props include intent, border, hover, etc.
+
+  const isIconFirst = cvaProps.order === "iconFirst";
 
   return (
     <Link to={to}>
       <button
         onClick={onClick}
-        className={`${Variants(variants)} ${className}`}
+        className={`${cvaProps} ${className}`}
+        {...props} // Spread rest of the props
       >
-        {order === "iconFirst" && icon && <div>{icon}&nbsp;</div>}
+        {isIconFirst && cvaProps.icon && <div>{cvaProps.icon}&nbsp;</div>}
         {text}
-        {order === "textFirst" && icon && <div>&nbsp;{icon}</div>}
+        {!isIconFirst && cvaProps.icon && <div>&nbsp;{icon}</div>}
       </button>
     </Link>
   );
