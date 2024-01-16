@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-const productTitleFlagship = (props) => {
+const ProductTitleFlagship = (props) => {
   const { Title, Specs, CurrentPrice, PreviousPrice } = props;
   return (
     <div>
@@ -24,4 +24,4 @@ const productTitleFlagship = (props) => {
   );
 };
 
-export default productTitleFlagship;
+export default ProductTitleFlagship;

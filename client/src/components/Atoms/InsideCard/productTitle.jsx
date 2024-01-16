@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-const productTitle = (props) => {
+const ProductTitle = (props) => {
   const { Title, Specs, Discount, StartingPrice, PreviousPrice } = props;
   return (
     <>
@@ -35,4 +35,4 @@ const productTitle = (props) => {
   );
 };
 
-export default productTitle;
+export default ProductTitle;
