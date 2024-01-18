@@ -1,6 +1,6 @@
 import React from "react";
 // app component
-function NavbarProducts(props) {
+function ProductNavbar(props) {
   const { title1, title2, title3, titleHead, toTitle1, toTitle2, toTitle3 } =
     props;
   return (
@@ -42,7 +42,7 @@ function NavbarProducts(props) {
   );
 }
 
-export default NavbarProducts;
+export default ProductNavbar;
 
 const DropdownContext = React.createContext({
   open: false,

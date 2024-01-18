@@ -31,7 +31,6 @@ const CustomerModel = sequelize.define(
 );
 
 // Menambahkan pemanggilan sync
-// Menambahkan pemanggilan sync
 async function createTableIfNotExists() {
   try {
     // Sinkronkan model dengan database

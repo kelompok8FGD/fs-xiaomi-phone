@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-// const CustomerModel = require("./CustomerModel");
+const CustomerModel = require("./CustomerModel");
 
 const AddressModel = sequelize.define(
   "AddressModel",
@@ -34,14 +34,32 @@ const AddressModel = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    id_customer: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize,
     modelName: "AddressModel",
-    tableName: "Address",
+    tableName: "address",
     timestamps: false,
   }
 );
+
+// Hubungan antara CustomerModel dan CustomerAddressModel
+CustomerModel.hasMany(AddressModel, {
+  foreignKey: {
+    name: "id_customer",
+    field: "id_customer",
+  },
+});
+AddressModel.belongsTo(CustomerModel, {
+  foreignKey: {
+    name: "id_customer",
+    field: "id_customer",
+  },
+});
 
 // Menambahkan pemanggilan sync
 async function createTableIfNotExists() {
@@ -56,7 +74,5 @@ async function createTableIfNotExists() {
 }
 
 createTableIfNotExists();
-
-// AddressModel.belongsTo(CustomerModel);
 
 module.exports = AddressModel;

@@ -1,22 +1,21 @@
-const { verify } = require('jsonwebtoken');
+const { verify } = require("jsonwebtoken");
 //Middleware function to validate a token from the request header
 module.exports = (req, res, next) => {
-
   // Extract the 'authorization' header from the request
-  const authorization = req.get('authorization');
+  const authorization = req.get("authorization");
 
   // Initialize the token variable
-  let token = ''
+  let token = "";
 
   // Check if 'authorization' header is missing
   if (!authorization) {
-    return res.status(401).json({ error: 'User not logged in' });
+    return res.status(401).json({ error: "User not logged in" });
   }
 
   // Check if 'authorization' header starts with 'Bearer'
-  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
+  if (authorization && authorization.toLowerCase().startsWith("bearer")) {
     // Extract the token after Bearer
-    token = authorization.substring(7)
+    token = authorization.substring(7);
   }
 
   // Verify the token using the secret key
@@ -25,7 +24,7 @@ module.exports = (req, res, next) => {
 
     // Check if the token is missing or invalid
     if (!token || !validToken.id) {
-      return res.status(401).json({ error: 'Token is missing or invalid' });
+      return res.status(401).json({ error: "Token is missing or invalid" });
     }
 
     // Attach the customer ID from the token to the request object
@@ -35,8 +34,6 @@ module.exports = (req, res, next) => {
     next();
   } catch (error) {
     // Handle errors during token verification
-    return res.status(401).json({ error: 'Token is missing or invalid' });
+    return res.status(401).json({ error: "Token is missing or invalid" });
   }
-
-
 };

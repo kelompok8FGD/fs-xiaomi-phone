@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/cart/cartSlice.js";
-import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import TitleCard from "../../Atoms/InsideCard/ProductTitle.jsx";
-import ImgCard from "../../Atoms/InsideCard/ProductImg.jsx";
-import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
+import { addToCart } from "../../../../redux/cart/cartSlice.js";
+import CustomButton from "../../../Atoms/WithCVA/CustomButton.jsx";
+import ProductTitle from "../../../Atoms/InsideCard/ProductTitle.jsx";
+import ProductImg from "../../../Atoms/InsideCard/ProductImg.jsx";
+import LearnMoreButton from "../../../Atoms/WithCVA/LearnMoreButton.jsx";
 
 export default function PocoSmallCard() {
   const [dataPoco, setDataPoco] = useState([]);
@@ -15,7 +15,7 @@ export default function PocoSmallCard() {
 
   const getApiPoco = async () => {
     const response = await axios(
-      "https://xiaomi-phone-api.onrender.com/api/v1/products"
+      "https://xiaomi-phone-api.onrender.com/api/v1/products/category/poco"
     );
 
     setDataPoco(response.data);
@@ -28,10 +28,7 @@ export default function PocoSmallCard() {
   const productPoco = dataPoco.data || [];
   // const firstPostIndex = currentPage + 2; // 3 = 1 + 2
   // const lastPostIndex = postsPerPage - 1; // 7 = 8 - 1
-  const currentSmallCard = productPoco.slice(
-    currentPage,
-    currentPage + postsPerPage
-  );
+  const currentSmallCard = productPoco.slice(currentPage, postsPerPage);
   // index ke 7, (sampai) index ke 8
 
   return (
@@ -46,7 +43,7 @@ export default function PocoSmallCard() {
                   key={i}
                   className={`flex flex-col bg-[#ffffff] items-center md:relative font-inter pt-10 px-5 text-center gap-2 md:hover:shadow-lg md:hover:ease-out md:duration-[250ms]`}
                 >
-                  <TitleCard
+                  <ProductTitle
                     Title={poco.name_product}
                     Specs={poco.specification}
                     StartingPrice={poco.price}
@@ -84,7 +81,7 @@ export default function PocoSmallCard() {
                       size="small"
                     />
                   </div>
-                  <ImgCard id={poco.id_product} PhonePic={poco.image} />
+                  <ProductImg id={poco.id_product} PhonePic={poco.image} />
                 </div>
               );
             })}
