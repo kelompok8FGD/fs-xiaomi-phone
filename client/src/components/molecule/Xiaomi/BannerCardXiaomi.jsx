@@ -3,8 +3,8 @@ import axios from "axios";
 import { CartContext } from "../../../context/CartProvider";
 import CustomButton from "../../Atoms/WithCVA/CustomButton";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
-import ImgFlagship from "../../Atoms/InsideCard/ImgFlagship.jsx";
-import TitleCard from "../../Atoms/InsideCard/TitleCard.jsx";
+import ProductTitleFlagship from "../../Atoms/InsideCard/ProductTitleFlagship.jsx";
+import ProductImgFlagship from "../../Atoms/InsideCard/ProductImgFlagship.jsx";
 
 const BannerCardXiaomi = () => {
   const [dataXiaomi, setDataXiaomi] = useState([]);
@@ -37,7 +37,7 @@ const BannerCardXiaomi = () => {
               className="flex flex-col items-center relative"
             >
               <div className="absolute text-center w-[370px] pt-10 md:text-start md:right-[2%] md:top-[60px] md:w-[600px]">
-                <TitleCard
+                <ProductTitleFlagship
                   Title={xiaomi.name}
                   Specs={xiaomi.specs}
                   StartingPrice={xiaomi.price}
@@ -71,10 +71,10 @@ const BannerCardXiaomi = () => {
                 </div>
               </div>
             </div>
-            <ImgFlagship
+            <ProductImgFlagship
               PhonePicDesktop="/smartphone/1desktop.webp"
               PhonePicMobile="/smartphone/1mobile.webp"
-            ></ImgFlagship>
+            ></ProductImgFlagship>
           </>
         ))}
       </div>

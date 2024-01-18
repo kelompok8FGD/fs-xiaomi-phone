@@ -2,11 +2,11 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/cart/cartSlice.js";
-import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import ProductTitleFlagship from "../../Atoms/InsideCard/ProductTitleFlagship.jsx";
-import ProductImgFlagship from "../../Atoms/InsideCard/ProductImgFlagship.jsx";
-import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
+import { addToCart } from "../../../../redux/cart/cartSlice.js";
+import CustomButton from "../../../Atoms/WithCVA/CustomButton.jsx";
+import ProductTitleFlagship from "../../../Atoms/InsideCard/ProductTitleFlagship.jsx";
+import ProductImgFlagship from "../../../Atoms/InsideCard/ProductImgFlagship.jsx";
+import LearnMoreButton from "../../../Atoms/WithCVA/LearnMoreButton.jsx";
 
 export default function PocoBanner() {
   const [dataPoco, setDataPoco] = useState([]);
@@ -17,7 +17,7 @@ export default function PocoBanner() {
 
   const getApiPoco = async () => {
     const response = await axios(
-      "https://xiaomi-phone-api.onrender.com/api/v1/products"
+      "https://xiaomi-phone-api.onrender.com/api/v1/products/category/poco"
     );
 
     setDataPoco(response.data);
@@ -27,7 +27,6 @@ export default function PocoBanner() {
     getApiPoco();
   }, []);
   const productPoco = dataPoco.data || [];
-  console.log(productPoco);
 
   // const firstPostIndex = postsPerPage - 1; // 7 = 8 - 1
   // const lastPostIndex = currentPage + 1; // 8 = 7 + 1
@@ -36,6 +35,7 @@ export default function PocoBanner() {
     currentPage + postsPerPage
   ); // index ke 7, (sampai) index ke 8
 
+  console.log(currentBannerImg);
   return (
     <>
       <div className="flex flex-col md:hover:cursor-pointer">

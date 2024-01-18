@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-const productImgFlagship = (props) => {
+const ProductImgFlagship = (props) => {
   const { PhonePicDesktop, PhonePicMobile, id } = props;
   return (
     <Link to={`/detail/${id}`}>
@@ -16,4 +16,4 @@ const productImgFlagship = (props) => {
   );
 };
 
-export default productImgFlagship;
+export default ProductImgFlagship;

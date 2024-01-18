@@ -42,9 +42,7 @@ const getCustomerById = async (req, res) => {
   }
 };
 
-
 const isStrongPasswordCustom = (password) => {
-
   return password.length >= 6;
 };
 
@@ -100,12 +98,11 @@ const loginCustomer = async (req, res) => {
     const { email, password } = req.body;
 
     //Validation
-    
+
     // Check emptiness of the incoming data
     if (!email || !password) {
       return res.json({ message: "Please enter all the details" });
     }
- 
 
     // Check email match
     const user = await Customer.findOne({ where: { email } });

@@ -1,6 +1,6 @@
-import PocoBanner from "../../molecule/Cards/PocoBanner";
-import PocoLargeCard from "../../molecule/Cards/PocoLargeCard";
-import PocoSmallCard from "../../molecule/Cards/PocoSmallCard";
+import PocoBanner from "../../molecule/Cards/PocoElement/PocoBanner";
+import PocoLargeCard from "../../molecule/Cards/PocoElement/PocoLargeCard";
+import PocoSmallCard from "../../molecule/Cards/PocoElement/PocoSmallCard";
 
 export default function PocoSection() {
   return (

@@ -11,8 +11,17 @@ const createNewAddress = async (req, res) => {
       city,
       region,
       postal_code,
-      customer_id: customer_id,
     } = req.body;
+    // Ambil ID pengguna dari token
+    const id_customer = req.id_customer;
+
+    // Pastikan ID pengguna ada
+    if (!id_customer) {
+      return res.status(401).json({
+        status: "failed",
+        message: "User ID not found in the token",
+      });
+    }
 
     details = {
       address_name,
@@ -23,9 +32,7 @@ const createNewAddress = async (req, res) => {
       postal_code,
     };
 
-    const newAddress = await AddressModel.create(details, {
-      where: { customer_id: customer_id },
-    });
+    const newAddress = await AddressModel.create(details);
 
     res.status(201).json({
       status: "ok",
