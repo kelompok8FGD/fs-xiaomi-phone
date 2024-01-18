@@ -12,6 +12,7 @@ const createNewAddress = async (req, res) => {
       region,
       postal_code,
     } = req.body;
+
     // Ambil ID pengguna dari token
     const id_customer = req.id_customer;
 
@@ -24,6 +25,7 @@ const createNewAddress = async (req, res) => {
     }
 
     details = {
+      id_customer,
       address_name,
       address_line1,
       address_line2,

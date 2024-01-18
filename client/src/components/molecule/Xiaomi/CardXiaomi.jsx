@@ -3,18 +3,19 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cart/cartSlice";
 import axios from "axios";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import ProductTitle from "../../Atoms/InsideCard/ProductTitle.jsx";
+import ProductTitle from "../../Atoms/InsideCard/productTitle.jsx";
 import ProductImg from "../../Atoms/InsideCard/ProductImg.jsx";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
 
 const CardXiaomi = () => {
   const [dataXiaomi, setDataXiaomi] = useState([]);
-  const [currentPage] = useState(0);
-  const [postsPerPage] = useState(2);
+  const [currentPage] = useState(17);
+  const [postsPerPage] = useState(19);
 
   const dispatch = useDispatch();
-  const API_URL = "https://6551cffe5c69a77903291de6.mockapi.io/xiaomi";
+  // const API_URL = "https://6551cffe5c69a77903291de6.mockapi.io/xiaomi";
   //const API_URL = "http://localhost:5000/api/v1/products";
+  const API_URL = "https://xiaomi-phone-api.onrender.com/api/v1/products";
 
   const getApiXiaomi = async () => {
     const response = await axios(API_URL);
@@ -30,10 +31,11 @@ const CardXiaomi = () => {
 
   // const firstPostIndex = currentPage - 1; // 0 = 1 - 1
   // const lastPostIndex = postsPerPage - 6; // 2 = 8 - 6
-  const currentCard = dataXiaomi
-    .filter((xiaomi) => xiaomi.category_product === "Xiaomi")
-    .slice(currentPage, postsPerPage);
-
+  // const currentCard = dataXiaomi
+  //   .filter((xiaomi) => xiaomi.category_product === "Xiaomi")
+  //   .slice(currentPage, postsPerPage);
+  const productXiaomi = dataXiaomi.data || [];
+  const currentCard = productXiaomi.slice(currentPage, postsPerPage);
   return (
     <>
       <div className="grid grid-cols-1 w-full md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 items-center gap-2 mt-2 mb-3 mx-2">

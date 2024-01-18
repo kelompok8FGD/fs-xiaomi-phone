@@ -42,7 +42,7 @@ const CheckoutModel = sequelize.define(
 async function createTableIfNotExists() {
   try {
     // Sinkronkan model dengan database
-    await CheckoutModel.sync({ force: true });
+    await CheckoutModel.sync({ force: false });
 
     console.log("Table created successfully");
   } catch (err) {
