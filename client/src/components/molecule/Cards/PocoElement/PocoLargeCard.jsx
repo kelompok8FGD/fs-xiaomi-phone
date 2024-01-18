@@ -1,20 +1,22 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { CartContext } from "../../../context/CartProvider.jsx";
-import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import TitleCard from "../../Atoms/InsideCard/TitleCard.jsx";
-import ImgCard from "../../Atoms/InsideCard/ImgCard.jsx";
-import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../../redux/cart/cartSlice.js";
+import CustomButton from "../../../Atoms/WithCVA/CustomButton.jsx";
+import ProductTitle from "../../../Atoms/InsideCard/ProductTitle.jsx";
+import ProductImg from "../../../Atoms/InsideCard/ProductImg.jsx";
+import LearnMoreButton from "../../../Atoms/WithCVA/LearnMoreButton.jsx";
 
-export default function LargeCard() {
+export default function PocoLargeCard() {
   const [dataPoco, setDataPoco] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [postsPerPage, setPostPerPage] = useState(2);
-
-  const { cartItems, addToCart } = useContext(CartContext);
+  const dispatch = useDispatch();
 
   const getApiPoco = async () => {
-    const response = await axios("http://localhost:5000/products");
+    const response = await axios(
+      "https://xiaomi-phone-api.onrender.com/api/v1/products/category/poco"
+    );
 
     setDataPoco(response.data);
   };
@@ -42,7 +44,7 @@ export default function LargeCard() {
             key={poco.id_product}
             className={`flex flex-col bg-[#ffffff] items-center md:relative font-inter pt-10 px-5 text-center gap-2 md:hover:shadow-lg md:hover:ease-out md:duration-[250ms] pb-5 `}
           >
-            <TitleCard
+            <ProductTitle
               id="1"
               Title={poco.name_product}
               Specs={poco.specification}
@@ -50,7 +52,6 @@ export default function LargeCard() {
               PreviousPrice={poco.price}
               PhonePic={poco.image}
               Button="md:my-[14px] md:flex md:gap-1"
-              rating={poco.rating}
               Discount={poco.discount}
               className="pb-5"
               Status="Habis"
@@ -64,11 +65,20 @@ export default function LargeCard() {
                 intent="accent_nobg"
                 hover="bg_soft"
                 media="mediumDark"
-                onClick={() => addToCart(poco)}
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      id: poco.id_product,
+                      name: poco.name_product,
+                      image: poco.image,
+                      price: poco.price,
+                    })
+                  )
+                }
               />
               <div className="toogle_icon">
                 <LearnMoreButton
-                  id={poco.id}
+                  id={poco.id_product}
                   text="Learn More"
                   icon=">"
                   order="text_first"
@@ -77,7 +87,7 @@ export default function LargeCard() {
                 />
               </div>
             </div>
-            <ImgCard id={poco.id_product} PhonePic={poco.image} />
+            <ProductImg id={poco.id_product} PhonePic={poco.image} />
           </div>
         ))}
       </div>

@@ -3,6 +3,7 @@ const Customer = db.CustomerModel;
 const { Op } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
+const validator = require("validator");
 
 //Menampilkan semua customer
 const findAllCustomers = async (req, res) => {
@@ -41,6 +42,10 @@ const getCustomerById = async (req, res) => {
   }
 };
 
+const isStrongPasswordCustom = (password) => {
+  return password.length >= 6;
+};
+
 const createNewCustomer = async (req, res) => {
   try {
     const { email, password, fullname } = req.body;
@@ -50,6 +55,15 @@ const createNewCustomer = async (req, res) => {
       return res.json({ message: "Please enter all the details" });
     }
 
+    // Check if the email is valid
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: "Email is not valid" });
+    }
+    if (!isStrongPasswordCustom(password)) {
+      return res.status(400).json({
+        message: "Password is not strong enough.",
+      });
+    }
     // Check if the user already exists
     const userExists = await Customer.findOne({ where: { email } });
 
@@ -82,6 +96,8 @@ const createNewCustomer = async (req, res) => {
 const loginCustomer = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    //Validation
 
     // Check emptiness of the incoming data
     if (!email || !password) {

@@ -1,8 +1,10 @@
 const db = require("../models");
 const Customer = db.CustomerModel;
-const CustomerAddressModel = db.CustomerAddressModel;
 const PaymentMethod = db.PaymentMethodModel;
-const { getCartItems } = require("./cartController");
+const CartModel = db.CartModel;
+const ProductModel = db.ProductModel;
+const AddressModel = db.AddressModel;
+const flat = require("flat");
 
 const checkoutController = async (req, res) => {
   try {
@@ -12,7 +14,7 @@ const checkoutController = async (req, res) => {
     const customer = await Customer.findByPk(id_customer);
 
     // Mendapatkan alamat pelanggan (pastikan untuk mengganti 'columnName' sesuai dengan kolom yang sesuai)
-    const address = await CustomerAddressModel.findOne({
+    const address = await AddressModel.findOne({
       where: { id_customer },
     });
 
@@ -22,7 +24,15 @@ const checkoutController = async (req, res) => {
     });
 
     // Menggunakan fungsi yang diimpor untuk mendapatkan item keranjang
-    const cartItems = await getCartItems(req, res);
+    const cartItems = await CartModel.findAll({
+      where: { id_customer },
+      include: [
+        {
+          model: ProductModel,
+          attributes: ["name_product", "image"],
+        },
+      ],
+    });
 
     // Mengecek ketersediaan data sebelum memberikan respons
     if (!customer || !address || !paymentMethod || !cartItems) {
@@ -33,15 +43,37 @@ const checkoutController = async (req, res) => {
     }
 
     // Memberikan respons dengan data yang telah ditemukan
-    res.json({
+    // return res.json({
+    //   status: "ok",
+    //   data: {
+    //     customer,
+    //     address,
+    //     paymentMethod,
+    //     cartItems,
+    //   },
+    // });
+
+    // Memberikan respons dengan data yang telah ditemukan
+    const flattenedData = {
       status: "ok",
-      data: {
-        customer,
-        address,
-        paymentMethod,
-        cartItems,
-      },
-    });
+      id_customer: customer.id_customer,
+      fullname: customer.fullname,
+      address_name: address.address_name,
+      address_line1: address.address_line1,
+      address_line2: address.address_line2,
+      city: address.city,
+      region: address.region,
+      postal_code: address.postal_code,
+      payment_type: paymentMethod.payment_type,
+      provider: paymentMethod.provider,
+      account_number: paymentMethod.account_number,
+      qty: cartItems[0].qty,
+      price: cartItems[0].price,
+      name_product: cartItems[0].ProductModel.name_product,
+      image: cartItems[0].ProductModel.image,
+    };
+
+    res.json(flattenedData);
   } catch (error) {
     console.error("Error during checkout:", error);
     res.status(500).json({

@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
-const TitleCard = (props) => {
+const ProductTitle = (props) => {
   const { Title, Specs, Discount, StartingPrice, PreviousPrice } = props;
+  const formattedPrice = StartingPrice.toLocaleString(undefined, {
+    maximumFractionDigits: 0,
+  });
   return (
     <>
       <div className="font-semibold text-[19px] leading-[24px] md:text-[36px] md:leading-[45px] pt-12">
@@ -14,18 +17,10 @@ const TitleCard = (props) => {
       </div>
       <div className="flex gap-2 flex-col md:flex md:flex-row md:items-center pb-5">
         <div className="font-normal text-[14px] leading-[18px] md:text-[16px] md:leading-[20px] xl:text-[18px] xl:leading-[20px]">
-          Mulai dari Rp{" "}
-          {StartingPrice.toLocaleString("id-ID", {
-            styles: "currency",
-            currency: "IDR",
-          })}
+          Mulai dari Rp {formattedPrice}
         </div>
         <div className="font-normal text-[12px] leading-[15px] text-[#999999] line-through md:text-[15px] md:leading-[19px]">
-          Rp{" "}
-          {PreviousPrice.toLocaleString("id-ID", {
-            styles: "currency",
-            currency: "IDR",
-          })}
+          Rp {PreviousPrice}
         </div>
       </div>
       {/* <div className={`${Button}`}>
@@ -40,4 +35,4 @@ const TitleCard = (props) => {
   );
 };
 
-export default TitleCard;
+export default ProductTitle;
