@@ -1,21 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { CartContext } from "../../../context/CartProvider.jsx";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/cart/cartSlice.js";
 import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import TitleCard from "../../Atoms/InsideCard/TitleCard.jsx";
-import ImgCard from "../../Atoms/InsideCard/ImgCard.jsx";
+import TitleCard from "../../Atoms/InsideCard/ProductTitle.jsx";
+import ImgCard from "../../Atoms/InsideCard/ProductImg.jsx";
 import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
 
-export default function SmallCard() {
+export default function PocoSmallCard() {
   const [dataPoco, setDataPoco] = useState([]);
   const [currentPage, setCurrentPage] = useState(3);
   const [postsPerPage, setPostPerPage] = useState(7);
-
-  const { cartItems, addToCart } = useContext(CartContext);
+  const dispatch = useDispatch();
 
   const getApiPoco = async () => {
     const response = await axios(
-      "https://6533becde1b6f4c59046358c.mockapi.io/Poco/Product/user/"
+      "https://xiaomi-phone-api.onrender.com/api/v1/products"
     );
 
     setDataPoco(response.data);
@@ -25,9 +25,14 @@ export default function SmallCard() {
     getApiPoco();
   }, []);
 
+  const productPoco = dataPoco.data || [];
   // const firstPostIndex = currentPage + 2; // 3 = 1 + 2
   // const lastPostIndex = postsPerPage - 1; // 7 = 8 - 1
-  const currentSmallCard = dataPoco.slice(currentPage, postsPerPage); // index ke 7, (sampai) index ke 8
+  const currentSmallCard = productPoco.slice(
+    currentPage,
+    currentPage + postsPerPage
+  );
+  // index ke 7, (sampai) index ke 8
 
   return (
     <>
@@ -42,12 +47,11 @@ export default function SmallCard() {
                   className={`flex flex-col bg-[#ffffff] items-center md:relative font-inter pt-10 px-5 text-center gap-2 md:hover:shadow-lg md:hover:ease-out md:duration-[250ms]`}
                 >
                   <TitleCard
-                    Title={poco.name}
-                    Specs={poco.specs}
+                    Title={poco.name_product}
+                    Specs={poco.specification}
                     StartingPrice={poco.price}
-                    PreviousPrice={poco.before_discount}
+                    PreviousPrice={poco.price}
                     PhonePic={poco.image}
-                    rating={poco.rating}
                     Discount={poco.discountPercentage}
                     className="p-5"
                   />
@@ -59,11 +63,20 @@ export default function SmallCard() {
                       rounded="yes"
                       size="small"
                       hover="bg_soft"
-                      onClick={() => addToCart(poco)}
+                      onClick={() =>
+                        dispatch(
+                          addToCart({
+                            id: poco.id_product,
+                            name: poco.name_product,
+                            image: poco.image,
+                            price: poco.price,
+                          })
+                        )
+                      }
                     />
                     {/* <LearnMoreButton id={poco.id} /> */}
                     <LearnMoreButton
-                      id={poco.id}
+                      id={poco.id_product}
                       text="Learn More"
                       intent="light"
                       rounded="yes"
@@ -71,7 +84,7 @@ export default function SmallCard() {
                       size="small"
                     />
                   </div>
-                  <ImgCard id={poco.id} PhonePic={poco.image} />
+                  <ImgCard id={poco.id_product} PhonePic={poco.image} />
                 </div>
               );
             })}

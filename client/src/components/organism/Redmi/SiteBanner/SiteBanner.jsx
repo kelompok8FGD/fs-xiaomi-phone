@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import BannerRedmi from "./BannerRedmi/BannerRedmi";
 import HeaderNote12 from "../../../../assets/redmi/header-redmi-note12.svg";
