@@ -14,14 +14,6 @@ const LoginForm = () => {
     
         await login(email, password)
       }
-    
-      const [isChecked, setIsChecked] = useState(false);
-    
-      const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-      };
-    
-
   return (
     <form className='bg-formBackground' onSubmit={handleSubmit}>
     <div className='flex flex-col space-y-5'>
