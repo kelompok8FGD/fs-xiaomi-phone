@@ -1,34 +1,95 @@
-/* eslint-disable react/prop-types */
+import {useContext, useEffect, useState} from "react";
+import cors from "cors";
+import axios from "axios";
+import {useDispatch} from "react-redux";
+import {addToCart} from "../../../redux/cart/cartSlice.js";
+import CustomButton from "../WithCVA/CustomButton.jsx";
+import ProductImg from "../InsideCard/ProductImg.jsx";
+import LearnMoreButton from "../WithCVA/LearnMoreButton.jsx";
+import ProductLongCardSmartphone from "../../Atoms/InsideCard/ProductLongCardSmartphone.jsx";
+
 const LongCard = (props) => {
-    const {Title, Specs, Discount, CurrentPrice, PreviousPrice, classname, Status, PhonePic} = props;
+    const {styling} = props;
+    const [dataXiaomi, setDataXiaomi] = useState([]);
+    const [currentPage, setCurrentPage] = useState(13);
+    const [postsPerPage, setPostPerPage] = useState(14);
+
+    const dispatch = useDispatch();
+
+    const getApiXiaomi = async () => {
+        const response = await axios("https://xiaomi-phone-api.onrender.com/api/v1/products");
+
+        setDataXiaomi(response.data);
+    };
+
+    useEffect(() => {
+        getApiXiaomi();
+    }, []);
+
+    const productXiaomi = dataXiaomi.data || []; // cek apakah properti data ada
+    console.log(productXiaomi);
+    const currentLargeCard = productXiaomi.slice(currentPage, postsPerPage);
 
     return (
-        <div className="md:mr-2 md:w-screen ">
-            <div className="flex flex-col items-center font-inter pt-10 px-5 text-center gap-2 bg-[#ffffff] md:max-h-[492px] md:relative md:hover:shadow-lg md:hover:ease-out md:duration-[250ms]" onClick="window.location.href = '/product/#'">
-                <div className="font-semibold text-[35px] leading-[44px] md:text-[36px] md:leading-[45px]">{Title}</div>
-                <div className="font-normal text-[19px] leading-[24px] md:text-[18px] md:leading-[23px]">{Specs}</div>
-                <div className="font-normal text-[12px] leading-[17px] text-[#ff6900] border border-[#ff6900] bg-[#FFF0E5] rounded px-1 md:left-4 md:top-4 md:absolute">{Discount}</div>
-                <div className="flex gap-2 items-center">
-                    <div className="font-normal text-[19px] leading-[24px] md:text-[21px] md:leading-[26px]">Mulai Dari Rp {CurrentPrice}</div>
-                    <div className="font-normal text-[12px] leading-[15px] text-[#999999] line-through md:text-[15px] md:leading-[19px]">{PreviousPrice}</div>
-                </div>
-                <div className="font-normal text-[14px] leading-[17px] py-4 mt-3">
-                    <button href="#" disabled>
-                        <span className={`text-[#8998BB] font-normal text-[15px] leading-[18px] md:bg-[#D0D0D0] ${classname} md:rounded-lg md:p-2 md:px-5 md:text-[18px] md:leading-[22px]`}>
-                            {Status} <span className="md:hidden">&gt;</span>
-                        </span>
-                    </button>
-                    <a href="#">
-                        <span className="font-normal text-[15px] leading-[18px] md:border md:border-black md:rounded-lg md:p-2 md:px-5">
-                            Learn More <span className="md:hidden">&gt;</span>
-                        </span>
-                    </a>
-                </div>
-                <picture className="md:flex md:items-center md:justify-center md:mt-0">
-                    <img src={`${PhonePic}`} alt="phone2" className="h-[226px] w-[226px] md:h-[260px] md:w-[260px]" />
-                </picture>
+        <>
+            <div className="md:mr-2 md:w-screen ">
+                {currentLargeCard.map((xiaomi) => (
+                    <div
+                        className="flex flex-col items-center font-inter text-center gap-2 bg-[#ffffff] md:max-h-[492px] md:relative md:hover:shadow-lg md:hover:ease-out md:duration-[250ms]"
+                        key={xiaomi.id_product}>
+                        <div className="font-normal text-[14px] leading-[17px] py-4 mt-3">
+                            <ProductLongCardSmartphone
+                                id="1"
+                                Title={xiaomi.name_product}
+                                Specs={xiaomi.specification}
+                                StartingPrice={xiaomi.price}
+                                PreviousPrice={
+                                    xiaomi.price - xiaomi.price * (xiaomi.discount / 100)
+                                }
+                                PhonePic={xiaomi.image}
+                                Button="md:my-[14px] md:flex md:gap-1"
+                                Discount={xiaomi.discount}
+                                className="pb-5"
+                                Status="Habis"
+                            />
+                            <div className="md:flex">
+                                <CustomButton
+                                    to="/cart"
+                                    text="Beli Sekarang"
+                                    order="text_first"
+                                    icon=">"
+                                    intent="accent_nobg"
+                                    hover="bg_soft"
+                                    media="mediumDark"
+                                    onClick={() =>
+                                        dispatch(
+                                            addToCart({
+                                                id: xiaomi.id_product,
+                                                name: xiaomi.name_product,
+                                                image: xiaomi.image,
+                                                price: xiaomi.price,
+                                            })
+                                        )
+                                    }
+                                />
+
+                                <div className="toogle_icon">
+                                    <LearnMoreButton
+                                        id={xiaomi.id_product}
+                                        text="Learn More"
+                                        icon=">"
+                                        order="text_first"
+                                        intent="dark_nobg"
+                                        media="mediumLight"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <ProductImg id={xiaomi.id_product} PhonePic={xiaomi.image} />
+                    </div>
+                ))}
             </div>
-        </div>
+        </>
     );
 };
 
