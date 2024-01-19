@@ -44,9 +44,9 @@ const SiteNavbar = () => {
         <SearchButton />
         <div id='cartamount' className='relative'>
           <Icon redirect="/cart" classname="shopping-cart" />
-        <div className="absolute top-[-10px] right-0 h-auto bg-accent px-2 py-1 rounded-full">
-                        <p className="mx-auto text-text text-xs">{totalQuantity}</p>
-                    </div>
+          <div className="absolute top-[-10px] right-0 h-auto bg-accent px-2 py-1 rounded-full">
+  <p className="mx-auto text-text text-xs">{user ? totalQuantity : 0}</p>
+</div>
         </div>  
         <ThemeSwitch />
           {/* User login/logout */}   
