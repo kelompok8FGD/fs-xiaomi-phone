@@ -6,7 +6,9 @@ import SearchButton from '../../molecule/Search/SearchButton';
 import { useLogout } from '../../../hooks/useLogout';
 import ThemeSwitch from '../../molecule/ThemeSwitch';
 import { useSelector } from 'react-redux';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 import { calculateTotal } from '../../../redux/cart/cartUtils';
+import { Link } from 'react-router-dom';
 const SiteNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -18,6 +20,7 @@ const SiteNavbar = () => {
   const { totalQuantity } = calculateTotal(cart);
 
   const { logout } = useLogout()
+  const { user } = useAuthContext()
   const handleClick = () => {
     logout()
   }
@@ -46,16 +49,23 @@ const SiteNavbar = () => {
                         <p className="mx-auto text-text text-xs">{totalQuantity}</p>
                     </div>
         </div>
-        
-        <div className="only-medium flex items-center">
+          {/* Login & Register */}
+          {!user && (
+         <div className="only-medium flex items-center">
           <Icon redirect="/account" classname="account" />
         </div>
+        )}
+        
         <ThemeSwitch />
         {/* Logout Button */}
+        {user && (
         <div>
+          <span>{user.email}</span>
           <button onClick={handleClick}>Log out</button>
         </div>
+        )}
 
+      
 
         {/* Toggle button for the menu */}
         <button
