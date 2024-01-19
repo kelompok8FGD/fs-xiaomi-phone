@@ -43,8 +43,8 @@ export const useLogin = () => {
         dispatch({ type: "LOGIN", payload: json });
 
         setIsLoading(false);
-        // Use navigate to redirect to the home page
-        navigate("/");
+        // Use navigate to redirect to the cart page
+        navigate("/cart");
       }
     } catch (error) {
       if (error.response) {
