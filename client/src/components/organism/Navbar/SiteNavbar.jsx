@@ -3,6 +3,7 @@ import Icon from '../../Atoms/Icon';
 import Logo from '../../Atoms/Logo';
 import List from '../../Atoms/Global/ListItem';
 import SearchButton from '../../molecule/Search/SearchButton';
+import { useLogout } from '../../../hooks/useLogout';
 import ThemeSwitch from '../../molecule/ThemeSwitch';
 import { useSelector } from 'react-redux';
 import { calculateTotal } from '../../../redux/cart/cartUtils';
@@ -15,6 +16,11 @@ const SiteNavbar = () => {
 
   const cart = useSelector((state) => state.cart);
   const { totalQuantity } = calculateTotal(cart);
+
+  const { logout } = useLogout()
+  const handleClick = () => {
+    logout()
+  }
 
   return (
     <nav className="relative h-full w-full flex mx-auto items-center justify-between">
@@ -45,6 +51,11 @@ const SiteNavbar = () => {
           <Icon redirect="/account" classname="account" />
         </div>
         <ThemeSwitch />
+        {/* Logout Button */}
+        <div>
+          <button onClick={handleClick}>Log out</button>
+        </div>
+
 
         {/* Toggle button for the menu */}
         <button
