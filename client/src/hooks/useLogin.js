@@ -11,7 +11,7 @@ export const useLogin = () => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch('http://localhost:5000/api/v1/login/', {
+        const response = await fetch('https://xiaomi-phone-api.onrender.com/api/v1/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email, password})
@@ -26,7 +26,8 @@ export const useLogin = () => {
         }
         if (response.ok) {
             // save the user to local storage
-           localStorage.setItem('user', JSON.stringify(json))
+           localStorage.setItem('user', JSON.stringify(json));
+           localStorage.setItem('token', JSON.stringify(json.token));
 
            // update the auth context
            dispatch({type: 'LOGIN', payload: json})
