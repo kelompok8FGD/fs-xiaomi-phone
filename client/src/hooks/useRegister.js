@@ -1,43 +1,56 @@
-import { useState } from 'react'
-import { useAuthContext } from './useAuthContext'
+import { useState } from "react";
+import { useAuthContext } from "./useAuthContext";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 export const useRegister = () => {
-    const { dispatch } = useAuthContext()
-    const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(null)
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-
+  
     const register = async (email, password, fullname) => {
-        setIsLoading(true)
-        setError(null)
-
-        const response = await fetch('https://xiaomi-phone-api.onrender.com/api/v1/register', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password, fullname})
-        })
-        const json = await response.json()
-        console.log('this is a test')
-        if (!response.ok) {
-            
-            setIsLoading(false)
-            setError(json.error)
-            console.log(json.error)
+      setIsLoading(true);
+      setError(null);
+  
+      try {
+        const response = await axios.post(
+          "https://xiaomi-phone-api.onrender.com/api/v1/register",
+          { email, password, fullname },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+  
+        const json = response.data;
+  
+        if (response.status !== 200) {
+          const jsonError =
+            json.message || "An error occurred during registration.";
+          setIsLoading(false);
+          setError(jsonError);
+          console.log(jsonError);
+        } else {
+          setIsLoading(false);
+          navigate("/");
         }
-        if (response.ok) {
-            // save the user to local storage
-           localStorage.setItem('user', JSON.stringify(json))
-
-           // update the auth context
-           dispatch({type: 'LOGIN', payload: json})
-
-           setIsLoading(false)
-            // Use navigate to redirect to the login page
-        navigate("/account");
-
-    }
-}
-    return { register, isLoading, error }
-}
+      } catch (error) {
+        if (error.response) {
+          const jsonError =
+            error.response.data.message || "An error occurred during registration";
+          setIsLoading(false);
+          setError(jsonError);
+          console.log(error.response);
+          console.log(jsonError);
+        } else {
+          setIsLoading(false);
+          setError("An error occurred during registration.");
+          console.error("Error during registration:", error);
+        }
+      }
+    };
+  
+    return { register, isLoading, error };
+  };
+  
