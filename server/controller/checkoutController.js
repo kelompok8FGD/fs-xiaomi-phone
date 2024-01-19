@@ -11,16 +11,27 @@ const checkoutController = async (req, res) => {
     const id_customer = req.id_customer; // Diambil dari token di middleware
 
     // Mendapatkan data pelanggan
-    const customer = await Customer.findByPk(id_customer);
+    const customer = await Customer.findByPk(id_customer, {
+      attributes: ["fullname", "email"],
+    });
 
     // Mendapatkan alamat pelanggan (pastikan untuk mengganti 'columnName' sesuai dengan kolom yang sesuai)
     const address = await AddressModel.findOne({
       where: { id_customer },
+      attributes: [
+        "address_name",
+        "address_line1",
+        "address_line2",
+        "city",
+        "region",
+        "postal_code",
+      ],
     });
 
     // Mendapatkan metode pembayaran
     const paymentMethod = await PaymentMethod.findOne({
       where: { id_customer },
+      attributes: ["payment_type", "account_number"],
     });
 
     // Menggunakan fungsi yang diimpor untuk mendapatkan item keranjang
@@ -29,7 +40,7 @@ const checkoutController = async (req, res) => {
       include: [
         {
           model: ProductModel,
-          attributes: ["name_product", "image"],
+          attributes: ["name_product", "image", "price"],
         },
       ],
     });
@@ -42,38 +53,19 @@ const checkoutController = async (req, res) => {
       });
     }
 
-    // Memberikan respons dengan data yang telah ditemukan
-    // return res.json({
-    //   status: "ok",
-    //   data: {
-    //     customer,
-    //     address,
-    //     paymentMethod,
-    //     cartItems,
-    //   },
-    // });
+    // Flatten objek respons sebelum mengirimkannya
+    const flattenedResponse = flat({
+      customer: customer.toJSON(),
+      address: address.toJSON(),
+      paymentMethod: paymentMethod.toJSON(),
+      cartItems: cartItems.map((item) => item.toJSON()),
+    });
 
     // Memberikan respons dengan data yang telah ditemukan
-    const flattenedData = {
+    return res.json({
       status: "ok",
-      id_customer: customer.id_customer,
-      fullname: customer.fullname,
-      address_name: address.address_name,
-      address_line1: address.address_line1,
-      address_line2: address.address_line2,
-      city: address.city,
-      region: address.region,
-      postal_code: address.postal_code,
-      payment_type: paymentMethod.payment_type,
-      provider: paymentMethod.provider,
-      account_number: paymentMethod.account_number,
-      qty: cartItems[0].qty,
-      price: cartItems[0].price,
-      name_product: cartItems[0].ProductModel.name_product,
-      image: cartItems[0].ProductModel.image,
-    };
-
-    res.json(flattenedData);
+      data: flattenedResponse,
+    });
   } catch (error) {
     console.error("Error during checkout:", error);
     res.status(500).json({
