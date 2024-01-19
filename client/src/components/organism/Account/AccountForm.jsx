@@ -1,10 +1,10 @@
 // TabbedInterface.js
 
 import React, { useState } from 'react';
+import { useRegister } from '../../../hooks/useRegister';
 import FB from '/account/facebook-svgrepo-com.png'
 import QrButton from '../../Atoms/Account/QrButton';
 import CountrySelector from '../../Atoms/Account/CountrySelector'
-
 
 const TabbedInterface = () => {
   const [activeTab, setActiveTab] = useState('login');
@@ -12,6 +12,17 @@ const TabbedInterface = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  const  [email, setEmail] = useState('')
+  const  [password, setPassword] = useState('')
+  const  [fullname, setFullName] = useState('')
+  const { error, isLoading, register } = useRegister()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    await register(email, password, fullname)
+  }
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -45,11 +56,11 @@ const TabbedInterface = () => {
         {activeTab === 'login' && (
           <div>
             {/* Login form */}
-            <form className='bg-formBackground'>
+            <form className='bg-formBackground' onSubmit={handleSubmit}>
               <div className='flex flex-col space-y-5'>
-                <input type="email" placeholder="Email"
+                <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Email"
                   />
-                <input type="password" placeholder="Password"
+                <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Password"
                   className="" /></div>
               <div className='mt-4 flex flex-col space-y-4'>
                 <button type="submit"
@@ -75,14 +86,15 @@ const TabbedInterface = () => {
         {activeTab === 'register' && (
           <div>
             {/* Registration form */}
-            <form>
-            <CountrySelector/>
+            <form onSubmit={handleSubmit}>
 
-              <input type="password" placeholder="Email"
+              <input type="text" onChange={(e) => setFullName(e.target.value)} value={fullname} placeholder="Full Name"/>
+
+              <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Email"
                 />
               <input type="password" placeholder="Setel sandi"
                  />
-              <input type="password" placeholder="Masukan sandi Anda lagi"
+              <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Masukan sandi Anda lagi"
                  />
               <p className="text-[13px] text-text leading-tight">Sandi harus terdiri dari 8-16 karakter dan
                 mencakup angka dan huruf</p>
@@ -103,6 +115,7 @@ const TabbedInterface = () => {
       <div>
         <button
           type="submit"
+          disabled={isLoading}
           className={`w-full text-center p-4 ${
             isChecked ? 'bg-[#ff5c00] text-white' : 'bg-[#ffbe99] text-white'
           }`}
@@ -110,6 +123,7 @@ const TabbedInterface = () => {
           Berikutnya
         </button>
       </div>
+      {error && <p className="text-red-500">{error}</p>}
     </div>
 
             </form>
