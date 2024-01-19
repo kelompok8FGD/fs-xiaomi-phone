@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AuthContextProvider } from './context/AuthContext';
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import { AuthContextProvider } from './context/AuthContext'
+import { useAuthContext } from "./hooks/useAuthContext.js";
 import App from "./App.jsx";
 import "./index.css";
 //import pages
@@ -20,6 +21,7 @@ import XiaomiPro from "./pages/XiaomiPro.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import DetailPoco from "./pages/ProductDetails/Poco/index.jsx";
 import RedmiList from "./pages/Redmi.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -44,6 +46,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
