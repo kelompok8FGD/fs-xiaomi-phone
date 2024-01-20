@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLogin } from '../../../hooks/useLogin';
 import FB from '/account/facebook-svgrepo-com.png'
+import { GithubAuth, GoogleAuth, FacebookAuth} from '../../../firebase/firebase'
+
 
 const LoginForm = () => {
 
@@ -14,6 +16,12 @@ const LoginForm = () => {
     
         await login(email, password)
       }
+
+      async function FacebookAuthButtonClicked() {
+        const user = await FacebookAuth();
+        console.log ("facebook user: ", user);
+      }
+
   return (
     <form className='bg-formBackground' onSubmit={handleSubmit}>
     <div className='flex flex-col space-y-5'>
@@ -37,8 +45,10 @@ const LoginForm = () => {
 
     <div>
       <div className="text-center text-[#797979] text-[17px] leading-[40px]">Pilihan lainnya</div>
-      <div className="m-[10px] flex justify-center"><img className="w-[70px] h-[70px] "
-        src={FB} alt="" /></div>
+      <div className="m-[10px] flex justify-center"><button onClick={FacebookAuthButtonClicked}>
+        <img className="w-[70px] h-[70px] "
+        src={FB} alt="" />
+        </button></div>
     </div>
   </form>
   )

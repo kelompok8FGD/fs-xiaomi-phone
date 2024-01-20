@@ -7,7 +7,7 @@ export const useLogin = () => {
   const { dispatch } = useAuthContext();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const API_URL = "https://xiaomi-phone-api.onrender.com/api/v1/login";
+  const API_URL = "http://localhost:5000//api/v1/login";
   const navigate = useNavigate();
   const login = async (email, password) => {
     setIsLoading(true);
