@@ -14,7 +14,7 @@ export const useRegister = () => {
   
       try {
         const response = await axios.post(
-          "https://xiaomi-phone-api.onrender.com/api/v1/register",
+          "http://localhost:5000//api/v1/register",
           { email, password, fullname },
           {
             headers: {
