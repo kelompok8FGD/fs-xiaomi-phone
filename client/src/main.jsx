@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import { AuthContextProvider } from './context/AuthContext'
 import App from "./App.jsx";
+import ProtectedRouteHOC from "./components/ProtectedRouteHOC.jsx";
 import "./index.css";
 //import pages
 import Home from "./pages/Home.jsx";
@@ -21,6 +22,7 @@ import Checkout from "./pages/Checkout.jsx";
 import DetailPoco from "./pages/ProductDetails/Poco/index.jsx";
 import RedmiList from "./pages/Redmi.jsx";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,8 +30,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/store", element: <Store /> },
-      { path: "/cart", element: <Cart /> },
-      { path: "/account", element: <Account /> },
+      { path: "/cart", element: <ProtectedRouteHOC element={<Cart />} /> },
+      { path: "/account",  element: <ProtectedRouteHOC element={<Account />} /> },
       { path: "/smartphone", element: <SmartPhone /> },
       { path: "/About", element: <About /> },
       { path: "/Agreement", element: <Agreement /> },
@@ -39,14 +41,17 @@ const router = createBrowserRouter([
       { path: "/redmi", element: <RedmiList /> },
       { path: "/xiaomi", element: <XiaomiPro /> },
       { path: "*", element: <Error /> },
-      { path: "/checkout", element: <Checkout /> },
+      { path: "/checkout", element: <ProtectedRouteHOC element={<Checkout />} /> },
       { path: "/detail/:id", element: <DetailPoco /> },
     ],
   },
 ]);
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <AuthContextProvider> 
     <RouterProvider router={router} />
+    </AuthContextProvider>
   </React.StrictMode>
 );

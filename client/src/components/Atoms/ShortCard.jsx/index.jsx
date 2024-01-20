@@ -1,54 +1,95 @@
-/* eslint-disable react/prop-types */
+import {useContext, useEffect, useState} from "react";
+import cors from "cors";
+import axios from "axios";
+import {useDispatch} from "react-redux";
+import {addToCart} from "../../../redux/cart/cartSlice.js";
+import CustomButton from "../WithCVA/CustomButton.jsx";
+import ProductTitleSmartphone from "../InsideCard/ProductTitleSmartphone.jsx";
+import ProductImg from "../InsideCard/ProductImg.jsx";
+import LearnMoreButton from "../WithCVA/LearnMoreButton.jsx";
+import ProductShortCardSmartphone from "../../Atoms/InsideCard/ProductShortCardSmartphone.jsx";
+
 const ShortCard = (props) => {
-    const {
-        Title,
-        Specs,
-        Discount,
-        DiscountBorder,
-        StartingPrice,
-        PreviousPrice,
-        PhonePic,
-        classname,
-        Button,
-    } = props;
+    const {styling} = props;
+    const [dataXiaomi, setDataXiaomi] = useState([]);
+    const [currentPage] = useState(14);
+    const [postsPerPage] = useState(16);
+
+    const dispatch = useDispatch();
+    const API_URL = "https://xiaomi-phone-api.onrender.com/api/v1/products";
+
+    const getApiXiaomi = async () => {
+        const response = await axios(API_URL);
+        // Choose the one that matches the api
+        const data = response.data; //for data from mockapi
+        //const data = response.data.data // for data from localhost
+        setDataXiaomi(data);
+    };
+
+    useEffect(() => {
+        getApiXiaomi();
+    }, []);
+
+    const productXiaomi = dataXiaomi.data || [];
+    const currentSmallCard = productXiaomi.slice(currentPage, postsPerPage);
+
     return (
         <>
-            <div
-                className={`flex flex-col bg-[#ffffff] items-center font-inter pt-[60px] px-5 text-center gap-2 ${classname}  md:hover:shadow-lg md:hover:ease-out md:duration-[250ms]" onClick="window.location.href = '/product/#'`}>
-                <div className="font-semibold text-[19px] leading-[24px] md:text-[36px] md:leading-[45px]">
-                    {Title}
-                </div>
-                <div className="font-normal text-[14px] leading-[18px] md:text-[18px] md:leading-[23px]">
-                    {Specs}
-                </div>
-                <div
-                    className={`font-normal text-[12px] leading-[17px] ${DiscountBorder} bg-[#FFF0E5] rounded px-1 md:left-4 md:top-4 md:absolute`}>
-                    {Discount}
-                </div>
-                <div className="flex gap-2 flex-col md:flex md:flex-row md:items-center">
-                    <div className="font-normal text-[14px] leading-[18px] md:text-[21px] md:leading-[26px] xl:text-[18px] xl:leading-[20px]">
-                        Mulai dari Rp {StartingPrice}
-                    </div>
-                    <div className="font-normal text-[12px] leading-[15px] text-[#999999] line-through md:text-[15px] md:leading-[19px]">
-                        {PreviousPrice}
-                    </div>
-                </div>
-                <div className={Button}>
-                    <button className="invisible md:visible md:bg-[#191919] md:hover:bg-[#444444] md:text-white md:rounded-lg md:p-2 md:px-5 md:text-[18px] md:leading-[22px]">
-                        Beli Sekarang
-                    </button>
-                    <button className="invisible md:visible md:text-[18px] md:leading-[22px] md:border md:border-black md:rounded-lg md:p-2 md:px-5">
-                        Learn More
-                    </button>
-                </div>
-                <picture className="md:flex md:items-center md:justify-center md:mt-0">
-                    <img
-                        src={`${PhonePic}`}
-                        alt="phone3b"
-                        className="h-[144px] w-[144px] md:h-[260px] md:w-[260px]"
-                    />
-                </picture>
-            </div>
+            {currentSmallCard.length > 0 ? (
+                <>
+                    {currentSmallCard.map((xiaomi, i) => {
+                        return (
+                            <div
+                                key={i}
+                                className={`flex flex-col bg-[#ffffff] items-center font-inter pt-[60px] md:pt-4 px-5 text-center gap-2 md:gap-0 ${styling}  md:hover:shadow-lg md:hover:ease-out md:duration-[250ms]"`}>
+                                <ProductShortCardSmartphone
+                                    Title={xiaomi.name_product}
+                                    Specs={xiaomi.specification}
+                                    StartingPrice={xiaomi.price}
+                                    PreviousPrice={xiaomi.price}
+                                    PhonePic={xiaomi.image}
+                                    Discount={xiaomi.discountPercentage}
+                                    className="p-5"
+                                />
+                                <div className="hidden md:flex md:flex-row md:gap-2">
+                                    <CustomButton
+                                        to="/cart"
+                                        text="Beli Sekarang"
+                                        intent="dark"
+                                        rounded="yes"
+                                        size="xsmall"
+                                        hover="bg_soft"
+                                        onClick={() =>
+                                            dispatch(
+                                                addToCart({
+                                                    id: xiaomi.id_product,
+                                                    name: xiaomi.name_product,
+                                                    image: xiaomi.image,
+                                                    price: xiaomi.price,
+                                                })
+                                            )
+                                        }
+                                    />
+                                    {/* <LearnMoreButton id={xiaomi.id} /> */}
+                                    <LearnMoreButton
+                                        id={xiaomi.id_product}
+                                        text="Learn More"
+                                        intent="light"
+                                        rounded="yes"
+                                        border="always"
+                                        size="small"
+                                    />
+                                </div>
+                                <ProductImg id={xiaomi.id_product} PhonePic={xiaomi.image} />
+                            </div>
+                        );
+                    })}
+                </>
+            ) : (
+                <>
+                    <div>Tidak ada data</div>
+                </>
+            )}
         </>
     );
 };

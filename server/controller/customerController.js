@@ -113,7 +113,7 @@ const loginCustomer = async (req, res) => {
         : // COMPARE USER PASSWORD WITH USER HASPASSWORD IN DB
           await bcrypt.compare(password, user.password);
     if (!(user && passwordMatched)) {
-      res.status(401).json({
+      return res.status(401).json({
         error: "User or password is invalid",
       });
     }

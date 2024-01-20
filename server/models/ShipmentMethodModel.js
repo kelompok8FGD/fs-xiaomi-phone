@@ -2,10 +2,10 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const CustomerModel = require("./CustomerModel");
 
-const PaymentMethodModel = sequelize.define(
-  "PaymentMethodModel",
+const ShipmentMethodModel = sequelize.define(
+  "ShipmentMethodModel",
   {
-    id_payment_method: {
+    id_shipment_method: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -14,15 +14,19 @@ const PaymentMethodModel = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    payment_type: {
+    shipment_type: {
       type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    shipment_price: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
     sequelize,
-    modelName: "PaymentMethodModel",
-    tableName: "payment_method",
+    modelName: "ShipmentMethodModel",
+    tableName: "shipment_method",
     timestamps: true,
   }
 );
@@ -32,7 +36,7 @@ const PaymentMethodModel = sequelize.define(
 async function createTableIfNotExists() {
   try {
     // Sinkronkan model dengan database
-    await PaymentMethodModel.sync({ force: false });
+    await ShipmentMethodModel.sync({ force: false });
 
     console.log("Table created successfully");
   } catch (err) {
@@ -43,17 +47,17 @@ async function createTableIfNotExists() {
 createTableIfNotExists();
 
 // Definisikan relasi
-CustomerModel.hasOne(PaymentMethodModel, {
+CustomerModel.hasOne(ShipmentMethodModel, {
   foreignKey: {
     name: "id_customer",
     field: "id_customer",
   },
 });
-PaymentMethodModel.belongsTo(CustomerModel, {
+ShipmentMethodModel.belongsTo(CustomerModel, {
   foreignKey: {
     name: "id_customer",
     field: "id_customer",
   },
 });
 
-module.exports = PaymentMethodModel;
+module.exports = ShipmentMethodModel;

@@ -6,11 +6,13 @@ const createNewAddress = async (req, res) => {
   try {
     const {
       address_name,
-      address_line1,
-      address_line2,
+      province,
       city,
-      region,
+      subdistrict,
+      villages,
+      full_address,
       postal_code,
+      phone_number,
     } = req.body;
 
     // Ambil ID pengguna dari token
@@ -27,11 +29,13 @@ const createNewAddress = async (req, res) => {
     details = {
       id_customer,
       address_name,
-      address_line1,
-      address_line2,
+      province,
       city,
-      region,
+      subdistrict,
+      villages,
+      full_address,
       postal_code,
+      phone_number,
     };
 
     const newAddress = await AddressModel.create(details);
@@ -164,10 +168,41 @@ const getAddressById = async (req, res) => {
   }
 };
 
+const checkAddress = async (req, res) => {
+  try {
+    const id_customer = req.id_customer;
+
+    // Pastikan ID pengguna ada
+    if (!id_customer) {
+      return res.status(401).json({
+        status: "failed",
+        message: "User ID not found in the token",
+      });
+    }
+
+    // Mencari alamat berdasarkan ID pengguna
+    const userAddresses = await AddressModel.findAll({
+      where: { id_customer },
+    });
+
+    res.json({
+      status: "ok",
+      data: userAddresses,
+    });
+  } catch (error) {
+    console.error(error, "<< Error getting addresses by user");
+    res.status(500).json({
+      status: "failed",
+      message: "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   createNewAddress,
   updateAddress,
   deleteAddress,
   findAllAddresss,
   getAddressById,
+  checkAddress,
 };

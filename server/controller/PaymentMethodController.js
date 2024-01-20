@@ -1,4 +1,3 @@
-// const { upload } = require('../config/multerConfig');
 const db = require("../models");
 const PaymentMethod = db.PaymentMethodModel;
 const { Op } = require("sequelize");
@@ -65,47 +64,14 @@ const getPaymentMethodByPaymentType = async (req, res) => {
   }
 };
 
-// get payment method by provider
-const getPaymentMethodByProvider = async (req, res) => {
-  try {
-    const { provider } = req.params;
-
-    const dataProvider = await PaymentMethod.findAll({
-      where: {
-        provider: {
-          [Op.like]: `%${provider}%`,
-        },
-      },
-    });
-
-    res.json({
-      status: "success",
-      data: dataProvider,
-    });
-  } catch (error) {
-    console.error("Error retrieving payment by Payment_Type:", error);
-    res.status(500).json({
-      status: "failed",
-      message: "Internal Server Error",
-    });
-  }
-};
-
 // Create a payment method
 const createNewPaymentMethod = async (req, res) => {
   try {
-    const {
-      id_customer: id_customer,
-      payment_type,
-      provider,
-      account_number,
-    } = req.body;
+    const { id_customer: id_customer, payment_type } = req.body;
 
     details = {
       id_customer,
       payment_type,
-      provider,
-      account_number,
     };
 
     const newPaymentMethod = await PaymentMethod.create(details, {
@@ -203,7 +169,6 @@ module.exports = {
   findAllPayments,
   getPaymentMethodById,
   getPaymentMethodByPaymentType,
-  getPaymentMethodByProvider,
   createNewPaymentMethod,
   updatePayment,
   deletePayment,
