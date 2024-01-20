@@ -1,8 +1,19 @@
 import CheckoutNavbar from "../components/organism/Navbar/CheckoutNavbar";
 import React, { useEffect, useState } from "react";
+import AddressForm from "../components/organism/AddressForm";
 import axios from "axios";
 
 function Checkout() {
+  const [tampilkanAddressForm, setTampilkanAddressForm] = useState(false);
+
+  const handleTambahAlamatClick = () => {
+    setTampilkanAddressForm(true);
+  };
+
+  const handleCloseAddressForm = () => {
+    setTampilkanAddressForm(false);
+  };
+
   const [dataCheckout, setDataCheckout] = useState([]);
 
   const token = localStorage.getItem("token");
@@ -60,11 +71,17 @@ function Checkout() {
                     {dataCheckout.region} {dataCheckout.postal_code}
                   </p>
                 </div>
-                <div className="hidden max-w-lg py-6 lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900] lg:hover:cursor-pointer">
+                <div
+                  className="hidden max-w-lg py-6 lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900] lg:hover:cursor-pointer"
+                  onClick={handleTambahAlamatClick}
+                >
                   <div className="flex justify-center text-center">
                     <p className="font-inter">Tambah Alamat Baru</p>
                   </div>
                 </div>
+                {tampilkanAddressForm && (
+                  <AddressForm onClose={handleCloseAddressForm} />
+                )}
               </section>
             </>
 
@@ -239,11 +256,8 @@ function Checkout() {
             </section>
             <section className="bg-white lg:order-2 lg:mt-0 lg:pt-0">
               <div className="relative">
-                <div
-                  id="yourFixedElement"
-                  className="bottom-0 w-full p-4 mb-0 bg-white flex flex-row justify-normal lg:static lg:grid lg:order-2 lg:grid-cols-2 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0"
-                >
-                  <div className="pr-5 my-auto justify-self-start left-2 lg:left-0">
+                <div className="inset-99 bottom-0 w-full p-4 mb-0 bg-white flex flex-row justify-normal lg:static lg:grid lg:order-2 lg:grid-cols-2 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0">
+                  <div className=" pr-5 my-auto justify-self-start left-2 lg:left-0">
                     <h1 className="font-Inter text-2xl font-bold text-[#FF6900] xsml:w-3xl lg:ml-auto lg:text-2xl">
                       Total:
                     </h1>
