@@ -17,6 +17,7 @@ const BannerError = (props) => {
           <p className="text-sm font-normal text-slate-500">
             Namun, banyak produk menarik lainnya di toko
           </p>
+          {/* fitur search can implemen in this code */}
           <input type="text" className="w-72 p-2 outline-none" />
           <br />
           <a href="/" className="text-sm mt-10 text-amber-600">

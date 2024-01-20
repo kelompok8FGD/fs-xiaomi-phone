@@ -9,9 +9,10 @@ export default function DetailXiaomi() {
 
   const getDetailApiXiaomi = async () => {
     const response = await axios(
-      `https://6555a21884b36e3a431e0535.mockapi.io/xiaomi/${params.id}`
+      // `https://6555a21884b36e3a431e0535.mockapi.io/xiaomi/${params.id}`
+      `https://xiaomi-phone-api.onrender.com/api/v1/products/${params.id}`
     );
-    setDataDetail(response.data);
+    setDataDetail(response.data.data);
   };
 
   useEffect(() => {
@@ -27,10 +28,12 @@ export default function DetailXiaomi() {
             <img src={dataDetail.image} />
           </div>
           <div className="items-start">
-            <h1 className="text-3xl font-semibold mb-2">{dataDetail.name}</h1>
-            <p className="text-gray-500 mb-2">{dataDetail.specs}</p>
+            <h1 className="text-3xl font-semibold mb-2">
+              {dataDetail.name_product}
+            </h1>
+            <p className="text-gray-500 mb-2">{dataDetail.specification}</p>
             <p className="text-gray-700 text-2xl mb-2">
-              Mulai Dari Rp. {dataDetail.price}
+              Mulai Dari Rp.{dataDetail.price}
             </p>
           </div>
         </div>
