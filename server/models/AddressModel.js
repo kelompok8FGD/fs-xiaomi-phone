@@ -14,11 +14,7 @@ const AddressModel = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    address_line1: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    address_line2: {
+    province: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -26,7 +22,15 @@ const AddressModel = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    region: {
+    subdistrict: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    villages: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    full_address: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -34,9 +38,12 @@ const AddressModel = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    id_customer: {
-      type: DataTypes.INTEGER,
+    phone_number: {
+      type: DataTypes.STRING(15),
       allowNull: false,
+      validate: {
+        isNumeric: true,
+      },
     },
   },
   {

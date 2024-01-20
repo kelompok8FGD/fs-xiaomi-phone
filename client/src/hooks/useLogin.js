@@ -34,9 +34,9 @@ export const useLogin = () => {
         console.log(jsonError);
       } else {
         // Save the user to local storage
+        const token = json.token;
         localStorage.setItem("user", JSON.stringify(json));
-        localStorage.setItem("token", JSON.stringify(json.token));
-        const token = JSON.parse(localStorage.getItem("token"));
+        localStorage.setItem("token", token);
         console.log("Token:", token);
 
         // Update the auth context

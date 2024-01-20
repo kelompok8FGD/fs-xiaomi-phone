@@ -1,7 +1,41 @@
-import React from "react";
 import CheckoutNavbar from "../components/organism/Navbar/CheckoutNavbar";
+import React, { useEffect, useState } from "react";
+import AddressForm from "../components/organism/AddressForm";
+import axios from "axios";
 
 function Checkout() {
+  const [tampilkanAddressForm, setTampilkanAddressForm] = useState(false);
+
+  const handleTambahAlamatClick = () => {
+    setTampilkanAddressForm(true);
+  };
+
+  const handleCloseAddressForm = () => {
+    setTampilkanAddressForm(false);
+  };
+
+  const [dataCheckout, setDataCheckout] = useState([]);
+
+  const token = localStorage.getItem("token");
+
+  const getApiCheckout = async () => {
+    const response = await axios(
+      "https://xiaomi-phone-api.onrender.com/api/v1/checkout",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setDataCheckout(response.data);
+  };
+
+  useEffect(() => {
+    getApiCheckout();
+  }, []);
+
   return (
     <div>
       <CheckoutNavbar activeStep={2} />
@@ -20,23 +54,37 @@ function Checkout() {
                 <div className="bg-slate-100 h-[1px] max-w-2xl lg:mb-7"></div>
               </div>
             </section>
-            <section className="bg-white mt-2 mb-4 px-8 lg:grid lg:grid-cols-2">
-              <div className="max-w-lg py-6 lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:mr-1 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
-                <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-lg">
-                  gufron
-                </h2>
-                <p className="text-lg lg:text-base">+62877****4477</p>
-                <p className="text-lg lg:text-base">
-                  Jl. Awan Kec. Kintamani Kota Bangli Bali Awan Kintamani Bangli
-                  Bali
-                </p>
-              </div>
-              <div className="hidden max-w-lg py-6 lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900] lg:hover:cursor-pointer">
-                <div className="flex justify-center text-center">
-                  <p className="font-inter">Tambah Alamat Baru</p>
+            <>
+              <section className="bg-white mt-2 mb-4 px-8 lg:grid lg:grid-cols-2">
+                <div className="max-w-lg py-6 lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:mr-1 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+                  <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-lg">
+                    {dataCheckout.address_name}
+                  </h2>
+                  <p className="text-lg lg:text-base">+62877****4477</p>
+                  <p className="text-lg lg:text-base ">
+                    {dataCheckout.address_line1}
+                    <span> {dataCheckout.address_line2}</span>
+                    <span> {dataCheckout.city}</span>
+                  </p>
+
+                  <p className="text-lg lg:text-base ">
+                    {dataCheckout.region} {dataCheckout.postal_code}
+                  </p>
                 </div>
-              </div>
-            </section>
+                <div
+                  className="hidden max-w-lg py-6 lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900] lg:hover:cursor-pointer"
+                  onClick={handleTambahAlamatClick}
+                >
+                  <div className="flex justify-center text-center">
+                    <p className="font-inter">Tambah Alamat Baru</p>
+                  </div>
+                </div>
+                {tampilkanAddressForm && (
+                  <AddressForm onClose={handleCloseAddressForm} />
+                )}
+              </section>
+            </>
+
             <section className="p-8 mb-4 bg-white">
               <div className="mb-6">
                 <div className="pb-6">
@@ -121,21 +169,21 @@ function Checkout() {
               <div className="pb-6">
                 <div className="pb-6">
                   <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
-                    1 item
+                    {dataCheckout.qty} item
                   </h2>
                 </div>
                 <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
               </div>
               <div className="grid grid-cols-4">
                 <div>
-                  <img src="./assets/images/checkout/xiaomi13t.png" alt="" />
+                  <img src={dataCheckout.image} alt="" />
                 </div>
                 <div className="col-span-2">
-                  <p>Xiaomi 13T 12 GB + 256 GB Black</p>
-                  <p>Jumlah: 1</p>
+                  <p>{dataCheckout.name_product}</p>
+                  <p>Jumlah: {dataCheckout.qty}</p>
                 </div>
                 <div>
-                  <p>Rp 6.499.000</p>
+                  <p>Rp. {dataCheckout.price}</p>
                 </div>
               </div>
             </section>
@@ -208,11 +256,8 @@ function Checkout() {
             </section>
             <section className="bg-white lg:order-2 lg:mt-0 lg:pt-0">
               <div className="relative">
-                <div
-                  id="yourFixedElement"
-                  className="bottom-0 w-full p-4 mb-0 bg-white flex flex-row justify-normal lg:static lg:grid lg:order-2 lg:grid-cols-2 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0"
-                >
-                  <div className="pr-5 my-auto justify-self-start left-2 lg:left-0">
+                <div className="inset-99 bottom-0 w-full p-4 mb-0 bg-white flex flex-row justify-normal lg:static lg:grid lg:order-2 lg:grid-cols-2 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0">
+                  <div className=" pr-5 my-auto justify-self-start left-2 lg:left-0">
                     <h1 className="font-Inter text-2xl font-bold text-[#FF6900] xsml:w-3xl lg:ml-auto lg:text-2xl">
                       Total:
                     </h1>
