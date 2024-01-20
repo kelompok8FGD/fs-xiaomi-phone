@@ -3,32 +3,37 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const ListCard = () => {
-  const [products, setProducts] = useState([]);
+  const [dataProduct, setDataProduct] = useState([]);
+  const [currentPage] = useState(0);
+  const [postsPerPage] = useState(20);
+  const API_URL = "https://xiaomi-phone-api.onrender.com/api/v1/products";
 
   const getApiProducts = async () => {
-    const response = await axios(
-      "https://6555a21884b36e3a431e0535.mockapi.io/errorProduct"
-    );
+    const response = await axios(API_URL);
 
-    setProducts(response.data);
+    const data = response.data;
+
+    setDataProduct(data);
   };
 
   useEffect(() => {
     getApiProducts();
   }, []);
 
+  const productList = dataProduct.data || [];
+  const currentCard = productList.slice(currentPage, postsPerPage);
+
   return (
     <section
       id="product_card"
       className="grid grid-cols-2 m-8 p-4 items-center text-center font-inter sm:grid-cols-3 md:grid-cols-5"
     >
-      {products.map((product) => (
-        <div key={product.id} className="md:hover:cursor-pointer">
+      {currentCard.map((product) => (
+        <div key={product.id_product} className="md:hover:cursor-pointer">
           <CardError
             PhonePic={product.image}
-            Title={product.name}
+            Title={product.name_product}
             StartingPrice={product.price}
-            // PreviousPrice={product.before_discount}
           ></CardError>
         </div>
       ))}

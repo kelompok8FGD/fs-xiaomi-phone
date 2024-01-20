@@ -75,7 +75,7 @@ const BannerCardXiaomi = () => {
                     }
                   />
                   <LearnMoreButton
-                    id={xiaomi.id}
+                    id={xiaomi.id_product}
                     text="Learn More >"
                     intent="dark_nobg"
                     rounded="yes"
