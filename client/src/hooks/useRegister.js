@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
+import { useNavigate } from "react-router-dom";
 
 
 export const useRegister = () => {
     const { dispatch } = useAuthContext()
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
+    const navigate = useNavigate();
 
     const register = async (email, password, fullname) => {
         setIsLoading(true)
@@ -32,6 +34,8 @@ export const useRegister = () => {
            dispatch({type: 'LOGIN', payload: json})
 
            setIsLoading(false)
+            // Use navigate to redirect to the login page
+        navigate("/account");
 
     }
 }
