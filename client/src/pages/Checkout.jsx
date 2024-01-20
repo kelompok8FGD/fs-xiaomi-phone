@@ -5,14 +5,15 @@ import axios from "axios";
 function Checkout() {
   const [dataCheckout, setDataCheckout] = useState([]);
 
+  const token = localStorage.getItem("token");
+
   const getApiCheckout = async () => {
     const response = await axios(
       "https://xiaomi-phone-api.onrender.com/api/v1/checkout",
       {
         method: "GET",
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJiZGZhc0BnbWFpbC5jb20iLCJpYXQiOjE3MDU1ODAyODYsImV4cCI6MTcwODE3MjI4Nn0.U3WHpbXwJM7mukn_oJO2WzF2h4Gg-Hv42WIbE54uQlg",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
