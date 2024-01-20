@@ -13,11 +13,6 @@ router.get(
   "/paymentMethods/payment_type/:payment_type",
   paymentMethod.getPaymentMethodByPaymentType
 );
-// get payment method by provider
-router.get(
-  "/paymentMethods/provider/:provider",
-  paymentMethod.getPaymentMethodByProvider
-);
 // create payment method
 router.post(
   "/paymentMethods",
