@@ -90,11 +90,15 @@ const AddressForm = ({ onClose }) => {
 
     // Panggil server API pribadi untuk menyimpan data alamat
     axios
-      .post("https://flixflix-api.onrender.com/api/v1/address", dataToSend, {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      })
+      .post(
+        "https://xiaomi-phone-api.onrender.com/api/v1/address",
+        dataToSend,
+        {
+          headers: {
+            Authorization: `bearer ${token}`,
+          },
+        }
+      )
       .then((response) =>
         console.log("Address submitted successfully:", response.data)
       )

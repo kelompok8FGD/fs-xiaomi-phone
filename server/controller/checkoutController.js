@@ -20,11 +20,13 @@ const checkoutController = async (req, res) => {
       where: { id_customer },
       attributes: [
         "address_name",
-        "address_line1",
-        "address_line2",
+        "province",
         "city",
-        "region",
+        "subdistrict",
+        "villages",
+        "full_address",
         "postal_code",
+        "phone_number",
       ],
     });
 
