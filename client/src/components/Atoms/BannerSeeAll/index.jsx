@@ -1,4 +1,4 @@
-import CustomButton from "../WithCVA/CustomButton";
+import CustomButton from "../Buttons/CustomButton";
 
 /* eslint-disable react/prop-types */
 const BannerSeeAll = (props) => {

@@ -1,7 +1,6 @@
 import React from "react";
-import Bannerleft from "/account/bannerleft.jpg";
 import Logo from "../../public/logo.svg";
-import SupportForm from "../components/molecule/Support/SupportForm";
+import SupportForm from "../components/organism/Forms/SupportForm";
 
 const Support = () => {
   return (
@@ -10,7 +9,7 @@ const Support = () => {
         <div id="side-banner" className="h-full w-0 md:w-[200px] xl:w-[470px]">
           <img
             className="h-full w-full object-cover"
-            src={Bannerleft}
+            src="https://r1.ilikewallpaper.net/ipad-air-wallpapers/download/29056/Orange-Purple-Gradation-Blur-ipad-air-wallpaper-ilikewallpaper_com.jpg"
             width="100%"
             height="100%"
           />

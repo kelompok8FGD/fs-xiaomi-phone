@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../../redux/cart/cartSlice.js";
-import CustomButton from "../../../Atoms/WithCVA/CustomButton.jsx";
+import CustomButton from "../../../Atoms/Buttons/CustomButton.jsx";
 import ProductTitle from "../../../Atoms/InsideCard/ProductTitle.jsx";
 import ProductImg from "../../../Atoms/InsideCard/ProductImg.jsx";
-import LearnMoreButton from "../../../Atoms/WithCVA/LearnMoreButton.jsx";
+import LearnMoreButton from "../../../Atoms/Buttons/LearnMoreButton.jsx";
 
 export default function PocoSmallCard() {
   const [dataPoco, setDataPoco] = useState([]);

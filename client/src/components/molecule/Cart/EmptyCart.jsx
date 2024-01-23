@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomButton from '../../Atoms/WithCVA/CustomButton'
+import CustomButton from '../../Atoms/Buttons/CustomButton'
 const EmptyCart = () => {
   return (
     <div id="cart-empty" className="w-full max-w-full bg-[#f3f4f6]">

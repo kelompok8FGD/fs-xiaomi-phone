@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import CartItem from "../components/molecule/Cart/CartItem";
 import CheckoutNavbar from "../components/organism/Navbar/CheckoutNavbar";
 import EmptyCart from "../components/molecule/Cart/EmptyCart";
-import CustomButton from "../components/Atoms/WithCVA/CustomButton";
+import CustomButton from "../components/Atoms/Buttons/CustomButton";
 import { calculateTotal } from "../redux/cart/cartUtils";
 
 const Cart = () => {
