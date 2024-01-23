@@ -1,14 +1,14 @@
 import { useEffect, useState, useContext } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/cart/cartSlice";
+import { addToCart } from "../../../../redux/cart/cartSlice.js";
 import axios from "axios";
-import { CartContext } from "../../../context/CartProvider";
-import CustomButton from "../../Atoms/WithCVA/CustomButton";
-import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
-import ProductImgFlagship from "../../Atoms/InsideCard/productImgFlagship.jsx";
-import ProductTitle from "../../Atoms/InsideCard/productTitle.jsx";
+import { CartContext } from "../../../../context/CartProvider.jsx";
+import CustomButton from "../../../Atoms/WithCVA/CustomButton.jsx";
+import LearnMoreButton from "../../../Atoms/WithCVA/LearnMoreButton.jsx";
+import ProductImgFlagship from "../../../Atoms/InsideCard/productImgFlagship.jsx";
+import ProductTitle from "../../../Atoms/InsideCard/productTitle.jsx";
 
-const BannerCardXiaomi = () => {
+const XiaomiBanner = () => {
   const [dataXiaomi, setDataXiaomi] = useState([]);
   const [currentPage] = useState(15);
   const [postsPerPage] = useState(16);
@@ -97,4 +97,4 @@ const BannerCardXiaomi = () => {
   );
 };
 
-export default BannerCardXiaomi;
+export default XiaomiBanner;

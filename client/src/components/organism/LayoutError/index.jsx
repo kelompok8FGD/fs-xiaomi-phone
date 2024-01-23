@@ -1,5 +1,5 @@
 import BannerError from "../../Atoms/BannerError";
-import ListCard from "../../molecule/Error/Card/ListCard";
+import ErrorCard from "../../molecule/Cards/ErrorElement/ErrorCard";
 
 const LayoutError = () => {
   return (
@@ -13,7 +13,7 @@ const LayoutError = () => {
         </h1>
       </section>
 
-      <ListCard />
+      <ErrorCard />
     </>
   );
 };

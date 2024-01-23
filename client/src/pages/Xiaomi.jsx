@@ -1,8 +1,7 @@
-import XiaomiProSection from "../components/organism/Products/XiaomiProSection";
-import Nav from "../components/molecule/Xiaomi/Nav";
+import XiaomiSection from "../components/organism/Products/XiaomiSection";
 import ProductNavbar from "../components/organism/Navbar/ProductsNavbar";
 
-const XiaomiPro = () => {
+const Xiaomi = () => {
   return (
     <>
       <ProductNavbar
@@ -14,9 +13,9 @@ const XiaomiPro = () => {
         toTitle2="/redmi"
         toTitle3="/poco"
       />
-      <XiaomiProSection />
+      <XiaomiSection />
     </>
   );
 };
 
-export default XiaomiPro;
+export default Xiaomi;

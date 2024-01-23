@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import { AuthContextProvider } from './context/AuthContext'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthContextProvider } from "./context/AuthContext";
 import App from "./App.jsx";
 import ProtectedRouteHOC from "./components/ProtectedRouteHOC.jsx";
 import "./index.css";
@@ -17,11 +17,10 @@ import Agreement from "./pages/Agreement.jsx";
 import Leadership from "./pages/Leadership.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Poco from "./pages/Poco.jsx";
-import XiaomiPro from "./pages/XiaomiPro.jsx";
+import Xiaomi from "./pages/Xiaomi.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import DetailPoco from "./pages/ProductDetails/Poco/index.jsx";
 import RedmiList from "./pages/Redmi.jsx";
-
 
 const router = createBrowserRouter([
   {
@@ -31,7 +30,10 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/store", element: <Store /> },
       { path: "/cart", element: <ProtectedRouteHOC element={<Cart />} /> },
-      { path: "/account",  element: <ProtectedRouteHOC element={<Account />} /> },
+      {
+        path: "/account",
+        element: <ProtectedRouteHOC element={<Account />} />,
+      },
       { path: "/smartphone", element: <SmartPhone /> },
       { path: "/About", element: <About /> },
       { path: "/Agreement", element: <Agreement /> },
@@ -39,19 +41,21 @@ const router = createBrowserRouter([
       { path: "/Privacy", element: <Privacy /> },
       { path: "/Poco", element: <Poco /> },
       { path: "/redmi", element: <RedmiList /> },
-      { path: "/xiaomi", element: <XiaomiPro /> },
+      { path: "/xiaomi", element: <Xiaomi /> },
       { path: "*", element: <Error /> },
-      { path: "/checkout", element: <ProtectedRouteHOC element={<Checkout />} /> },
+      {
+        path: "/checkout",
+        element: <ProtectedRouteHOC element={<Checkout />} />,
+      },
       { path: "/detail/:id", element: <DetailPoco /> },
     ],
   },
 ]);
 
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthContextProvider> 
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
     </AuthContextProvider>
   </React.StrictMode>
 );

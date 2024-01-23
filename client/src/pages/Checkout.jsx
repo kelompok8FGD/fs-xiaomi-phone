@@ -14,6 +14,12 @@ function Checkout() {
     setTampilkanAddressForm(false);
   };
 
+  // metode pengiriman
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   const [dataCheckout, setDataCheckout] = useState([]);
 
   const token = localStorage.getItem("token");
@@ -60,7 +66,7 @@ function Checkout() {
                   <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-lg">
                     {dataCheckout.address_name}
                   </h2>
-                  <p className="text-lg lg:text-base">+62877****4477</p>
+                  <p className="text-lg lg:text-base">Tambah Alamat Baru</p>
                   <p className="text-lg lg:text-base ">
                     {dataCheckout.address_line1}
                     <span> {dataCheckout.address_line2}</span>
@@ -105,15 +111,21 @@ function Checkout() {
                 <p>Email: service.id@support.mi.com</p>
               </div>
             </section>
-            <section className="p-8 mb-4 bg-white">
+
+            <section
+              className="p-8 mb-4 bg-white"
+              value={setIsChecked}
+              onChange={handleCheckboxChange}
+            >
               <div className="mb-6">
                 <div className="pb-6">
                   <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
-                    Metode pengiriman
+                    Metode Pengiriman
                   </h2>
                 </div>
                 <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
               </div>
+
               <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
                 <div className="text-center my-auto">
                   <input
@@ -128,6 +140,7 @@ function Checkout() {
                   </p>
                 </div>
               </div>
+
               <div className="grid grid-cols-9 border border-solid rounded-lg mt-2 mb-3 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
                 <div className="text-center my-auto">
                   <input
@@ -135,7 +148,7 @@ function Checkout() {
                     className="form-checkbox text-[#FF6900] h-5 w-5"
                   />
                 </div>
-                <div className="p-4 col-span-8">
+                <div className="p-4 col-span-8" value="shipp">
                   <p>Pengiriman standar</p>
                   <p>3-5 hari setelah pembayaran</p>
                   <p className="text-[#FF6900]">
@@ -146,19 +159,58 @@ function Checkout() {
               <p>
                 Dipengaruhi oleh cuaca dan festival, pengiriman akan tertunda
               </p>
-            </section>
-            <section className="p-8 mb-4 bg-white">
-              <div className="pb-6">
-                <div className="pb-6">
-                  <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
-                    Metode Pembayaran
-                  </h2>
+              <section className="mt-6 mb-4 bg-white">
+                <div className="">
+                  <div className="">
+                    <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
+                      Metode Pembayaran
+                    </h2>
+                  </div>
+                  <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
                 </div>
-                <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
-              </div>
-              <div className="border border-solid rounded-lg p-4 my-3">
-                <h3>Pembayaran teransfer Bank</h3>
-              </div>
+              </section>
+            </section>
+
+            <section className="mb-4">
+              {/* Shipping with Card section (conditionally rendered) */}
+              {isChecked === true && (
+                <>
+                  <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+                    <div className="text-center my-auto">
+                      <input
+                        type="checkbox"
+                        className="form-checkbox text-[#FF6900] h-5 w-5"
+                      />
+                    </div>
+                    <div className="p-3 col-span-8 flex">
+                      <img
+                        src="https://i02.appmifile.com/411_operatorx_operatorx_xm/22/03/2023/aa4f7b9b044b02579d60e54fb40e66bc.png"
+                        alt="Bank BCA"
+                        width="30px"
+                      />
+                      <p className="ml-5">Bank BCA</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+                    <div className="text-center my-auto">
+                      <input
+                        type="checkbox"
+                        className="form-checkbox text-[#FF6900] h-5 w-5"
+                      />
+                    </div>
+
+                    <div className="p-4 col-span-8 flex">
+                      <img
+                        src="https://i01.appmifile.com/webfile/globalimg/checkout/cards.png"
+                        alt="Bank BCA"
+                        width="30px"
+                      />
+                      <p className="ml-4">Pembayaran Online & Indomaret</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </section>
           </div>
         </article>
@@ -215,18 +267,31 @@ function Checkout() {
                 </div>
               </div>
             </section>
-            <section className="p-8 mb-4 bg-white lg:order-5 lg:pb-0 lg:mb-0 lg:mt-0 lg:pt-0">
+            <section className="p-8 bg-white lg:order-5 lg:pb-0 lg:mb-0 lg:mt-0 lg:pt-0">
               <div className="grid grid-cols-2">
                 <div>
                   <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
                     Kupon
                   </h2>
+                  <h4 className="p-1">0 Kupon Tersedia</h4>
+                  <h4 className="p-1">Tidak Ada Kupon Yang Digunakan</h4>
                 </div>
                 <div className="text-right">
                   <p className="lg:text-[#FF6900]">Gunakan Kupon</p>
                 </div>
               </div>
             </section>
+
+            <section className="hidden lg:grid lg:order-last text-center">
+              <div className="items-end lg:bottom-0 lg:right-20 lg:pb-1">
+                <button className="w-[241px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end lg:w-[400px]">
+                  <h1 className="text-white font-Inter text-2xl z-50">
+                    Bayar Sekarang
+                  </h1>
+                </button>
+              </div>
+            </section>
+
             <section className="p-8 mb-4 lg:order-last lg:pb-0 lg:mb-0 lg:mt-0 lg:pt-0">
               <div className="grid grid-cols-9 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
                 <div className="text-center m-auto">
@@ -254,6 +319,7 @@ function Checkout() {
                 </div>
               </div>
             </section>
+
             <section className="bg-white lg:order-2 lg:mt-0 lg:pt-0">
               <div className="relative">
                 <div className="inset-99 bottom-0 w-full p-4 mb-0 bg-white flex flex-row justify-normal lg:static lg:grid lg:order-2 lg:grid-cols-2 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0">
@@ -262,7 +328,7 @@ function Checkout() {
                       Total:
                     </h1>
                   </div>
-                  <div className="justify-self-start mx-auto my-auto lg:text-right lg:mr-auto">
+                  <div className="justify-self-start mx-auto my-auto lg:text-right lg:mr-2">
                     <h1 className="font-Inter text-2xl xsml:w-3xl font-bold text-[#FF6900] sm:text-3xl lg:text-2xl">
                       Rp 6.499.000
                     </h1>
@@ -275,15 +341,6 @@ function Checkout() {
                     </button>
                   </div>
                 </div>
-              </div>
-            </section>
-            <section className="hidden lg:grid lg:order-last text-center">
-              <div className="items-end lg:bottom-0 lg:right-20 lg:pb-1">
-                <button className="w-[241px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end lg:w-[400px]">
-                  <h1 className="text-white font-Inter text-2xl z-50">
-                    Bayar Sekarang
-                  </h1>
-                </button>
               </div>
             </section>
           </div>
