@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../../redux/cart/cartSlice.js";
 import axios from "axios";
 import { CartContext } from "../../../../context/CartProvider.jsx";
-import CustomButton from "../../../Atoms/WithCVA/CustomButton.jsx";
-import LearnMoreButton from "../../../Atoms/WithCVA/LearnMoreButton.jsx";
+import CustomButton from "../../../Atoms/Buttons/CustomButton.jsx";
+import LearnMoreButton from "../../../Atoms/Buttons/LearnMoreButton.jsx";
 import ProductImgFlagship from "../../../Atoms/InsideCard/productImgFlagship.jsx";
 import ProductTitle from "../../../Atoms/InsideCard/productTitle.jsx";
 

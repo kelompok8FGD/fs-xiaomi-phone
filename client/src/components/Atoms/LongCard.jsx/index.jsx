@@ -3,9 +3,9 @@ import cors from "cors";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {addToCart} from "../../../redux/cart/cartSlice.js";
-import CustomButton from "../WithCVA/CustomButton.jsx";
+import CustomButton from "../Buttons/CustomButton.jsx";
 import ProductImg from "../InsideCard/ProductImg.jsx";
-import LearnMoreButton from "../WithCVA/LearnMoreButton.jsx";
+import LearnMoreButton from "../Buttons/LearnMoreButton.jsx";
 import ProductLongCardSmartphone from "../../Atoms/InsideCard/ProductLongCardSmartphone.jsx";
 
 const LongCard = (props) => {

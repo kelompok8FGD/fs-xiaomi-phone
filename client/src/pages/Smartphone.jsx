@@ -2,7 +2,7 @@ import RedmiSection from "../components/molecule/Smartphone/RedmiSection";
 import XiaomiSection from "../components/molecule/Smartphone/XiaomiSection";
 import PocoSection from "../components/organism/Products/PocoSection";
 import TitleSeeAll from "../components/Atoms/BannerSeeAll/TitleSeeAll";
-import CustomButton from "../components/Atoms/WithCVA/CustomButton";
+import CustomButton from "../components/Atoms/Buttons/CustomButton";
 
 const SmartPhone = () => {
   return (

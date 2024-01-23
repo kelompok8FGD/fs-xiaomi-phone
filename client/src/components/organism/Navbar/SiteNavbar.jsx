@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Icon from '../../Atoms/Icon';
 import Logo from '../../Atoms/Logo';
 import List from '../../Atoms/Global/ListItem';
-import SearchButton from '../../molecule/Search/SearchButton';
+import SearchButton from '../../Atoms/Buttons/SearchButton';
 import { useLogout } from '../../../hooks/useLogout';
 import ThemeSwitch from '../../molecule/ThemeSwitch';
 import { useSelector } from 'react-redux';
@@ -94,8 +94,7 @@ const SiteNavbar = () => {
                 <div className='py-5 border-b-gray-100 border-t-gray-100 border-b-[1px] border-t-[1px]'>
                 <List className="text-text px-[8px] lg:px-[16px]" redirect="/store" text="Store" title="Store" />
                 <List className="text-text px-[8px] lg:px-[16px]" redirect="/smartphone" text="Smartphone" title="Smartphone" />
-                <List redirect="#" text="Discover" className="px-[8px] lg:px-[16px]" title="Discover" />
-                <List redirect="#" text="Support" className="px-[8px] lg:px-[16px]" title="Support" />
+                <List redirect="/support" text="Support" className="px-[8px] lg:px-[16px]" title="Support" />
                 </div>
                 <List className="text-text p-2" redirect="/about" text="About" title="About" />
                
