@@ -39,7 +39,7 @@ const SiteNavbar = () => {
         /></div>
         <div className="grow h-full"></div>
         <div className='only-medium'>
-        <List redirect="#" text="Support" className="h-full px-[8px] lg:px-[16px]" title="Support" />
+        <List redirect="/support" text="Support" className="h-full px-[8px] lg:px-[16px]" title="Support" />
         </div>
         <SearchButton />
         <div id='cartamount' className='relative'>

@@ -28,6 +28,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/support", element: <Support /> },
       { path: "/store", element: <Store /> },
       { path: "/cart", element: <ProtectedRouteHOC element={<Cart />} /> },
       {
