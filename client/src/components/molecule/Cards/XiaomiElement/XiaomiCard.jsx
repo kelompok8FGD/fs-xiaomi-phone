@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/cart/cartSlice";
+import { addToCart } from "../../../../redux/cart/cartSlice.js";
 import axios from "axios";
-import CustomButton from "../../Atoms/WithCVA/CustomButton.jsx";
-import ProductTitle from "../../Atoms/InsideCard/productTitle.jsx";
-import ProductImg from "../../Atoms/InsideCard/ProductImg.jsx";
-import LearnMoreButton from "../../Atoms/WithCVA/LearnMoreButton.jsx";
+import CustomButton from "../../../Atoms/WithCVA/CustomButton.jsx";
+import ProductTitle from "../../../Atoms/InsideCard/productTitle.jsx";
 
-const CardXiaomi = () => {
+import ProductImg from "../../../Atoms/InsideCard/ProductImg.jsx";
+import LearnMoreButton from "../../../Atoms/WithCVA/LearnMoreButton.jsx";
+
+const XiaomiCard = () => {
   const [dataXiaomi, setDataXiaomi] = useState([]);
   const [currentPage] = useState(17);
   const [postsPerPage] = useState(19);
@@ -96,4 +97,4 @@ const CardXiaomi = () => {
   );
 };
 
-export default CardXiaomi;
+export default XiaomiCard;
