@@ -3,7 +3,7 @@ const SearchButton = () => {
     return (
         
         <button>
-           <Icon classname="search-glass"/>
+           <Icon redirect="/search" classname="search-glass"/>
         </button>
     )
 }
