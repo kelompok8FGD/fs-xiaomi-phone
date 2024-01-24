@@ -172,27 +172,8 @@ height: 100%;
     margin-top: 3.125vw;
   }
 }
-.site-banner__price strong {
-  font-weight: 700;
-}
-
-.mi-price strong {
-  display: inline-block;
-  font-weight: 400;
-  white-space: nowrap;
-}
 
 /* HOME CSS END */
-
-/* CART CSS START */
-
-
-
-#cart-quantity-buttons {
- border: 1px solid rgb(198, 198, 198);
-}
-
-/* CART CSS END */
 
 /* ABOUT CSS START */
 .background-text-images {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRegister } from '../../../hooks/useRegister';
 import CustomInput from '../../Atoms/CustomInput';
+import CustomLabel from '../../Atoms/CustomLabel';
 const RegisterForm = () => {
 
     const  [email, setEmail] = useState('')
@@ -43,9 +44,7 @@ onChange={handleCheckboxChange}
 intent="checkbox"
 />
 
-<label className='flex flex-row space-x-4' htmlFor="checkbox"><span className="text-[13px] text-[#999]">
-        Saya telah membaca dan menyetujui Perjanjian Pengguna dan Kebijakan Privasi Xiaomi.
-      </span></label>
+<CustomLabel intent="checkbox" text="Saya telah membaca dan menyetujui Perjanjian Pengguna dan Kebijakan Privasi Xiaomi." htmlFor="checkbox" />
       </div>
 
 
