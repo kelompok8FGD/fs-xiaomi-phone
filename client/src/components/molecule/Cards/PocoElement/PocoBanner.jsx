@@ -3,10 +3,10 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../../redux/cart/cartSlice.js";
-import CustomButton from "../../../Atoms/WithCVA/CustomButton.jsx";
-import ProductTitleFlagship from "../../../Atoms/InsideCard/ProductTitleFlagship.jsx";
-import ProductImgFlagship from "../../../Atoms/InsideCard/ProductImgFlagship.jsx";
-import LearnMoreButton from "../../../Atoms/WithCVA/LearnMoreButton.jsx";
+import CustomButton from "../../../Atoms/Buttons/CustomButton.jsx";
+import ProductTitleFlagship from "../../../Atoms/InsideCard/productTitleFlagship.jsx";
+import ProductImgFlagship from "../../../Atoms/InsideCard/productImgFlagship.jsx";
+import LearnMoreButton from "../../../Atoms/Buttons/LearnMoreButton.jsx";
 
 export default function PocoBanner() {
   const [dataPoco, setDataPoco] = useState([]);
@@ -35,16 +35,12 @@ export default function PocoBanner() {
     currentPage + postsPerPage
   ); // index ke 7, (sampai) index ke 8
 
-  console.log(currentBannerImg);
   return (
     <>
       <div className="flex flex-col md:hover:cursor-pointer">
         {currentBannerImg.map((poco) => (
           <>
-            <div
-              key={poco.id_product}
-              className="flex flex-col items-center relative"
-            >
+            <div key={poco.id} className="flex flex-col items-center relative">
               <div className="absolute text-center w-[370px] pt-10 md:text-start md:left-[10%] md:top-[60px] md:w-[600px]">
                 <ProductTitleFlagship
                   Title={poco.name_product}

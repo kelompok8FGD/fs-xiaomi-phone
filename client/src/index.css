@@ -172,27 +172,8 @@ height: 100%;
     margin-top: 3.125vw;
   }
 }
-.site-banner__price strong {
-  font-weight: 700;
-}
-
-.mi-price strong {
-  display: inline-block;
-  font-weight: 400;
-  white-space: nowrap;
-}
 
 /* HOME CSS END */
-
-/* CART CSS START */
-
-
-
-#cart-quantity-buttons {
- border: 1px solid black;
-}
-
-/* CART CSS END */
 
 /* ABOUT CSS START */
 .background-text-images {
@@ -282,87 +263,11 @@ select:focus {
   height: max-content;
 }
 
-#account-forms input:not([type="checkbox"]){
-  border: 1px solid rgb(213, 213, 213);
-  background: var(--color-input-background);
-  color: #999;
-  width: 100%;
-  height: 30px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 30px 15px;
-  border-color: var(--color-input-background);
-}
-
 #google-button,
 .accountinput {
   box-shadow: 0 0 5px 0px rgb(199, 199, 199);
 }
 
-.mi-layout__card {
-  text-align: left;
-  border-radius: 4px;
-  box-shadow: 0 20px 50px 0 hsla(0, 0%, 64%, 0.1);
-  margin: 0 auto 80px;
-  padding: 40px 45px;
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 450px;
-  overflow: hidden;
-  position: relative;
-}
-
-.qr-switch-wrap {
-  outline: 1px solid transparent;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.mi-qr-account-switch {
-  background-size: cover;
-  border: 32px solid #ff5c00;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  cursor: pointer;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
-
-.mi-qr-account-switch {
-  height: 64px;
-  opacity: 0.4;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  width: 64px;
-  z-index: 1000;
-}
-
-.qr-account-switch:hover {
-  height: 64px;
-  opacity: 1;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  width: 64px;
-  z-index: 1000;
-}
-
-.qr-account-icon {
-  font-size: 36px;
-  position: absolute;
-  top: -22px;
-  right: -22px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  display: inline-block;
-  font-style: normal;
-  line-height: 0;
-  text-align: center;
-  text-rendering: optimizeLegibility;
-  text-transform: none;
-  vertical-align: -0.125em;
-}
-.qr-account-icon svg {
-  fill: var(--color-form-background);
-}
 
 .checkbox-custom {
   transform: scale(1.5);

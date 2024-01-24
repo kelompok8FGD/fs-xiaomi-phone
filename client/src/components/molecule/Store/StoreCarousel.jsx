@@ -1,6 +1,6 @@
 import { Carousel } from "flowbite-react";
 import CarouselImg from '../../Atoms/CarouselImg/CarouselImg'
-import CustomButton from '../../Atoms/WithCVA/CustomButton'
+import CustomButton from '../../Atoms/Buttons/CustomButton'
 
 function StoreCarousel() {
   return (

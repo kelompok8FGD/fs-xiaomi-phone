@@ -1,5 +1,5 @@
 import React from "react";
-import CustomButton from "../../Atoms/WithCVA/CustomButton";
+import CustomButton from "../../Atoms/Buttons/CustomButton";
 
 const RedmiBanner = () => {
   return (
