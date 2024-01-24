@@ -1,6 +1,6 @@
 import CheckoutNavbar from "../components/organism/Navbar/CheckoutNavbar";
 import React, { useEffect, useState } from "react";
-import AddressForm from "../components/organism/AddressForm";
+import AddressForm from "../components/organism/Address/AddressForm";
 import axios from "axios";
 
 function Checkout() {
@@ -26,7 +26,7 @@ function Checkout() {
 
   const getApiCheckout = async () => {
     const response = await axios(
-      "https://xiaomi-phone-api.onrender.com/api/v1/checkout",
+      `${import.meta.env.VITE_APP_BASEURL}/api/v1/checkout`,
       {
         method: "GET",
         headers: {
