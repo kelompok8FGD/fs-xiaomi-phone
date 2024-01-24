@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '../../Atoms/Icon';
 import Logo from '../../Atoms/Logo';
-import List from '../../Atoms/Global/ListItem';
+import List from '../../Atoms/List/ListItem';
 import SearchButton from '../../Atoms/Buttons/SearchButton';
 import { useLogout } from '../../../hooks/useLogout';
 import ThemeSwitch from '../../molecule/ThemeSwitch';
@@ -52,7 +52,7 @@ const SiteNavbar = () => {
           {/* User login/logout */}   
           <div className="flex justify-center items-center gap-4">
           {!user ? (
-        <Icon redirect="/account" classname="account only-medium" />
+        <Icon redirect="/account?activeTab=login" classname="account only-medium" />
       ) : (
         <>
           <button className='only-medium' onClick={handleClick}>Log out</button>
@@ -77,7 +77,7 @@ const SiteNavbar = () => {
               <div className='text-text relative mt-10'>
                 <div className='px-[16px]  py-[16px] gap-4 flex justify-between' >
                   <div className='w-max rounded-lg bg-neutral-300 text-white flex items-center justify-center'>
-                <Icon redirect="/account" classname="account" /></div>
+                <Icon redirect="/account?activeTab=login" classname="account" /></div>
                 {user ? (
         <div className='flex flex-col items-start w-full'>
           <span>{user.email}</span>
@@ -86,7 +86,7 @@ const SiteNavbar = () => {
       ) : (
         <List
           className="w-full justify-start  mr-10 inline-block text-text px-[8px] lg:px-[16px]"
-          redirect="/account"
+          redirect="/account?activeTab=login"
           text="Account"
           title="Login/Register"
         />
