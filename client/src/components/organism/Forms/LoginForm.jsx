@@ -38,7 +38,7 @@ const LoginForm = () => {
         />
       <CustomInput intent="form" type="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Password"
         className="" /></div>
-    <div className='mt-4 flex flex-col space-y-4'>
+    <div className='mt-4 flex flex-col space-y-4 pb-2'>
       <button type="submit"
         disabled={isLoading}
         className="disabled w-full text-center p-4 bg-[#ffbe99] text-white">Masuk</button>
@@ -50,7 +50,8 @@ const LoginForm = () => {
           Google</span>
       </button></div>
 
-    <a className="block text-accent" href="">Lupa Sandi?</a>
+    <span className=" py-4 text-text">Don't have an account?</span>
+          <a className="text-accent ml-2" href="/account">Register</a>
 
     <div>
       <div className="text-center text-[#797979] text-[17px] leading-[40px]">Pilihan lainnya</div>
