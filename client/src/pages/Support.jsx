@@ -1,16 +1,15 @@
 import React from "react";
-import Bannerleft from "/account/bannerleft.jpg";
 import Logo from "../../public/logo.svg";
-import AccountForm from "../components/organism/Forms/AccountForm";
+import SupportForm from "../components/organism/Forms/SupportForm";
 
-const Account = () => {
+const Support = () => {
   return (
     <div className="bg-contrast h-[100vh]">
       <div className="flex justify-around h-full">
         <div id="side-banner" className="h-full w-0 md:w-[200px] xl:w-[470px]">
           <img
             className="h-full w-full object-cover"
-            src={Bannerleft}
+            src="https://r1.ilikewallpaper.net/ipad-air-wallpapers/download/29056/Orange-Purple-Gradation-Blur-ipad-air-wallpaper-ilikewallpaper_com.jpg"
             width="100%"
             height="100%"
           />
@@ -22,7 +21,7 @@ const Account = () => {
               <a href="/">
                 <img className="w-[40px] h-[40px]" src={Logo} alt="" />
               </a>
-              <h1 className="text-[28px] text-text">Akun Xiaomi</h1>
+              <h1 className="text-[28px] text-text">Contact Support</h1>
             </div>
 
             <div className="hidden md:block w-[50%]">
@@ -49,7 +48,7 @@ const Account = () => {
           </header>
           <div
             className="p-8 w-[500px] relative bg-contrast text-left m-auto py-[20px]">
-            <AccountForm />
+            <SupportForm/>
           </div>
         </div>
       </div>
@@ -57,4 +56,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Support;

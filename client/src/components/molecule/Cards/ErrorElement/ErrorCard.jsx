@@ -2,7 +2,7 @@ import CardError from "../../../Atoms/CardError";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const ListCard = () => {
+const ErrorCard = () => {
   const [dataProduct, setDataProduct] = useState([]);
   const [currentPage] = useState(0);
   const [postsPerPage] = useState(20);
@@ -41,4 +41,4 @@ const ListCard = () => {
   );
 };
 
-export default ListCard;
+export default ErrorCard;

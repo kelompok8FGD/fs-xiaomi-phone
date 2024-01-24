@@ -17,7 +17,7 @@ const TabbedInterface = () => {
       <ul id='account-form-navigation' className="flex gap-4">
         <li
           onClick={() => handleTabClick('login')}
-          className={`cursor-pointer  ${activeTab === 'login' ? ' text-text border-b border-b-[5px] border-b-accent' : 'text-gray-300'
+          className={`cursor-pointer  ${activeTab === 'login' ? ' text-text border-b-[5px] border-b-accent' : 'text-gray-300'
             }`}
         >
 
@@ -26,7 +26,7 @@ const TabbedInterface = () => {
         </li>
         <li
           onClick={() => handleTabClick('register')}
-          className={`cursor-pointer px-4 ${activeTab === 'register' ? 'text-text border-b border-b-[5px] border-b-accent' : 'text-gray-300'
+          className={`cursor-pointer px-4 ${activeTab === 'register' ? 'text-text border-b-[5px] border-b-accent' : 'text-gray-300'
             }`}
         >
           Daftar

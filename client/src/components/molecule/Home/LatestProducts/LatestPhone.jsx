@@ -1,5 +1,5 @@
 import React from "react";
-import CustomButton from "../../../Atoms/WithCVA/CustomButton";
+import CustomButton from "../../../Atoms/Buttons/CustomButton";
 
 const LatestPhone = ({title, subtitle, imgphone, imgmedium, to1, to2,}) => {
   return (
