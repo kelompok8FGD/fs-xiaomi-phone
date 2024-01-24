@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CustomInput from '../../Atoms/CustomInput';
 import { useLogin } from '../../../hooks/useLogin';
 import FB from '/account/facebook-svgrepo-com.png'
 import { FacebookAuth, GoogleAuth } from '../../../firebase/firebase';
@@ -33,9 +34,9 @@ const LoginForm = () => {
   return (
     <form className='bg-formBackground' onSubmit={handleSubmit}>
     <div className='flex flex-col space-y-5'>
-      <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Email"
+      <CustomInput intent="form" type="email" onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Email"
         />
-      <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Password"
+      <CustomInput intent="form" type="password" onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Password"
         className="" /></div>
     <div className='mt-4 flex flex-col space-y-4'>
       <button type="submit"
