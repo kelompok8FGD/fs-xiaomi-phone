@@ -30,6 +30,8 @@ function Checkout() {
     );
 
     setDataCheckout(response.data);
+    const dataAll = dataCheckout.data || [];
+    console.log(dataAll);
   };
 
   useEffect(() => {
