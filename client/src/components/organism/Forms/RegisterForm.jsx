@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { useRegister } from '../../../hooks/useRegister';
 import CustomInput from '../../Atoms/CustomInput';
 import CustomLabel from '../../Atoms/CustomLabel';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
+
 const RegisterForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullname, setFullName] = useState('');
 
-    const  [email, setEmail] = useState('')
-    const  [password, setPassword] = useState('')
-    const  [fullname, setFullName] = useState('')
-    const { error, isLoading, register } = useRegister()
+  // Use useNavigate to get the navigate function
+  const navigate = useNavigate();
 
+  const { error, isLoading, register } = useRegister(navigate);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
