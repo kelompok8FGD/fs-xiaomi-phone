@@ -96,11 +96,17 @@ const getShipmentMethodByShipmentPrice = async (req, res) => {
 // Create a shipment method
 const createNewShipmentMethod = async (req, res) => {
   try {
-    const {
-      id_customer: id_customer,
-      shipment_type,
-      shipment_price,
-    } = req.body;
+    const { shipment_type, shipment_price } = req.body;
+
+    // Ambil ID pengguna dari token
+    const id_customer = req.id_customer;
+
+    if (!id_customer) {
+      return res.status(401).json({
+        status: "failed",
+        message: "User ID not found in the token",
+      });
+    }
 
     details = {
       id_customer,
@@ -108,17 +114,11 @@ const createNewShipmentMethod = async (req, res) => {
       shipment_price,
     };
 
-    const newShipmentMethod = await ShipmentMethod.create(details, {
-      where: { id_customer: id_customer },
+    const newShipmentMethod = await ShipmentMethod.create(details);
+    res.status(201).json({
+      status: "ok",
+      data: newShipmentMethod,
     });
-
-    if (newShipmentMethod) {
-      res.status(201).json({
-        status: "ok",
-        message: "Create Shipment Method Succesfully",
-        data: newShipmentMethod,
-      });
-    }
   } catch (error) {
     console.log(error, "<<<- Error create new Shipment");
     res.status(500).json({

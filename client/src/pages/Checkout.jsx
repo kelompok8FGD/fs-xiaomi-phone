@@ -109,6 +109,54 @@ function Checkout() {
   );
   // Menampilkan data ProductModel dengan console.log
 
+  const handleBayarSekarangClick = async () => {
+    try {
+      // Persiapkan data untuk dikirimkan ke API
+      const dataPembayaran = {
+        payment_type: bankSelection ? "Bank" : paymentSelection ? "Online" : "", // Teks 'Bank' atau 'Online'
+        // Tambahkan field lain yang diperlukan untuk pembayaran
+      };
+
+      const dataPengiriman = {
+        // Isi dengan data pengiriman yang dibutuhkan
+        // Contoh:
+        shipment_type: isChecked ? "Standar" : "Motor",
+        // Tambahkan field lain yang diperlukan untuk pengiriman
+      };
+
+      // Lakukan permintaan API untuk mengirim data pengiriman
+      const responsePengiriman = await axios.post(
+        `${import.meta.env.VITE_APP_BASEURL}/shipmentMethods`,
+        dataPengiriman,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Lakukan permintaan API untuk mengirim data pembayaran
+      const responsePembayaran = await axios.post(
+        `${import.meta.env.VITE_APP_BASEURL}/paymentMethods`,
+        dataPembayaran,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Tangani respons atau lakukan tindakan lain
+      console.log("Respons Pembayaran:", responsePembayaran.data);
+      console.log("Respons Pengiriman:", responsePengiriman.data);
+
+      // Opsional: Redirect pengguna ke halaman sukses atau lakukan tindakan lain
+    } catch (error) {
+      // Tangani kesalahan
+      console.error("Kesalahan selama pembayaran atau pengiriman:", error);
+    }
+  };
+
   return (
     <div>
       <CheckoutNavbar activeStep={2} />
@@ -392,6 +440,7 @@ function Checkout() {
                     !isAgreementSelected ||
                     allAddress.length === 0
                   }
+                  onClick={handleBayarSekarangClick}
                   className={`w-[201px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end xsml:w-[241px] lg:w-[400px] ${
                     !isAddressSelected ||
                     !isChecked ||
@@ -462,6 +511,7 @@ function Checkout() {
                         !isAgreementSelected ||
                         allAddress.length === 0
                       }
+                      onClick={handleBayarSekarangClick}
                       className={`w-[201px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end xsml:w-[241px] ${
                         !isAddressSelected ||
                         !isChecked ||
