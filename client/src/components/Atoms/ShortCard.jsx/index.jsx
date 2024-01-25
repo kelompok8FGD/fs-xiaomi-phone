@@ -12,8 +12,8 @@ import ProductShortCardSmartphone from "../../Atoms/InsideCard/ProductShortCardS
 const ShortCard = (props) => {
     const {styling} = props;
     const [dataXiaomi, setDataXiaomi] = useState([]);
-    const [currentPage] = useState(14);
-    const [postsPerPage] = useState(16);
+    const [currentPage] = useState(1);
+    const [postsPerPage] = useState(3);
 
     const dispatch = useDispatch();
     const API_URL = "https://xiaomi-phone-api.onrender.com/api/v1/products";
@@ -21,7 +21,7 @@ const ShortCard = (props) => {
     const getApiXiaomi = async () => {
         const response = await axios(API_URL);
         // Choose the one that matches the api
-        const data = response.data; //for data from mockapi
+        const data = response.data; //for data from API 
         //const data = response.data.data // for data from localhost
         setDataXiaomi(data);
     };
