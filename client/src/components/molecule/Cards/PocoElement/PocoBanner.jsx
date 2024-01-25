@@ -17,7 +17,7 @@ export default function PocoBanner() {
 
   const getApiPoco = async () => {
     const response = await axios(
-      `${import.meta.env.VITE_APP_BASEURL}/api/v1/products/category/poco`
+      `${import.meta.env.VITE_APP_BASEURL}/products/category/poco`
     );
 
     setDataPoco(response.data);

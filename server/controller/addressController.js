@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const { AddressModel } = require("../models");
+// const { CustomerModel } = require("../models");
 
 //Menambahkan Alamat Baru
 const createNewAddress = async (req, res) => {
@@ -168,6 +169,46 @@ const getAddressById = async (req, res) => {
   }
 };
 
+const getAddressByTokenId = async (req, res) => {
+  try {
+    // Dapatkan req params
+    const id_customer = req.id_customer; // Diambil dari token di middleware
+
+    // Dapatkan semua data alamat untuk ID pelanggan tertentu
+    const dataAddresses = await AddressModel.findAll({
+      where: { id_customer },
+      attributes: [
+        "address_name",
+        "province",
+        "city",
+        "subdistrict",
+        "villages",
+        "full_address",
+        "postal_code",
+        "phone_number",
+      ],
+    });
+
+    if (dataAddresses.length === 0) {
+      return res.status(404).json({
+        status: "failed",
+        message: `No addresses found for customer with id ${id_customer}`,
+      });
+    }
+
+    res.json({
+      status: "ok",
+      data: dataAddresses,
+    });
+  } catch (error) {
+    console.log(error, "<<<- error get Address by id");
+    res.status(500).json({
+      status: "error",
+      message: "Internal Server Error",
+    });
+  }
+};
+
 const checkAddress = async (req, res) => {
   try {
     const id_customer = req.id_customer;
@@ -205,4 +246,5 @@ module.exports = {
   findAllAddresss,
   getAddressById,
   checkAddress,
+  getAddressByTokenId,
 };

@@ -74,25 +74,46 @@ const checkoutController = async (req, res) => {
       });
     }
 
-    const flattenedResponse = flattenObject({
+    // Fungsi untuk melakukan transformasi data
+    function transformData(data) {
+      return {
+        fullname: data.customer.fullname,
+        email: data.customer.email,
+        address_name: data.address.address_name,
+        province: data.address.province,
+        city: data.address.city,
+        subdistrict: data.address.subdistrict,
+        villages: data.address.villages,
+        full_address: data.address.full_address,
+        postal_code: data.address.postal_code,
+        phone_number: data.address.phone_number,
+
+        payment_type: data.paymentMethod.payment_type,
+
+        // tambahkan transformasi untuk kunci-kunci lainnya
+        // ...
+        cartItems: data.cartItems.map(transformCartItem),
+      };
+    }
+    function transformCartItem(cartItem) {
+      return {
+        id_cart: cartItem.id_cart,
+        id_product: cartItem.id_product,
+        id_customer: cartItem.id_customer,
+        qty: cartItem.qty,
+        price: cartItem.price,
+        name_product: cartItem.ProductModel.name_product,
+        image: cartItem.ProductModel.image,
+        price_product: cartItem.ProductModel.price,
+      };
+    }
+
+    const flattenedResponse = transformData({
       customer: customer.toJSON(),
       address: address.toJSON(),
       paymentMethod: paymentMethod.toJSON(),
       cartItems: cartItems.map((item) => item.toJSON()),
     });
-
-    // Mengubah kunci-kunci
-    // const renamedResponse = {};
-    // Object.keys(flattenedResponse).forEach((key) => {
-    //   // Menghilangkan awalan "customer.", "address.", "paymentMethod.", "cartItems.0.", dan "ProductModel."
-    //   const newKey = key.replace(
-    //     /^(customer|address|paymentMethod|cartItems\.\d+|ProductModel)\./,
-    //     ""
-    //   );
-    // Menghilangkan kembali awalan "ProductModel." jika ada
-    // const finalKey = newKey.replace(/^ProductModel\./, "");
-    //   renamedResponse[newKey] = flattenedResponse[key];
-    // });
 
     // Memberikan respons dengan data yang telah ditemukan
     return res.json({

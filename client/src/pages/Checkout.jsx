@@ -20,13 +20,18 @@ function Checkout() {
     setIsChecked(!isChecked);
   };
 
-  const [dataCheckout, setDataCheckout] = useState([]);
+  const [dataAddress, setDataAddress] = useState([]);
+  const [mainAddress, setMainAddress] = useState(null);
+  const [currentAddress, setCurrentAddress] = useState(0);
+  const [addressPerPage, setAddressPerPage] = useState(1);
+
+  const [dataCartItem, setDataCartItem] = useState([]);
 
   const token = localStorage.getItem("token");
 
-  const getApiCheckout = async () => {
+  const getApiAddress = async () => {
     const response = await axios(
-      `${import.meta.env.VITE_APP_BASEURL}/api/v1/checkout`,
+      `${import.meta.env.VITE_APP_BASEURL}/address`,
       {
         method: "GET",
         headers: {
@@ -35,14 +40,43 @@ function Checkout() {
       }
     );
 
-    setDataCheckout(response.data);
-    const dataAll = dataCheckout.data || [];
-    console.log(dataAll);
+    setDataAddress(response.data);
+    // Pilih alamat utama (contoh: alamat pertama dalam daftar)
+    if (response.data.length > 0) {
+      setMainAddress(response.data[0]);
+    }
+  };
+  const getCartItems = async () => {
+    const response = await axios(
+      `${import.meta.env.VITE_APP_BASEURL}/getCartItems`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setDataCartItem(response.data);
+    // Pilih alamat utama (contoh: alamat pertama dalam daftar)
+    if (response.data.length > 0) {
+      setMainAddress(response.data[0]);
+    }
   };
 
   useEffect(() => {
-    getApiCheckout();
+    getApiAddress();
+    getCartItems();
   }, []);
+
+  const allAddress = dataAddress.data || [];
+  const allCartItem = dataCartItem.data || [];
+
+  const adress = allAddress.slice(
+    currentAddress,
+    currentAddress + addressPerPage
+  );
+  // Menampilkan data ProductModel dengan console.log
 
   return (
     <div>
@@ -63,24 +97,46 @@ function Checkout() {
               </div>
             </section>
             <>
-              <section className="bg-white mt-2 mb-4 px-8 lg:grid lg:grid-cols-2">
-                <div className="max-w-lg py-6 lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:mr-1 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
-                  <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-lg">
-                    {dataCheckout.address_name}
-                  </h2>
-                  <p className="text-lg lg:text-base">Tambah Alamat Baru</p>
-                  <p className="text-lg lg:text-base ">
-                    {dataCheckout.address_line1}
-                    <span> {dataCheckout.address_line2}</span>
-                    <span> {dataCheckout.city}</span>
-                  </p>
+              <section className="bg-white mt-2 mb-4 px-8 gap-5 lg:grid lg:grid-cols-2">
+                {adress.length > 0 ? (
+                  adress.map((checkout) => (
+                    <div
+                      key={checkout.id}
+                      className={`max-w-lg py-6 lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:mr-1 lg:hover:border-[#FF6900] lg:hover:cursor-pointer ${
+                        checkout === mainAddress ? "border-[#FF6900]" : ""
+                      }`}
+                      onClick={() => handleSelectMainAddress(checkout)}
+                    >
+                      <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-lg">
+                        {checkout.address_name}
+                      </h2>
+                      <p className="text-lg lg:text-base">
+                        {checkout.phone_number}
+                      </p>
+                      <p className="text-lg lg:text-base ">
+                        {checkout.full_address}
+                        <span> {checkout.villages}</span>
+                        <span> {checkout.subdistrict}</span>
+                      </p>
+                      <p className="text-lg lg:text-base ">
+                        {checkout.city}, {checkout.province}{" "}
+                        {checkout.postal_code}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="max-w-lg py-6 lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900]">
+                    <div className="flex justify-center text-center">
+                      <p className="text-lg lg:text-base">
+                        Anda belum menambahkan alamat, silahkan tambahkan alamat
+                        terlebih dahulu{">>"}.
+                      </p>
+                    </div>
+                  </div>
+                )}
 
-                  <p className="text-lg lg:text-base ">
-                    {dataCheckout.region} {dataCheckout.postal_code}
-                  </p>
-                </div>
                 <div
-                  className="hidden max-w-lg py-6 lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900] lg:hover:cursor-pointer"
+                  className=" max-w-lg py-6 items-center lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900] lg:hover:cursor-pointer"
                   onClick={handleTambahAlamatClick}
                 >
                   <div className="flex justify-center text-center">
@@ -219,28 +275,33 @@ function Checkout() {
 
         <aside className="grid grid-flow-col grid-cols-1 max-w-full min-w-xl lg:col-span-3 lg:ml-1 lg:mr-4 lg:mt-2 lg:bg-white">
           <div className="grid grid-cols-1">
-            <section className="p-8 mb-4 bg-white lg:order-2 lg:pt-0 lg:pb-0 lg:mb-0">
-              <div className="pb-6">
+            {allCartItem.map((cart) => (
+              <section className="p-8 mb-4 bg-white lg:order-2 lg:pt-0 lg:pb-0 lg:mb-0">
                 <div className="pb-6">
-                  <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
-                    {dataCheckout.qty} item
-                  </h2>
+                  <div className="pb-6">
+                    <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
+                      {cart.qty} item
+                    </h2>
+                  </div>
+
+                  <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
                 </div>
-                <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
-              </div>
-              <div className="grid grid-cols-4">
-                <div>
-                  <img src={dataCheckout.image} alt="" />
+
+                <div className="grid grid-cols-4">
+                  <div>
+                    <img src={cart.ProductModel.image} alt="" />
+                  </div>
+                  <div className="col-span-2">
+                    <p>{cart.ProductModel.name_product}</p>
+                    <p>Jumlah: {cart.qty}</p>
+                  </div>
+                  <div>
+                    <p>Rp. {cart.price}</p>
+                  </div>
                 </div>
-                <div className="col-span-2">
-                  <p>{dataCheckout.name_product}</p>
-                  <p>Jumlah: {dataCheckout.qty}</p>
-                </div>
-                <div>
-                  <p>Rp. {dataCheckout.price}</p>
-                </div>
-              </div>
-            </section>
+              </section>
+            ))}
+
             <section className="p-8 mb-4 bg-white lg:order-1 lg:pb-0 lg:mb-0">
               <div>
                 <div className="pb-6">
