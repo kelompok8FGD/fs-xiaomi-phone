@@ -41,6 +41,8 @@ const Account = () => {
           <div
             className="p-8 w-[500px] relative bg-contrast text-left m-auto py-[20px]">
             <AccountForm />
+            <h1>{localStorage.getItem("name")}</h1>
+      <h1>{localStorage.getItem("email")}</h1>
           </div>
         </div>
       </div>
