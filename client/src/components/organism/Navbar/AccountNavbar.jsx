@@ -29,13 +29,13 @@ const AccountNavbar = () => {
     <nav id="account-top-nav">
                 <ul className="text-text">
                   <li>
-                    <a href="">Perjanjian Pengguna</a>
+                    <a href="">{t("useragreement")} </a>
                   </li>
                   <li>
-                    <a href="">Kebijakan Privasi</a>
+                    <a href="">{t("privacypolicy")} </a>
                   </li>
                   <li>
-                    <a href="">Butuh Bantuan?</a>
+                    <a href="">{t("help")} </a>
                   </li>
                   <li>
                     <span>|</span>
@@ -46,9 +46,9 @@ const AccountNavbar = () => {
         
       <button
         id="dropdownHoverButton"
-        className="text-text  focus:outline-none focus:ring-accent font-medium rounded-lg text-sm px-2 py-1.5 text-center flex gap-2 items-center justify-center"
+        className="text-text text-[22px]  focus:outline-none focus:ring-accent font-medium rounded-lg text-sm px-2 py-1.5 text-center flex gap-2 items-center justify-center"
         type="button"
-      >  Pilih Bahasa Anda
+      >  {t("language")} 
       <svg
         className={`w-2.5 h-2.5 transition-transform transform ${
           isDropdownOpen ? 'rotate-180' : ''
