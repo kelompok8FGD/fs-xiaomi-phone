@@ -5,6 +5,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import App from "./App.jsx";
 import ProtectedRouteHOC from "./components/ProtectedRouteHOC.jsx";
 import "./index.css";
+import "./i18.js";
 //import pages
 import Home from "./pages/Home.jsx";
 import Store from "./pages/Store.jsx";
