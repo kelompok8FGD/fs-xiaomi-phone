@@ -4,6 +4,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 
 const TabbedInterface = () => {
@@ -17,7 +18,7 @@ const TabbedInterface = () => {
     setActiveTab(tab);
   };
 
- 
+  const { t, i18n } = useTranslation();
   
   return (
     <div className="mi-layout__card bg-formBackground container px-[50px] py-8 border-formBackground mx-auto mt-[-50px]">
@@ -29,7 +30,7 @@ const TabbedInterface = () => {
             }`}
         >
 
-          Masuk
+        {t("login")}
 
         </li>
         <li id='register'
@@ -37,7 +38,7 @@ const TabbedInterface = () => {
           className={`cursor-pointer px-4 ${activeTab === 'register' ? 'text-text border-b-[5px] border-b-accent' : 'text-gray-300'
             }`}
         >
-          Daftar
+          {t("register")}
         </li>
       </ul>
 
