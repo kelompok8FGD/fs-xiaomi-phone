@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { useRegister } from '../../../hooks/useRegister';
 import CustomInput from '../../Atoms/CustomInput';
+import CustomLabel from '../../Atoms/CustomLabel';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
+
 const RegisterForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullname, setFullName] = useState('');
 
-    const  [email, setEmail] = useState('')
-    const  [password, setPassword] = useState('')
-    const  [fullname, setFullName] = useState('')
-    const { error, isLoading, register } = useRegister()
+  // Use useNavigate to get the navigate function
+  const navigate = useNavigate();
 
+  const { error, isLoading, register } = useRegister(navigate);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -43,9 +48,7 @@ onChange={handleCheckboxChange}
 intent="checkbox"
 />
 
-<label className='flex flex-row space-x-4' htmlFor="checkbox"><span className="text-[13px] text-[#999]">
-        Saya telah membaca dan menyetujui Perjanjian Pengguna dan Kebijakan Privasi Xiaomi.
-      </span></label>
+<CustomLabel intent="checkbox" text="Saya telah membaca dan menyetujui Perjanjian Pengguna dan Kebijakan Privasi Xiaomi." htmlFor="checkbox" />
       </div>
 
 

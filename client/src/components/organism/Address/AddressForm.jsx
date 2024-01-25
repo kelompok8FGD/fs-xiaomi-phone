@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CustomLabel from "../../Atoms/CustomLabel";
+import CustomInput from "../../Atoms/CustomInput";
+import CustomButton from "../../Atoms/Buttons/CustomButton";
 
 const AddressForm = ({ onClose }) => {
-  const apiKey =
-    "2cfd80e4e2928634a890259476e7fc7181615888611972711d13f953c7d858a9";
+  const apiKey = import.meta.env.VITE_API_KEY;
   const token = localStorage.getItem("token");
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
@@ -23,7 +25,7 @@ const AddressForm = ({ onClose }) => {
   const fetchProvinces = async () => {
     try {
       const response = await fetch(
-        `https://api.binderbyte.com/wilayah/provinsi?api_key=${apiKey}`,
+        `${import.meta.env.VITE_API_BASE_URL}/provinsi?api_key=${apiKey}`,
         {
           method: "GET",
         }
@@ -44,7 +46,9 @@ const AddressForm = ({ onClose }) => {
     try {
       // Panggil API Raja Ongkir untuk mendapatkan daftar kota/kabupaten berdasarkan provinsi
       const response = await axios.get(
-        `https://api.binderbyte.com/wilayah/kabupaten?api_key=${apiKey}&id_provinsi=${selectedProvince}`
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/kabupaten?api_key=${apiKey}&id_provinsi=${selectedProvince}`
       );
       setCities(response.data.value);
     } catch (error) {
@@ -56,7 +60,9 @@ const AddressForm = ({ onClose }) => {
     try {
       // Panggil API Raja Ongkir untuk mendapatkan daftar kota/kabupaten berdasarkan provinsi
       const response = await axios.get(
-        `https://api.binderbyte.com/wilayah/kecamatan?api_key=${apiKey}&id_kabupaten=${selectedCity}`
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/kecamatan?api_key=${apiKey}&id_kabupaten=${selectedCity}`
       );
       setSubdistrict(response.data.value);
     } catch (error) {
@@ -67,7 +73,9 @@ const AddressForm = ({ onClose }) => {
     try {
       // Panggil API Raja Ongkir untuk mendapatkan daftar kota/kabupaten berdasarkan provinsi
       const response = await axios.get(
-        `https://api.binderbyte.com/wilayah/kelurahan?api_key=${apiKey}&id_kecamatan=${SelectedSubdistrict}`
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/kelurahan?api_key=${apiKey}&id_kecamatan=${SelectedSubdistrict}`
       );
       setVillages(response.data.value);
     } catch (error) {
@@ -90,15 +98,11 @@ const AddressForm = ({ onClose }) => {
 
     // Panggil server API pribadi untuk menyimpan data alamat
     axios
-      .post(
-        "https://xiaomi-phone-api.onrender.com/api/v1/address",
-        dataToSend,
-        {
-          headers: {
-            Authorization: `bearer ${token}`,
-          },
-        }
-      )
+      .post(`${import.meta.env.VITE_APP_BASEURL}/api/v1/address`, dataToSend, {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      })
       .then((response) =>
         console.log("Address submitted successfully:", response.data)
       )
@@ -159,24 +163,24 @@ const AddressForm = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex z-50 items-center justify-center bg-black bg-opacity-50">
       <div className="py-20 container mx-auto mt-8 p-8 bg-gray-100 rounded-md">
         <h2 className="text-2xl font-bold mb-4">Pilih Alamat Pengiriman</h2>
         <div className="mt-4">
-          <label htmlFor="address_name">Nama Alamat:</label>
-          <input
+          <CustomLabel text="Nama Alamat:" />
+          <CustomInput
             id="address_name"
             name="address_name"
             value={formData.address_name}
             onChange={handleAddressNameChange}
             rows="4"
             cols="50"
-            className="w-full p-2 border border-gray-300 rounded-md"
-          ></input>
+            className="w-full p-2 border rounded-md"
+          />
         </div>
         <div className="mt-4">
-          <label htmlFor="phone_number">Phone Number:</label>
-          <input
+          <CustomLabel htmlFor="phone_number" text="Phone Number:" />
+          <CustomInput
             type="number"
             id="phone_number"
             name="phone_number"
@@ -185,11 +189,11 @@ const AddressForm = ({ onClose }) => {
             rows="4"
             cols="50"
             className="w-full p-2 border border-gray-300 rounded-md"
-          ></input>
+          />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label htmlFor="province">Provinsi:</label>
+            <CustomLabel htmlFor="province" text="Provinsi:" />
             <select
               id="province"
               name="province"
@@ -206,7 +210,7 @@ const AddressForm = ({ onClose }) => {
             </select>
           </div>
           <div>
-            <label htmlFor="city">Kota/Kabupaten:</label>
+            <CustomLabel htmlFor="city" text="Kota/Kabupaten:" />
             <select
               id="city"
               name="city"
@@ -223,7 +227,7 @@ const AddressForm = ({ onClose }) => {
             </select>
           </div>
           <div>
-            <label htmlFor="subdistrict">Kecamatan:</label>
+            <CustomLabel htmlFor="subdistrict" text="Kecamatan:" />
             <select
               id="subdistrict"
               name="subdistrict"
@@ -240,7 +244,7 @@ const AddressForm = ({ onClose }) => {
             </select>
           </div>
           <div>
-            <label htmlFor="villages">Kelurahan / Desa:</label>
+            <CustomLabel htmlFor="villages" text="Kelurahan / Desa:" />
             <select
               id="villages"
               name="villages"
@@ -258,8 +262,8 @@ const AddressForm = ({ onClose }) => {
           </div>
         </div>
         <div className="mt-4">
-          <label htmlFor="postal_code">Postal Code:</label>
-          <input
+          <CustomLabel htmlFor="postal_code" text="Postal Code:" />
+          <CustomInput
             type="number"
             id="postal_code"
             name="postal_code"
@@ -268,10 +272,10 @@ const AddressForm = ({ onClose }) => {
             rows="4"
             cols="50"
             className="w-full p-2 border border-gray-300 rounded-md"
-          ></input>
+          />
         </div>
         <div className="mt-4">
-          <label htmlFor="full_address">Alamat lengkap:</label>
+          <CustomLabel htmlFor="full_address" text="Alamat lengkap:" />
           <textarea
             id="full_address"
             name="full_address"
@@ -282,20 +286,31 @@ const AddressForm = ({ onClose }) => {
             className="w-full p-2 border border-gray-300 rounded-md"
           ></textarea>
         </div>
-
-        <button
-          type="button"
-          onClick={submitForm}
-          className="mt-4 bg-blue-500 text-white p-2 rounded-md cursor-pointer"
-        >
-          Kirim
-        </button>
-        <button
-          onClick={onClose}
-          className=" mx-8 mt-4 bg-blue-500 text-white p-2 rounded-md cursor-pointer"
-        >
-          Tutup
-        </button>
+        <div className="flex justify-start gap-4 items-start">
+          <div className="flex">
+            <CustomButton
+              intent="light"
+              rounded="yes"
+              size="small"
+              hover="bg"
+              border="always"
+              text="Kirim"
+              onClick={submitForm}
+              className="hover:text-slate-100"
+            />
+          </div>
+          <div className="flex">
+            <CustomButton
+              intent="dark"
+              rounded="yes"
+              size="small"
+              hover="bg_soft"
+              border="always"
+              text="Tutup"
+              onClick={onClose}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

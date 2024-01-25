@@ -17,6 +17,7 @@
     "axios": "^1.6.2",
     "class-variance-authority": "^0.7.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
     "firebase": "^10.7.2",
     "flowbite": "^2.2.0",
     "flowbite-react": "^0.7.0",
