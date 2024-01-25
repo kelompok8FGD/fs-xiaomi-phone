@@ -27,6 +27,10 @@ i18n.use(initReactI18next).init({
                 next: "Next",
                 information: "Passwords must be 8-16 characters long and include both numbers and letters.",
                 checkbox: "I have read and agree to Xiaomi's User Agreement and Privacy Policy.",
+                useragreement: "User agreement",
+                privacypolicy: "Privacy Policy",
+                help: "Need Help?",
+                language: "Select your language"
             }
         },
         id: {
@@ -48,6 +52,10 @@ i18n.use(initReactI18next).init({
                 next: "Berikutnya",
                 information: "Sandi harus terdiri dari 8-16 karakter dan mencakup angka dan huruf.",
                 checkbox: "Saya telah membaca dan menyetujui Perjanjian Pengguna dan Kebijakan Privasi Xiaomi.",
+                useragreement: "Perjanjian Pengguna",
+                privacypolicy: "Kebijakan Privasi",
+                help: "Butuh Bantuan?",
+                language: "Pilih Bahasa Anda"
             },
         },
     },
