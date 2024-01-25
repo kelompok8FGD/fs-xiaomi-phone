@@ -45,6 +45,10 @@ const AddressModel = sequelize.define(
         isNumeric: true,
       },
     },
+    id_customer: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize,
