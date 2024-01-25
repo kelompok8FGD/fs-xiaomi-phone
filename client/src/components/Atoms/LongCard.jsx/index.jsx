@@ -11,8 +11,8 @@ import ProductLongCardSmartphone from "../../Atoms/InsideCard/ProductLongCardSma
 const LongCard = (props) => {
     const {styling} = props;
     const [dataXiaomi, setDataXiaomi] = useState([]);
-    const [currentPage, setCurrentPage] = useState(9);
-    const [postsPerPage, setPostPerPage] = useState(10);
+    const [currentPage, setCurrentPage] = useState(11);
+    const [postsPerPage, setPostPerPage] = useState(12);
 
     const dispatch = useDispatch();
 
