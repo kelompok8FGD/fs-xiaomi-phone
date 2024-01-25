@@ -42,34 +42,46 @@ const getCustomerById = async (req, res) => {
   }
 };
 
-const isStrongPasswordCustom = (password) => {
-  return password.length >= 6;
+const isStrongPassword = (password) => {
+  // Check if the password has at least 8 characters and at most 16 characters
+  return validator.isLength(password, { min: 8, max: 16 });
 };
 
+const isAlphanumericPassword = (password) => {
+  // Check if the password contains both letters and numbers
+  return /[a-zA-Z]/.test(password) && /\d/.test(password);
+};
 const createNewCustomer = async (req, res) => {
   try {
     const { email, password, fullname } = req.body;
 
     // Check emptiness of the incoming data
     if (!email || !password || !fullname) {
-      return res.json({ message: "Please enter all the details" });
+      return res.json({ error: "One or more missing details" });
     }
 
     // Check if the email is valid
     if (!validator.isEmail(email)) {
-      return res.status(400).json({ message: "Email is not valid" });
+      return res.status(400).json({ error: "Email is not valid" });
     }
-    if (!isStrongPasswordCustom(password)) {
+    if (!isStrongPassword(password)) {
       return res.status(400).json({
-        message: "Password is not strong enough.",
+        error: "Password must be 8 to 16 characters long",
       });
     }
+
+    if (!isAlphanumericPassword(password)) {
+      return res.status(400).json({
+        error: "Password must include both numbers and letters.",
+      });
+    }
+
     // Check if the user already exists
     const userExists = await Customer.findOne({ where: { email } });
 
     if (userExists) {
       return res.status(400).json({
-        message: "This email is already in use. Use a different one.",
+        error: "This email is already in use. Use a different one.",
       });
     }
 
@@ -101,7 +113,7 @@ const loginCustomer = async (req, res) => {
 
     // Check emptiness of the incoming data
     if (!email || !password) {
-      return res.json({ message: "Please enter all the details" });
+      return res.json({ error: "Please enter all the details" });
     }
 
     // Check email match
