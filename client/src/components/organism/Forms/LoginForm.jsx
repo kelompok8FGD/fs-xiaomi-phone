@@ -20,11 +20,13 @@ const LoginForm = () => {
     await emailPasswordLogin(email, password);
   };
 
-  const handleGoogleButton = async () => {
+  const handleGoogleButton = async (e) => {
+    e.preventDefault(); // prevent form submission
     await handleGoogleLogin();
   };
 
-  const handleFacebookButton = async () => {
+  const handleFacebookButton = async (e) => {
+    e.preventDefault(); // prevent form submission
     await handleFacebookLogin();
   };
 

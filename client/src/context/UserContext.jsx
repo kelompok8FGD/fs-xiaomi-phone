@@ -22,6 +22,7 @@ export const UserContextProvider = ({ children }) => {
     if (storedUser) {
       dispatchUser({ type: 'SET_USER', payload: storedUser });
     }
+    console.log(storedUser)
   }, []);
 
   return (

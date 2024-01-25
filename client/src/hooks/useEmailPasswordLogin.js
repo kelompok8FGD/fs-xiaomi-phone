@@ -27,23 +27,24 @@ export const useEmailPasswordLogin = () => {
           },
         }
       );
-
-      const dataError = response.data.error || "An error occurred during login.";
+      const data = response.data
+      const dataError = data.error || "An error occurred during login.";
 
       if (response.status === 200) {  // Handle successful backend response
         setEmailPasswordLoading(false);
-        const token = response.data.token;
-        localStorage.setItem("user", JSON.stringify(response.data));
+        // Extract the information
+        const { email, fullname, token } = data;
+        // Create a user object with the necessary information
+        const userData = { email, fullname, token };
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("token", token);
 
         // Dispatch to AuthContext
-        dispatchAuth({ type: "LOGIN", payload: response.data });
+        dispatchAuth({ type: "LOGIN", payload: userData });
 
         // Dispatch to UserContext
-        dispatchUser({ type: 'SET_USER', payload: response.data });
-
-        localStorage.setItem("token", token);
-        console.log("Token:", token);
-
+        dispatchUser({ type: 'SET_USER', payload: userData});
+        
         navigate("/cart");
       } else {  // Handle unexpected structure in backend response
         setEmailPasswordLoading(false);

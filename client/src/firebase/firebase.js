@@ -29,8 +29,10 @@ const fbAuthProvider = new FacebookAuthProvider(); // facebook authentication
 
 export const signInWithGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, googleAuthProvider);
+    const result = await signInWithPopup(auth, googleAuthProvider); 
+    console.log(result.user)
     return result.user;
+   
   } catch (error) {
     throw error;
   }
@@ -39,6 +41,8 @@ export const signInWithGoogle = async () => {
 export const signInWithFacebook = async () => {
   try {
     const result = await signInWithPopup(auth, fbAuthProvider);
+    console.log(result.user)
+    
     return result.user;
   } catch (error) {
     throw error;
