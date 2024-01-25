@@ -9,7 +9,7 @@ export default function DetailPoco() {
 
   const getDetailApiPoco = async () => {
     const response = await axios(
-      `https://xiaomi-phone-api.onrender.com/api/v1/products/${params.id}`
+      `${import.meta.env.VITE_APP_BASEURL}/products/${params.id}`
     );
     setDataDetail(response.data.data);
   };
