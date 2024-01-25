@@ -42,6 +42,9 @@ const AddressForm = ({ onClose }) => {
     fetchProvinces();
   }, []);
 
+  const provinceNames = provinces.map((province) => province);
+  console.log(provinceNames);
+
   const getCities = async (selectedProvince) => {
     try {
       // Panggil API Raja Ongkir untuk mendapatkan daftar kota/kabupaten berdasarkan provinsi
@@ -84,6 +87,7 @@ const AddressForm = ({ onClose }) => {
   };
 
   const submitForm = () => {
+    console.log(formData);
     const dataToSend = {
       address_name: formData.address_name,
       province: formData.province,
@@ -94,6 +98,8 @@ const AddressForm = ({ onClose }) => {
       postal_code: formData.postal_code,
       phone_number: formData.phone_number,
     };
+
+    console.log;
 
     // Panggil server API pribadi untuk menyimpan data alamat
     axios
