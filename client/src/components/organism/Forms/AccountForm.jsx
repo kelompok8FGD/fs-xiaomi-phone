@@ -21,7 +21,6 @@ const TabbedInterface = () => {
   
   return (
     <div className="mi-layout__card bg-formBackground container px-[50px] py-8 border-formBackground mx-auto mt-[-50px]">
-          <Link to="#register"   onClick={() => handleTabClick('register')}>Daftar</Link>
 
       <ul id='account-form-navigation' className="flex gap-4">
         <li id='login'

@@ -85,7 +85,6 @@ const AddressForm = ({ onClose }) => {
 
   const submitForm = () => {
     const dataToSend = {
-      // Sesuaikan dengan properti yang sesuai untuk nama
       address_name: formData.address_name,
       province: formData.province,
       city: formData.city,
@@ -98,15 +97,20 @@ const AddressForm = ({ onClose }) => {
 
     // Panggil server API pribadi untuk menyimpan data alamat
     axios
-      .post(`${import.meta.env.VITE_APP_BASEURL}/api/v1/address`, dataToSend, {
+      .post(`${import.meta.env.VITE_APP_BASEURL}/address`, dataToSend, {
         headers: {
           Authorization: `bearer ${token}`,
         },
       })
-      .then((response) =>
-        console.log("Address submitted successfully:", response.data)
-      )
-      .catch((error) => console.error("Error submitting address:", error));
+      .then((response) => {
+        console.log("Alamat berhasil dikirim:", response.data);
+        alert("Alamat berhasil dikirim");
+        window.location.reload(); // Me-refresh halaman
+      })
+      .catch((error) => {
+        console.error("Error saat mengirim alamat:", error);
+        alert("Error saat mengirim alamat");
+      });
   };
 
   const handleProvinceChange = (e) => {
