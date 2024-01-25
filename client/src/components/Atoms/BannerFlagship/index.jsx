@@ -10,8 +10,8 @@ import ProductTitleSmartphone from "../InsideCard/ProductTitleSmartphone.jsx";
 
 const BannerFlagship = (props) => {
   const [dataXiaomi, setDataXiaomi] = useState([]);
-  const [currentPage] = useState(15);
-  const [postsPerPage] = useState(16);
+  const [currentPage] = useState(8);
+  const [postsPerPage] = useState(9);
 
   const dispatch = useDispatch();
   // const { addToCart } = useContext(CartContext);
