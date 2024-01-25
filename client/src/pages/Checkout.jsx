@@ -5,6 +5,14 @@ import axios from "axios";
 
 function Checkout() {
   const [tampilkanAddressForm, setTampilkanAddressForm] = useState(false);
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
+  const [isAgreementSelected, setIsAgreementSelected] = useState(false);
+
+  const handleSelectMainAddress = (address) => {
+    // Your existing logic to set the main address
+    setMainAddress(address);
+    setIsAddressSelected(true);
+  };
 
   const handleTambahAlamatClick = () => {
     setTampilkanAddressForm(true);
@@ -16,8 +24,28 @@ function Checkout() {
 
   // metode pengiriman
   const [isChecked, setIsChecked] = useState(false);
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+
+  const handleRadioClick = () => {
+    if (!isChecked) {
+      setIsChecked(true);
+    }
+  };
+
+  const handleCheckboxChange = (e) => {
+    setIsAgreementSelected(e.target.checked);
+  };
+
+  const [bankSelection, setBankSelection] = useState(false);
+  const [paymentSelection, setPaymentSelection] = useState(false);
+
+  const handleRadioPaymentChange = (group) => {
+    if (group === "bank") {
+      setBankSelection(true);
+      setPaymentSelection(false);
+    } else if (group === "payment") {
+      setBankSelection(false);
+      setPaymentSelection(true);
+    }
   };
 
   const [dataAddress, setDataAddress] = useState([]);
@@ -28,6 +56,8 @@ function Checkout() {
   const [dataCartItem, setDataCartItem] = useState([]);
 
   const token = localStorage.getItem("token");
+
+  const isPaymentSelected = bankSelection || paymentSelection;
 
   const getApiAddress = async () => {
     const response = await axios(
@@ -42,8 +72,9 @@ function Checkout() {
 
     setDataAddress(response.data);
     // Pilih alamat utama (contoh: alamat pertama dalam daftar)
-    if (response.data.length > 0) {
+    if (response.data.data.length > 0) {
       setMainAddress(response.data[0]);
+      setIsAddressSelected(true); // Auto select the first address
     }
   };
   const getCartItems = async () => {
@@ -171,9 +202,9 @@ function Checkout() {
             </section>
 
             <section
-              className="p-8 mb-4 bg-white"
+              className="p-4 mb-2 bg-white"
               value={setIsChecked}
-              onChange={handleCheckboxChange}
+              onChange={handleRadioClick}
             >
               <div className="mb-6">
                 <div className="pb-6">
@@ -184,26 +215,34 @@ function Checkout() {
                 <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
               </div>
 
-              <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+              <div className="grid grid-cols-9 border bg-gray-200 border-solid rounded-lg mb-2 lg:hover:cursor-pointer">
                 <div className="text-center my-auto">
                   <input
-                    type="checkbox"
-                    className="form-checkbox text-[#FF6900] h-5 w-5"
+                    type="radio"
+                    className="form-checkbox text-gray-400 h-5 w-5"
+                    name="pengiriman"
+                    disabled
                   />
                 </div>
                 <div className="p-4 col-span-8">
                   <p>Pengiriman Sepeda motor</p>
-                  <p className="text-[#FF6900]">
+                  <p className="text-gray-400">
                     Layanan pengiriman ini tidak didukung
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-9 border border-solid rounded-lg mt-2 mb-3 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+              <div
+                className="grid grid-cols-9 border border-solid rounded-lg mt-2 mb-3 lg:hover:border-[#FF6900] lg:hover:cursor-pointer"
+                onClick={handleRadioClick}
+              >
                 <div className="text-center my-auto">
                   <input
-                    type="checkbox"
+                    type="radio"
                     className="form-checkbox text-[#FF6900] h-5 w-5"
+                    name="pengiriman"
+                    checked={isChecked}
+                    onChange={() => {}}
                   />
                 </div>
                 <div className="p-4 col-span-8" value="shipp">
@@ -217,27 +256,33 @@ function Checkout() {
               <p>
                 Dipengaruhi oleh cuaca dan festival, pengiriman akan tertunda
               </p>
+            </section>
+
+            <section className="p-4 mb-2 bg-white">
               <section className="mt-6 mb-4 bg-white">
                 <div className="">
                   <div className="">
-                    <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
+                    <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl pb-6">
                       Metode Pembayaran
                     </h2>
                   </div>
-                  <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
+                  <div className=" bg-slate-100 h-[1px] max-w-2xl"></div>
                 </div>
               </section>
-            </section>
-
-            <section className="mb-4">
               {/* Shipping with Card section (conditionally rendered) */}
               {isChecked === true && (
                 <>
-                  <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+                  <div
+                    className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer"
+                    onClick={() => handleRadioPaymentChange("bank")}
+                  >
                     <div className="text-center my-auto">
                       <input
-                        type="checkbox"
+                        type="radio"
                         className="form-checkbox text-[#FF6900] h-5 w-5"
+                        name="bankSelection"
+                        checked={bankSelection}
+                        onChange={() => {}}
                       />
                     </div>
                     <div className="p-3 col-span-8 flex">
@@ -250,11 +295,17 @@ function Checkout() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+                  <div
+                    className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer"
+                    onClick={() => handleRadioPaymentChange("payment")}
+                  >
                     <div className="text-center my-auto">
                       <input
-                        type="checkbox"
+                        type="radio"
                         className="form-checkbox text-[#FF6900] h-5 w-5"
+                        name="paymentSelection"
+                        checked={paymentSelection}
+                        onChange={() => {}}
                       />
                     </div>
 
@@ -330,25 +381,28 @@ function Checkout() {
                 </div>
               </div>
             </section>
-            <section className="p-8 bg-white lg:order-5 lg:pb-0 lg:mb-0 lg:mt-0 lg:pt-0">
-              <div className="grid grid-cols-2">
-                <div>
-                  <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
-                    Kupon
-                  </h2>
-                  <h4 className="p-1">0 Kupon Tersedia</h4>
-                  <h4 className="p-1">Tidak Ada Kupon Yang Digunakan</h4>
-                </div>
-                <div className="text-right">
-                  <p className="lg:text-[#FF6900]">Gunakan Kupon</p>
-                </div>
-              </div>
-            </section>
 
             <section className="hidden lg:grid lg:order-last text-center">
               <div className="items-end lg:bottom-0 lg:right-20 lg:pb-1">
-                <button className="w-[241px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end lg:w-[400px]">
-                  <h1 className="text-white font-Inter text-2xl z-50">
+                <button
+                  disabled={
+                    !isAddressSelected ||
+                    !isChecked ||
+                    !isPaymentSelected ||
+                    !isAgreementSelected ||
+                    allAddress.length === 0
+                  }
+                  className={`w-[201px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end xsml:w-[241px] lg:w-[400px] ${
+                    !isAddressSelected ||
+                    !isChecked ||
+                    !isPaymentSelected ||
+                    !isAgreementSelected ||
+                    allAddress.length === 0
+                      ? "cursor-not-allowed bg-gray-400"
+                      : ""
+                  }`}
+                >
+                  <h1 className="text-white font-Inter text-xl xsml:text-2x1">
                     Bayar Sekarang
                   </h1>
                 </button>
@@ -356,26 +410,29 @@ function Checkout() {
             </section>
 
             <section className="p-8 mb-4 lg:order-last lg:pb-0 lg:mb-0 lg:mt-0 lg:pt-0">
-              <div className="grid grid-cols-9 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+              <div
+                className="grid grid-cols-9 lg:hover:border-[#FF6900] lg:hover:cursor-pointer "
+                onChange={handleCheckboxChange}
+              >
                 <div className="text-center m-auto">
                   <input
                     type="checkbox"
                     className="form-checkbox text-[#FF6900] h-5 w-5"
+                    onChange={handleCheckboxChange}
                   />
                 </div>
                 <div className="col-span-8">
                   <span className="">
                     Dengan melakukan pemesanan, berarti Anda telah membaca dan
-                    menyetujui
+                    menyetujui{" "}
                     <span className="text-[#FF6900]">
-                      Ketentuan Penggunaandan
+                      Ketentuan Penggunaandan{" "}
                     </span>
-                    dan
-                    <span className="text-[#FF6900]">
-                      Kebijakan Privasi{" "}
-                    </span>{" "}
+                    dan{" "}
+                    <span className="text-[#FF6900]">Kebijakan Privasi </span>{" "}
                     Mi.com. Saya telah membaca dan menyetujui
                     <span className="text-[#FF6900]">
+                      {" "}
                       Kebijakan Pengembalian.
                     </span>
                   </span>
@@ -397,7 +454,24 @@ function Checkout() {
                     </h1>
                   </div>
                   <div className="items-end lg:absolute lg:bottom-0 lg:right-20 lg:pb-10 lg:hidden">
-                    <button className="w-[201px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end xsml:w-[241px]">
+                    <button
+                      disabled={
+                        !isAddressSelected ||
+                        !isChecked ||
+                        !isPaymentSelected ||
+                        !isAgreementSelected ||
+                        allAddress.length === 0
+                      }
+                      className={`w-[201px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end xsml:w-[241px] ${
+                        !isAddressSelected ||
+                        !isChecked ||
+                        !isPaymentSelected ||
+                        !isAgreementSelected ||
+                        allAddress.length === 0
+                          ? "cursor-not-allowed"
+                          : ""
+                      }`}
+                    >
                       <h1 className="text-white font-Inter text-xl xsml:text-2x1">
                         Bayar Sekarang
                       </h1>
