@@ -27,7 +27,7 @@ export default function SupportForm() {
       <input id="name" name="name" type='text' placeholder='Name' className='input' />
       <input id="email" name="email" type="email" placeholder="Email" className="input" />
       <ValidationError prefix="Email" field="email" errors={state.errors} />
-      <textarea id="message" name="message" className="textarea" placeholder="Message" />
+      <textarea id="message" name="message" className="textarea min-h-[300px] overflow-y-auto resize-none" placeholder="How can we help you today?" />
       <ValidationError prefix="Message" field="message" errors={state.errors} />
       <button type="submit" disabled={state.submitting} className='btn rounded-full border bg-accent py-3 text-white border-white/50 max-w-[170px] px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
       <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>

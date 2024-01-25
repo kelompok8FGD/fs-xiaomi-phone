@@ -54,18 +54,18 @@ const Dropdown = () => {
       <div
         className={`${
           isDropdownOpen ? 'block' : 'hidden'
-        } z-10 absolute top-full left-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 transition-transform transform origin-top`}
+        } z-10 absolute top-full left-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-max transition-transform transform origin-top`}
       >
 
       {!user ? (
-             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+             <ul className="py-2 text-sm text-gray-700 " aria-labelledby="dropdownHoverButton">
              <li>
                 
              </li>
              <li>
                <a
                  href="/account?activeTab=login"
-                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                 className="block px-4 py-2 hover:underline"
                >
                  Masuk
                </a>
@@ -73,24 +73,24 @@ const Dropdown = () => {
              <li>
                <a
                  href="/account?activeTab=register"
-                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                 className="block px-4 py-2 hover:underline"
                >
                  Daftar
                </a>
              </li>
            </ul>
       ) : (
-        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+        <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
        <li>
           <a
             href="/account?activeTab=register"
-            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            className="block px-4 py-2 hover:underline"
           >
             Profile
           </a>
         </li>
         <li>
-        <button className='block px-4 py-2 hover:bg-gray-100' onClick={handleClick}>Log out</button>
+        <button className='block px-4 py-2 hover:underline' onClick={handleClick}>Log out</button>
         </li>
         
       </ul>
