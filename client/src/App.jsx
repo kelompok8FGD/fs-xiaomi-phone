@@ -1,5 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { DynamicThemeProvider } from "./context/DynamicThemeContext";
+import { AuthContextProvider } from "./context/AuthContext";
+import { UserContextProvider } from "./context/UserContext";
 {
   /*Delete cart provider only after fully implementing redux*/
 }
@@ -24,15 +26,19 @@ function App() {
   return (
     <>
       <DynamicThemeProvider>
-        <Provider store={store}>
-          <CartProvider>
-            {showHeader && <Header />}
-            <main>
-              <Outlet />
-            </main>
-            {showFooter && <Footer />}
-          </CartProvider>
-        </Provider>
+        <AuthContextProvider>
+          <UserContextProvider>
+            <Provider store={store}>
+              <CartProvider>
+                {showHeader && <Header />}
+                <main>
+                  <Outlet />
+                </main>
+                {showFooter && <Footer />}
+              </CartProvider>
+            </Provider>
+          </UserContextProvider>
+        </AuthContextProvider>
       </DynamicThemeProvider>
     </>
   );

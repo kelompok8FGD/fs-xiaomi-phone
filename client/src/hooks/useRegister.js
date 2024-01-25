@@ -20,37 +20,36 @@ export const useRegister = (navigate) => {
         }
       );
 
-      const json = response.data;
+      const dataError = response.data.error || "An error occurred during registration.";
 
-      if (response.status !== 200) {
-        const jsonError =
-          json.message || "An error occurred during registration.";
-        setIsLoading(false);
-        setError(jsonError);
-        console.log(jsonError);
-      } else {
+      if (response.status === 200) { //Successful response
         setIsLoading(false);
         // Use the navigate function passed as a parameter
         navigate("/account?activeTab=login");
         window.location.reload();
+      } else {
+        // Handle unexpected structure in backend response
+        setIsLoading(false);
+        setError(dataError);
+        console.error(dataError);
       }
     } catch (error) {
-      if (error.response) {
-        const jsonError =
-          error.response.data.message || "An error occurred during registration";
-        setIsLoading(false);
-        setError(jsonError);
-        console.log(error.response);
-        console.log(jsonError);
+      setIsLoading(false);
+      const serverError = error.response?.data?.error;
+
+      if (serverError) {
+        // Specific error message from the backend
+        setError(serverError);
+        console.error("Server error during registration:", serverError);
       } else {
-        setIsLoading(false);
-        setError("An error occurred during registration.");
-        console.error("Error during registration:", error);
+        // Unexpected response from the backend
+        setError("An unexpected error occurred during registration.");
+        console.error("Unexpected error in server:", error.response?.data);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return { register, isLoading, error };
 };
-
-  
