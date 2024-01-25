@@ -5,6 +5,7 @@ import List from '../../Atoms/List/ListItem';
 import SearchButton from '../../Atoms/Buttons/SearchButton';
 import { useLogout } from '../../../hooks/useLogout';
 import ThemeSwitch from '../../molecule/ThemeSwitch';
+import Dropdown from './Dropdown';
 import { useSelector } from 'react-redux';
 import { useAuthContext } from '../../../hooks/useAuthContext';
 import { calculateTotal } from '../../../redux/cart/cartUtils';
@@ -40,7 +41,8 @@ const SiteNavbar = () => {
         <div className="grow h-full"></div>
         <div className='only-medium'>
         <List redirect="/support" text="Support" className="h-full px-[8px] lg:px-[16px]" title="Support" />
-        </div>
+        </div>     {/* User login/logout */}   
+      <Dropdown/>
         <SearchButton />
         <div id='cartamount' className='relative'>
           <Icon redirect="/cart" classname="shopping-cart" />
@@ -49,18 +51,7 @@ const SiteNavbar = () => {
 </div>
         </div>  
         <ThemeSwitch />
-          {/* User login/logout */}   
-          <div className="flex justify-center items-center gap-4">
-          {!user ? (
-        <Icon redirect="/account?activeTab=login" classname="account only-medium" />
-      ) : (
-        <>
-          <button className='only-medium' onClick={handleClick}>Log out</button>
-        </>
-      )}
-      </div>
-        
-      
+     
         {/* Toggle button for the menu */}
         <button
           className="relative ml-4 text-text p-2 focus:outline-none  flex md:hidden z-[1001]"
