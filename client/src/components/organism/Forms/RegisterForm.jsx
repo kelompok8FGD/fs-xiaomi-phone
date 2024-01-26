@@ -4,6 +4,7 @@ import CustomInput from "../../Atoms/CustomInput";
 import CustomLabel from "../../Atoms/CustomLabel";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import CountrySelector from '../../Atoms/CountrySelector/index'
 
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
@@ -49,6 +50,8 @@ const RegisterForm = () => {
         value={fullname}
         placeholder="Full Name"
       />
+
+      <CountrySelector/>
 
       <CustomInput
         required
