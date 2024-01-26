@@ -86,19 +86,24 @@ const AddressForm = ({ onClose }) => {
     }
   };
 
+  // Fungsi bantuan untuk mendapatkan nama dari ID
+  const getNameFromId = (id, dataArray) => {
+    const selectedItem = dataArray.find((item) => item.id === id);
+    return selectedItem ? selectedItem.name : "";
+  };
+
   const submitForm = () => {
-    console.log(formData);
+    // Menggunakan fungsi bantuan untuk mendapatkan nama dari ID
     const dataToSend = {
       address_name: formData.address_name,
-      province: formData.province,
-      city: formData.city,
-      subdistrict: formData.subdistrict,
-      villages: formData.villages,
+      province: getNameFromId(formData.province, provinces),
+      city: getNameFromId(formData.city, cities),
+      subdistrict: getNameFromId(formData.subdistrict, subdistrict),
+      villages: getNameFromId(formData.villages, villages),
       full_address: formData.full_address,
       postal_code: formData.postal_code,
       phone_number: formData.phone_number,
     };
-
     console.log;
 
     // Panggil server API pribadi untuk menyimpan data alamat
