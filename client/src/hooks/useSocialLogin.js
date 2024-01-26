@@ -50,7 +50,7 @@ export const useSocialLogin = () => {
         // Dispatch 'LOGIN' action with the extracted information
         dispatchAuth({ type: 'LOGIN', payload: userAuth });
         dispatchUser({ type: 'SET_USER', payload: userProfile });
-       // navigate("/cart");
+       navigate("/cart");
       } catch (error) {
         console.error('Facebook Login Error:', error);
       }

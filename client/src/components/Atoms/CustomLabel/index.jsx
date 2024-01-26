@@ -1,7 +1,7 @@
 import React from "react";
 import { cva } from "class-variance-authority";
 
-const cvaLabel = cva("focus:ring-accent focus:border-accent mb-[10px] mt-[10px] border-gray-300", {
+const cvaLabel = cva("text-text focus:ring-accent focus:border-accent mb-[10px] mt-[10px] border-gray-300", {
   variants: {
     intent: { //use any styles you need, will be used for address form
       form: "text-gray-800 h-[30px] mb-[10px] mt-[10px] py-[30px] px-[15px] w-full",
