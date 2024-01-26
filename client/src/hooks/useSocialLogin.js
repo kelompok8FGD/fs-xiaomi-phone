@@ -15,15 +15,17 @@ export const useSocialLogin = () => {
           const { email, displayName: fullname, accessToken: token, photoURL } = data;
       
           // Create a user object with the necessary information
-          const userData = { email, fullname, token };
+          const userAuth = { email, fullname, token };
+          const userProfile = { email, fullname, photoURL };
       
           // Store the user data in local storage
-          localStorage.setItem("user", JSON.stringify(userData));
+          localStorage.setItem("auth", JSON.stringify(userAuth));
           localStorage.setItem("token", token);
-      
+          localStorage.setItem("user", JSON.stringify(userProfile));
+          console.log("User Profile saved:", userProfile);
           // Dispatch 'LOGIN' action with the extracted information
-          dispatchAuth({ type: 'LOGIN', payload: userData });
-          dispatchUser({ type: 'SET_USER', payload: userData });
+          dispatchAuth({ type: 'LOGIN', payload: userAuth });
+          dispatchUser({ type: 'SET_USER', payload: userProfile });
           navigate("/cart");
         } catch (error) {
           console.error('Google Login Error:', error);
@@ -38,14 +40,16 @@ export const useSocialLogin = () => {
         // Extract necessary information
         const { email, displayName: fullname, accessToken: token, photoURL } = data;
         // Create a user object with the necessary information
-        const userData = { email, fullname, token };
+        const userAuth = { email, fullname, token };
+        const userProfile = { email, fullname, photoURL };
         // Store the user data in local storage
-        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("user", JSON.stringify(userProfile));
+        localStorage.setItem("auth", JSON.stringify(userAuth));
         localStorage.setItem("token", token);
   
         // Dispatch 'LOGIN' action with the extracted information
-        dispatchAuth({ type: 'LOGIN', payload: userData });
-        dispatchUser({ type: 'SET_USER', payload: userData });
+        dispatchAuth({ type: 'LOGIN', payload: userAuth });
+        dispatchUser({ type: 'SET_USER', payload: userProfile });
         navigate("/cart");
       } catch (error) {
         console.error('Facebook Login Error:', error);

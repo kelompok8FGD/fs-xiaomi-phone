@@ -30,7 +30,8 @@ i18n.use(initReactI18next).init({
                 useragreement: "User agreement",
                 privacypolicy: "Privacy Policy",
                 help: "Need Help?",
-                language: "Select your language"
+                language: "Select your language",
+                country: "Select your country",
             }
         },
         id: {
@@ -55,7 +56,8 @@ i18n.use(initReactI18next).init({
                 useragreement: "Perjanjian Pengguna",
                 privacypolicy: "Kebijakan Privasi",
                 help: "Butuh Bantuan?",
-                language: "Pilih Bahasa Anda"
+                language: "Pilih Bahasa Anda",
+                country: "Pilih Negara Anda",
             },
         },
     },

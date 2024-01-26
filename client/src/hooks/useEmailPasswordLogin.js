@@ -35,15 +35,21 @@ export const useEmailPasswordLogin = () => {
         // Extract the information
         const { email, fullname, token } = data;
         // Create a user object with the necessary information
-        const userData = { email, fullname, token };
-        localStorage.setItem("user", JSON.stringify(userData));
+        const userAuth = { email, fullname, token };
+        const userProfile = { email, fullname, photoURL: "" };
+        localStorage.setItem("auth", JSON.stringify(userAuth));
+        localStorage.setItem("user", JSON.stringify(userProfile));
         localStorage.setItem("token", token);
+        const user = JSON.parse(localStorage.getItem("user"));
+        const auth = JSON.parse(localStorage.getItem("auth"));
+        console.log("User Profile saved:", user);
+        console.log("User Auth saved:", auth);
 
         // Dispatch to AuthContext
-        dispatchAuth({ type: "LOGIN", payload: userData });
+        dispatchAuth({ type: "LOGIN", payload: userAuth });
 
         // Dispatch to UserContext
-        dispatchUser({ type: 'SET_USER', payload: userData});
+        dispatchUser({ type: 'SET_USER', payload: userProfile});
         
         navigate("/cart");
       } else {  // Handle unexpected structure in backend response

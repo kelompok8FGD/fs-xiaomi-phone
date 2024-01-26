@@ -11,6 +11,7 @@ import Home from "./pages/Home.jsx";
 import Store from "./pages/Store.jsx";
 import Cart from "./pages/Cart.jsx";
 import Account from "./pages/Account.jsx";
+import Profile from "./pages/Profile.jsx";
 import Support from "./pages/Support.jsx"
 import Error from "./pages/Error.jsx";
 import SmartPhone from "./pages/Smartphone.jsx";
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/account",
         element: <ProtectedRouteHOC element={<Account />} />,
+      },
+      {
+        path: "/profile",
+        element: <ProtectedRouteHOC element={<Profile />} />,
       },
       { path: "/smartphone", element: <SmartPhone /> },
       { path: "/About", element: <About /> },
