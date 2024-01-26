@@ -4,6 +4,9 @@ const ProductTitle = (props) => {
   const formattedPrice = StartingPrice.toLocaleString(undefined, {
     maximumFractionDigits: 0,
   });
+  const formattedPricePrev = PreviousPrice.toLocaleString(undefined, {
+    maximumFractionDigits: 0,
+  });
   return (
     <>
       <div className="font-semibold text-[19px] leading-[24px] md:text-[36px] md:leading-[45px] pt-12">
@@ -20,7 +23,7 @@ const ProductTitle = (props) => {
           Mulai dari Rp {formattedPrice}
         </div>
         <div className="font-normal text-[12px] leading-[15px] text-[#999999] line-through md:text-[15px] md:leading-[19px]">
-          Rp {PreviousPrice}
+          Rp {formattedPricePrev}
         </div>
       </div>
       {/* <div className={`${Button}`}>
