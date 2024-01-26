@@ -2,11 +2,19 @@ import React from "react";
 import XiaomiBanner from "../components/molecule/Home/XiaomiBanner";
 import RedmiBanner from "../components/molecule/Home/RedmiBanner";
 import LatestPhone from "../components/molecule/Home/LatestProducts/LatestPhone";
+// This Banner will be reusable
+import ProductBanner from "../components/molecule/ProductBanner";
+
+
+
 
 const Home = () => {
+  const bgPhone = "https://firebasestorage.googleapis.com/v0/b/tutorial-1ad91.appspot.com/o/xiaomi%2Fimage_xiaomi_desktop.webp?alt=media&token=5ae3f2c0-fb04-463d-a436-54b5923bd98b"
+  const bgDesktop = "//i02.appmifile.com/298_operator_id/03/10/2023/f495255ebd34286602b86fa19fab9026.jpg"
   return (
     <div className="flex flex-col max-w-full bg-[#f7f7f7] gap-[15px]">
       <div id="top-banner" className="w-full flex flex-col gap-[16px]">
+        {/** <ProductBanner phonePicMobile = {bgPhone} phonePicDesktop = {bgDesktop} /> **/}
         <XiaomiBanner />
         <RedmiBanner />
       </div>

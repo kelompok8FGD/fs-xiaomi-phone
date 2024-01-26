@@ -102,6 +102,46 @@ const createNewProduct = async (req, res) => {
   }
 };
 
+
+// Controller to get product by ID within a specific category
+const getProductByIdInCategory = async (req, res) => {
+  try {
+    const { category, id } = req.params;
+
+    // You may want to validate the category and id inputs here
+
+    const dataProduct = await Product.findOne({
+      where: {
+        id_product: {
+          [Op.like]: `%${id}%`,
+        },
+        category_product: {
+          [Op.like]: `%${category}%`,
+        },
+      },
+    });
+
+    if (!dataProduct) {
+      return res.status(404).json({
+        status: "failed",
+        message: `Product with id ${id} in category ${category} not found`,
+      });
+    }
+
+    res.json({
+      status: "ok",
+      data: dataProduct,
+    });
+  } catch (error) {
+    console.error("Error retrieving product by id in category:", error);
+    res.status(500).json({
+      status: "failed",
+      message: "Internal Server Error",
+    });
+  }
+};
+
+
 // Update Product
 const updateProduct = async (req, res, next) => {
   try {
@@ -184,6 +224,7 @@ module.exports = {
   findAllProducts,
   getProductById,
   getProductsByCategory,
+  getProductByIdInCategory,
   createNewProduct,
   deleteProduct,
   updateProduct,
