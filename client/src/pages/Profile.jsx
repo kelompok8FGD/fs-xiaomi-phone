@@ -1,5 +1,7 @@
 import React from 'react'
 import NoPicture from "../assets/global/no-picture.png"
+import CustomInput from '../components/Atoms/CustomInput';
+import CustomLabel from '../components/Atoms/CustomLabel';
 
 const Profile = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -21,6 +23,17 @@ const Profile = () => {
             <div>
 
             </div>
+        </div>
+        <div className='flex flex-col p-10'>
+            <h2 className='text-3xl font-bold'>Edit Info</h2>
+            <form action="" className='w-[50%] flex flex-col'>
+                <CustomLabel text="Name" id="name"/>
+            <CustomInput intent="form" placeholder={user.fullname} id='name' type='text'/>
+            <CustomLabel  text="Phone Number" id="phoneNumber"/>
+            <CustomInput intent="form" placeholder={"Edit Number"} id='phonenumber' type='phone'/>
+            </form>
+            
+
         </div>
     </div>
   )

@@ -42,7 +42,6 @@ export const signInWithFacebook = async () => {
   try {
     const result = await signInWithPopup(auth, fbAuthProvider);
     console.log(result.user)
-    
     return result.user;
   } catch (error) {
     throw error;
