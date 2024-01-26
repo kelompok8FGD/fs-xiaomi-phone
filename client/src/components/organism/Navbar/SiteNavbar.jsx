@@ -21,7 +21,7 @@ const SiteNavbar = () => {
   const { totalQuantity } = calculateTotal(cart);
 
   const { logout } = useLogout()
-  const { user } = useAuthContext()
+  const { auth } = useAuthContext()
   const handleClick = () => {
     logout()
   }
@@ -47,7 +47,7 @@ const SiteNavbar = () => {
         <div id='cartamount' className='relative'>
           <Icon redirect="/cart" classname="shopping-cart" />
           <div className="absolute top-[-10px] right-0 h-auto bg-accent px-2 py-1 rounded-full">
-  <p className="mx-auto text-text text-xs">{user ? totalQuantity : 0}</p>
+  <p className="mx-auto text-text text-xs">{auth ? totalQuantity : 0}</p>
 </div>
         </div>  
         <ThemeSwitch />
@@ -69,9 +69,9 @@ const SiteNavbar = () => {
                 <div className='px-[16px]  py-[16px] gap-4 flex justify-between' >
                   <div className='w-max rounded-lg bg-neutral-300 text-white flex items-center justify-center'>
                 <Icon redirect="/account?activeTab=login" classname="account" /></div>
-                {user ? (
+                {auth ? (
         <div className='flex flex-col items-start w-full'>
-          <span>{user.email}</span>
+          <span>{auth.email}</span>
           <button onClick={handleClick}>Log out</button>
         </div>
       ) : (
