@@ -22,6 +22,7 @@ import Privacy from "./pages/Privacy.jsx";
 import Poco from "./pages/Poco.jsx";
 import Xiaomi from "./pages/Xiaomi.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import OrderCompleted from "./pages/OrderCompleted.jsx"
 import DetailPoco from "./pages/ProductDetails/Poco/index.jsx";
 import RedmiList from "./pages/Redmi.jsx";
 import Search from "./pages/Search.jsx";
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <ProtectedRouteHOC element={<Checkout />} />,
+      },
+      {
+        path: "/ordercompleted",
+        element: <ProtectedRouteHOC element={<OrderCompleted />} />,
       },
       { path: "/detail/:id", element: <DetailPoco /> },
     ],
