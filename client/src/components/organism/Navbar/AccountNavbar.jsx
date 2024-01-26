@@ -29,13 +29,13 @@ const AccountNavbar = () => {
     <nav id="account-top-nav">
                 <ul className="text-text">
                   <li>
-                    <a href="">{t("useragreement")} </a>
+                    <a href="/Agreement">{t("useragreement")} </a>
                   </li>
                   <li>
-                    <a href="">{t("privacypolicy")} </a>
+                    <a href="/Privacy">{t("privacypolicy")} </a>
                   </li>
                   <li>
-                    <a href="">{t("help")} </a>
+                    <a href="/support">{t("help")} </a>
                   </li>
                   <li>
                     <span>|</span>
