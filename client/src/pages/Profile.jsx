@@ -20,7 +20,7 @@ const Profile = () => {
       >
         <div
           id="user-welcome"
-          className="px-[250px]  h-max flex gap-8 items-center"
+          className="px-[250px] h-max flex gap-8 items-center"
         >
           <div id="picture-wrapper" className="w-[100px] md:w-[170px] h-auto  ">
             <img
@@ -31,7 +31,7 @@ const Profile = () => {
           </div>
           <div className="flex flex-col h-full text-white min-h-[170px] py-[20px] items-start">
             <p className="text-3xl font-bold">Hi! Welcome, {user.fullname}</p>
-            <p className="text-xl py-[10px] font-normal">Email: {user.email}</p>
+            <p className="text-xl font-normal py-[10px] font-normal">Email: {user.email}</p>
           </div>
         </div>
         <div></div>
