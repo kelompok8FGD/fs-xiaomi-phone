@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Bannerleft from "/account/bannerleft.jpg";
 import Logo from "../../public/logo.svg";
 import { useTranslation } from "react-i18next";
@@ -10,7 +10,9 @@ const Account = () => {
   const { t, i18n } = useTranslation();
 
 
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="bg-contrast h-[100vh]">
       <div className="flex justify-around h-full">
@@ -41,8 +43,6 @@ const Account = () => {
           <div
             className="p-8 w-[500px] relative bg-contrast text-left m-auto py-[20px]">
             <AccountForm />
-            <h1>{localStorage.getItem("name")}</h1>
-      <h1>{localStorage.getItem("email")}</h1>
           </div>
         </div>
       </div>

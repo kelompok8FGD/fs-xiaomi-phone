@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../redux/cart/cartSlice";
 import CartItem from "../components/molecule/Cart/CartItem";
@@ -75,6 +75,10 @@ const Cart = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
   return (
     <div className="flex flex-col max-w-[100vw] h-full bg-white">

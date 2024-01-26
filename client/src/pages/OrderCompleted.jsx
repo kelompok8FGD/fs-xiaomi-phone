@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import OrderInvoice from './OrderInvoice'; // component to convert to PDF
@@ -15,6 +15,9 @@ const PdfDownloadComponent = () => {
       // Specify the name of the downloaded PDF file
     });
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className='bg-background flex flex-col w-full items-center py-10'>
         <CustomButton intent="accent_bg" onClick={handleDownloadPDF} text="Download Invoice"/>
