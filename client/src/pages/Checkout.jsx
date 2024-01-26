@@ -2,11 +2,19 @@ import CheckoutNavbar from "../components/organism/Navbar/CheckoutNavbar";
 import React, { useEffect, useState } from "react";
 import AddressForm from "../components/organism/Address/AddressForm";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import ProductItem from "../components/Atoms/CheckoutItem/ProductItem";
+import TotalPrice from "../components/Atoms/CheckoutItem/TotalPrice";
+import ConfirmPayment from "../components/Atoms/CheckoutItem/ConfirmPayment";
+import CountdownTimer from "../components/Atoms/CheckoutItem/CountdownTimer";
 
 function Checkout() {
+  const navigate = useNavigate();
   const [tampilkanAddressForm, setTampilkanAddressForm] = useState(false);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
   const [isAgreementSelected, setIsAgreementSelected] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [tampilkanCountdown, setTampilkanCountdown] = useState(false);
 
   const handleSelectMainAddress = (address) => {
     // Your existing logic to set the main address
@@ -98,10 +106,39 @@ function Checkout() {
   useEffect(() => {
     getApiAddress();
     getCartItems();
+
+    const storedStartTime = localStorage.getItem("countdownStartTime");
+
+    if (storedStartTime) {
+      const elapsed = new Date() - new Date(storedStartTime);
+      if (elapsed < 24 * 60 * 60 * 1000) {
+        setTampilkanCountdown(true);
+      }
+    }
   }, []);
 
   const allAddress = dataAddress.data || [];
   const allCartItem = dataCartItem.data || [];
+
+  // Initialize a counter variable
+  let totalProductItems = 0;
+
+  // Loop through each cart item and check if it has ProductModel
+  allCartItem.forEach((item) => {
+    if (item.ProductModel) {
+      // Increment the counter if ProductModel exists
+      totalProductItems++;
+    }
+  });
+
+  // Initialize a variable to store the total cost
+  let totalCost = 0;
+
+  // Loop through each cart item, calculate the cost (price * qty) for each item, and add it to the total
+  allCartItem.forEach((item) => {
+    const itemCost = item.price * item.qty;
+    totalCost += itemCost;
+  });
 
   const adress = allAddress.slice(
     currentAddress,
@@ -110,21 +147,26 @@ function Checkout() {
   // Menampilkan data ProductModel dengan console.log
 
   const handleBayarSekarangClick = async () => {
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmPayment = async () => {
+    const startTime = new Date().toString();
+    localStorage.setItem("countdownStartTime", startTime);
+    // Your logic when the user confirms the payment
     try {
-      // Persiapkan data untuk dikirimkan ke API
+      // Your logic to prepare data for API
       const dataPembayaran = {
-        payment_type: bankSelection ? "Bank" : paymentSelection ? "Online" : "", // Teks 'Bank' atau 'Online'
-        // Tambahkan field lain yang diperlukan untuk pembayaran
+        payment_type: bankSelection ? "Bank" : paymentSelection ? "Online" : "",
+        // Add other fields as needed for payment
       };
 
       const dataPengiriman = {
-        // Isi dengan data pengiriman yang dibutuhkan
-        // Contoh:
         shipment_type: isChecked ? "Standar" : "Motor",
-        // Tambahkan field lain yang diperlukan untuk pengiriman
+        // Add other fields as needed for shipment
       };
 
-      // Lakukan permintaan API untuk mengirim data pengiriman
+      // Send data to API for shipment
       const responsePengiriman = await axios.post(
         `${import.meta.env.VITE_APP_BASEURL}/shipmentMethods`,
         dataPengiriman,
@@ -135,7 +177,7 @@ function Checkout() {
         }
       );
 
-      // Lakukan permintaan API untuk mengirim data pembayaran
+      // Send data to API for payment
       const responsePembayaran = await axios.post(
         `${import.meta.env.VITE_APP_BASEURL}/paymentMethods`,
         dataPembayaran,
@@ -146,15 +188,34 @@ function Checkout() {
         }
       );
 
-      // Tangani respons atau lakukan tindakan lain
-      console.log("Respons Pembayaran:", responsePembayaran.data);
-      console.log("Respons Pengiriman:", responsePengiriman.data);
+      // Display confirmation message or redirect user
+      const isConfirmed = window.confirm("Payment confirmed!");
 
-      // Opsional: Redirect pengguna ke halaman sukses atau lakukan tindakan lain
+      if (isConfirmed) {
+        // Redirect user or perform other actions
+        navigate("/ordercompleted");
+      } else {
+        console.log("Payment canceled.");
+      }
+
+      // Log API responses
+      console.log("Payment Response:", responsePembayaran.data);
+      console.log("Shipment Response:", responsePengiriman.data);
+
+      // Hide confirmation popup
+      setShowConfirmation(false);
+      setTampilkanCountdown(true);
     } catch (error) {
-      // Tangani kesalahan
-      console.error("Kesalahan selama pembayaran atau pengiriman:", error);
+      // Handle errors
+      console.error("Error during payment or shipment:", error);
     }
+  };
+
+  const handleCancelPayment = () => {
+    // Your logic when the user cancels the payment
+    console.log("Payment canceled.");
+    setShowConfirmation(false);
+    setTampilkanKonfirmasi(false);
   };
 
   return (
@@ -374,32 +435,29 @@ function Checkout() {
 
         <aside className="grid grid-flow-col grid-cols-1 max-w-full min-w-xl lg:col-span-3 lg:ml-1 lg:mr-4 lg:mt-2 lg:bg-white">
           <div className="grid grid-cols-1">
-            {allCartItem.map((cart) => (
-              <section className="p-8 mb-4 bg-white lg:order-2 lg:pt-0 lg:pb-0 lg:mb-0">
+            <section className="p-8 mb-4 bg-white lg:order-2 lg:pt-0 lg:pb-0 lg:mb-0">
+              <div className="pb-6">
                 <div className="pb-6">
-                  <div className="pb-6">
-                    <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
-                      {cart.qty} item
-                    </h2>
-                  </div>
-
-                  <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
+                  <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
+                    {totalProductItems} item
+                  </h2>
                 </div>
 
-                <div className="grid grid-cols-4">
-                  <div>
-                    <img src={cart.ProductModel.image} alt="" />
-                  </div>
-                  <div className="col-span-2">
-                    <p>{cart.ProductModel.name_product}</p>
-                    <p>Jumlah: {cart.qty}</p>
-                  </div>
-                  <div>
-                    <p>Rp. {cart.price}</p>
-                  </div>
+                <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
+              </div>
+
+              {allCartItem.map((cart) => (
+                <div>
+                  <ProductItem
+                    className="grid grid-cols-4"
+                    Image={cart.ProductModel.image}
+                    Tittle={cart.ProductModel.name_product}
+                    Qty={cart.qty}
+                    Price={cart.price}
+                  />
                 </div>
-              </section>
-            ))}
+              ))}
+            </section>
 
             <section className="p-8 mb-4 bg-white lg:order-1 lg:pb-0 lg:mb-0">
               <div>
@@ -416,7 +474,7 @@ function Checkout() {
                   <p>Subtotal</p>
                 </div>
                 <div className="text-right">
-                  <p>Rp 6.499.000</p>
+                  <TotalPrice TotalPrice={totalCost} />
                 </div>
               </div>
               <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
@@ -431,6 +489,11 @@ function Checkout() {
             </section>
 
             <section className="hidden lg:grid lg:order-last text-center">
+              {tampilkanCountdown && (
+                <div className="mt-4">
+                  <CountdownTimer />
+                </div>
+              )}
               <div className="items-end lg:bottom-0 lg:right-20 lg:pb-1">
                 <button
                   disabled={
@@ -499,7 +562,7 @@ function Checkout() {
                   </div>
                   <div className="justify-self-start mx-auto my-auto lg:text-right lg:mr-2">
                     <h1 className="font-Inter text-2xl xsml:w-3xl font-bold text-[#FF6900] sm:text-3xl lg:text-2xl">
-                      Rp 6.499.000
+                      <TotalPrice TotalPrice={totalCost} />
                     </h1>
                   </div>
                   <div className="items-end lg:absolute lg:bottom-0 lg:right-20 lg:pb-10 lg:hidden">
@@ -512,13 +575,13 @@ function Checkout() {
                         allAddress.length === 0
                       }
                       onClick={handleBayarSekarangClick}
-                      className={`w-[201px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end xsml:w-[241px] ${
+                      className={`w-[201px] h-[56px] rounded-lg bg-black opacity-1  text-white text-center justify-self-end xsml:w-[241px] ${
                         !isAddressSelected ||
                         !isChecked ||
                         !isPaymentSelected ||
                         !isAgreementSelected ||
                         allAddress.length === 0
-                          ? "cursor-not-allowed"
+                          ? "cursor-not-allowed bg-gray-400"
                           : ""
                       }`}
                     >
@@ -533,6 +596,12 @@ function Checkout() {
           </div>
         </aside>
       </main>
+      {showConfirmation && (
+        <ConfirmPayment
+          onConfirm={handleConfirmPayment}
+          onCancel={handleCancelPayment}
+        />
+      )}
       {/* Checkout End */}
     </div>
   );

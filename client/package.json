@@ -11,7 +11,10 @@
     "build:css": "postcss src/styles/about.css -o public/build/output.css"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "@formspree/react": "^2.5.1",
+    "@mui/material": "^5.15.6",
     "@reduxjs/toolkit": "^2.0.1",
     "aos": "^3.0.0-beta.6",
     "axios": "^1.6.2",
