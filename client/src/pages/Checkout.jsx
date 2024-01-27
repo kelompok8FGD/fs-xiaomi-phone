@@ -239,28 +239,27 @@ function Checkout() {
             <>
               <section className="bg-white mt-2 mb-4 px-8 gap-5 lg:grid lg:grid-cols-2">
                 {adress.length > 0 ? (
-                  adress.map((checkout) => (
+                  adress.map((address) => (
                     <div
-                      key={checkout.id}
+                      key={address.id}
                       className={`max-w-lg py-6 lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:mr-1 lg:hover:border-[#FF6900] lg:hover:cursor-pointer ${
-                        checkout === mainAddress ? "border-[#FF6900]" : ""
+                        address === mainAddress ? "border-[#FF6900]" : ""
                       }`}
-                      onClick={() => handleSelectMainAddress(checkout)}
+                      onClick={() => handleSelectMainAddress(address)}
                     >
                       <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-lg">
-                        {checkout.address_name}
+                        {address.address_name}
                       </h2>
                       <p className="text-lg lg:text-base">
-                        {checkout.phone_number}
+                        {address.phone_number}
                       </p>
                       <p className="text-lg lg:text-base ">
-                        {checkout.full_address}
-                        <span> {checkout.villages}</span>
-                        <span> {checkout.subdistrict}</span>
+                        {address.full_address}
+                        <span> {address.villages}</span>
+                        <span> {address.subdistrict}</span>
                       </p>
                       <p className="text-lg lg:text-base ">
-                        {checkout.city}, {checkout.province}{" "}
-                        {checkout.postal_code}
+                        {address.city}, {address.province} {address.postal_code}
                       </p>
                     </div>
                   ))

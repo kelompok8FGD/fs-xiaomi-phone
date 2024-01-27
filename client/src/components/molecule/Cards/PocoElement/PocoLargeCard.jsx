@@ -31,6 +31,8 @@ export default function PocoLargeCard() {
     currentPage + postsPerPage
   );
 
+  console.log(currentLargeCard);
+
   // const firstPostIndex = currentPage - 1; // 0 = 1 - 1
   // const lastPostIndex = postsPerPage - 6; // 2 = 8 - 6
   // const currentLargCard = dataPoco.data.slice(currentPage, postsPerPage); // index ke 7, (sampai) index ke 8
@@ -57,7 +59,6 @@ export default function PocoLargeCard() {
             />
             <div className="flex flex-row gap-2">
               <CustomButton
-                
                 text="Beli Sekarang"
                 order="text_first"
                 icon=">"
