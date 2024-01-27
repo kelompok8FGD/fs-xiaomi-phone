@@ -8,6 +8,7 @@ const cartRouter = require("./routes/cartRouter");
 const checkoutRouter = require("./routes/checkoutRouter");
 const paymentRouter = require("./routes/paymentRouter");
 const shipmentRouter = require("./routes/shipmentRouter");
+const saveTimerRouter = require("./routes/saveTimerRouter");
 const cors = require("cors");
 const {
   notFoundHandler,
@@ -32,6 +33,7 @@ app.use("/api/v1/", cartRouter);
 app.use("/api/v1", checkoutRouter);
 app.use("/api/v1/", paymentRouter);
 app.use("/api/v1/", shipmentRouter);
+app.use("/api/v1/", saveTimerRouter);
 
 // Middlewares
 app.use(notFoundHandler);

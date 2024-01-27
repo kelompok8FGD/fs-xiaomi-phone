@@ -5,6 +5,9 @@ import OrderInvoice from "./OrderInvoice"; // component to convert to PDF
 import CustomButton from "../components/Atoms/Buttons/CustomButton";
 import CountdownTimer from "../components/Atoms/CheckoutItem/CountdownTimer";
 const PdfDownloadComponent = () => {
+  const countdownStartTime = localStorage.getItem("countdownStartTime");
+  const countdownEndTime = localStorage.getItem("countdownEndTime");
+
   const handleDownloadPDF = () => {
     const input = document.getElementById("pdf-content");
     // Specify the id of the element you want to convert to PDF
@@ -26,7 +29,10 @@ const PdfDownloadComponent = () => {
         onClick={handleDownloadPDF}
         text="Download Invoice"
       />
-      <CountdownTimer />
+      <CountdownTimer
+        startTime={countdownStartTime}
+        endTime={countdownEndTime}
+      />
       <OrderInvoice id="pdf-content" />
       {/* Ensure to pass the same id to the target component */}
     </div>
