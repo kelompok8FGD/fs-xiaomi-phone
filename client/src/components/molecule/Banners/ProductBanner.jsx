@@ -7,12 +7,25 @@ import LearnMoreButton from "../../Atoms/Buttons/LearnMoreButton.jsx";
 import ProductImgFlagship from "../../Atoms/InsideCard/productImgFlagship.jsx";
 import ProductTitle from "../../Atoms/InsideCard/productTitle.jsx";
 
-const ProductBanner = ({ baseURL = "http://localhost:5000", category = "poco", id = 1, phonePicMobile, phonePicDesktop }) => {
+const ProductBanner = ({ 
+  baseURL = import.meta.env.VITE_APP_BASEURL, 
+  category = "poco", 
+  id = 1, 
+  phonePicMobile, 
+  phonePicDesktop, 
+  alignLeft = false, 
+  lightTheme = false, 
+  darkTheme = false, 
+  hideDiscount = false,
+  hidePrices = false,
+  hideLearnMore = false,
+  height
+}) => {
   const [product, setProduct] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const apiurl = `${baseURL}/api/v1/products/category/${category}/${id}`;
+    const apiurl = `${baseURL}/products/category/${category}/${id}`;
 
     const fetchData = async () => {
       try {
@@ -31,10 +44,14 @@ const ProductBanner = ({ baseURL = "http://localhost:5000", category = "poco", i
     return null; // Return null or a loading indicator while data is being fetched
   }
 
+  const themeClass = lightTheme ? 'text-white' : (darkTheme ? 'dark-theme' : '');
+
+  const productInfoClass = `absolute text-center w-[370px] pt-10 md:right-[2%] ${alignLeft ? 'md:text-start md:left-[15%]' : 'md:text-start md:right-[2%]'} md:top-[60px] md:w-[600px] ${themeClass}`;
+
   return (
     <div className="flex flex-col md:hover:cursor-pointer">
       <div className="flex flex-col items-center relative" key={product.id_product}>
-        <div className="absolute text-center w-[370px] pt-10 md:text-start md:right-[2%] md:top-[60px] md:w-[600px]">
+        <div className={productInfoClass}>
           <ProductTitle
             Title={product.name_product}
             Specs={product.specification}
@@ -45,15 +62,16 @@ const ProductBanner = ({ baseURL = "http://localhost:5000", category = "poco", i
             Discount={product.discount}
             className="pb-5"
             Status="Habis"
+            hideDiscount={hideDiscount} // Set hideDiscount based on your condition
+            hidePrices={hidePrices}  
           />
 
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row justify-center md:justify-start gap-2">
             <CustomButton
-              
               text="Beli Sekarang"
-              intent="dark"
+              intent={lightTheme ? 'light' : 'dark'}
               rounded="yes"
-              hover="bg_soft"
+              hover={lightTheme ? 'bg_light_soft' : 'bg_dark_soft'}
               onClick={() =>
                 dispatch(
                   addToCart({
@@ -65,15 +83,18 @@ const ProductBanner = ({ baseURL = "http://localhost:5000", category = "poco", i
                 )
               }
             />
-            <LearnMoreButton
+            { !hideLearnMore &&
+                <LearnMoreButton
               id={product.id_product}
               text="Learn More >"
-              intent="dark_nobg"
+              intent={lightTheme ? 'dark_nobg' : 'light_nobg'}
               rounded="yes"
               border="no"
               icon="text_first"
-              hover="underline"
+              hover={lightTheme ? 'underline_light' : 'underline_dark'}
             />
+            }
+          
           </div>
         </div>
       </div>
