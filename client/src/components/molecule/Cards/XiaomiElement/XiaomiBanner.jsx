@@ -19,7 +19,7 @@ const XiaomiBanner = () => {
   const getApiXiaomi = async () => {
     const response = await axios(
       // "https://6555a21884b36e3a431e0535.mockapi.io/xiaomi"
-      `${import.meta.env.VITE_APP_BASEURL}/products`
+      `${import.meta.env.VITE_APP_BASEURL}/products/category/xiaomi`
     );
 
     setDataXiaomi(response.data);
