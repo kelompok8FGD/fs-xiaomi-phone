@@ -3,8 +3,6 @@ import { Link } from "react-router-dom"; // Import Link from React Router
 import axios from "axios";
 import Input from "../components/Atoms/CustomInput";
 
-const API_URL = "http://localhost:5000/api/v1/products";
-
 function Search() {
   const [query, setQuery] = useState("");
   const [data, setData] = useState([]);
@@ -18,7 +16,7 @@ function Search() {
 
   useEffect(() => {
     if (inputFocused) {
-      axios.get(API_URL)
+      axios.get(`${import.meta.env.VITE_APP_BASEURL}/products`)
         .then(response => {
           setData(response.data.data);
         })

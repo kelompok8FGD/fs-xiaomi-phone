@@ -1,6 +1,7 @@
 import React from "react";
 import { cva } from "class-variance-authority";
 import { Link } from "react-router-dom";
+import { handleToast } from "../../../utils";
 
 const cvaButton = cva(
   /* button base style */
@@ -68,15 +69,26 @@ const cvaButton = cva(
 );
 
 
-const CustomButton = ({ onClick, to, text, className, ...props }) => {
+const CustomButton = ({ onClick, toastMessage, to, text, className, ...props }) => {
   const cvaProps = cvaButton(props); // intent, border, hover, etc.
-
   const isIconFirst = cvaProps.order === "iconFirst";
+
+  const handleClick = async (e) => {
+    if (onClick) {
+      await onClick(e);
+    }
+
+    // Conditionally show toast based on showToast prop
+    if (toastMessage) {
+      // from utils
+      await handleToast(toastMessage);
+    }
+  };
 
   return (
     <Link to={to}>
       <button
-        onClick={onClick}
+        onClick={handleClick}
         className={`${cvaProps} ${className}`}
         {...props} // Spread rest of the props
       >

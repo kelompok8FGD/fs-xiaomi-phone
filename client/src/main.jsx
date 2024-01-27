@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
 import App from "./App.jsx";
 import ProtectedRouteHOC from "./components/ProtectedRouteHOC.jsx";
+import {Toaster} from 'sonner'
 import "./index.css";
 import "./i18.js";
 //import pages
@@ -71,6 +72,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>
       <RouterProvider router={router} />
+      <Toaster invert="true" richColors  position="top-center"/>
     </AuthContextProvider>
   </React.StrictMode>
 );
