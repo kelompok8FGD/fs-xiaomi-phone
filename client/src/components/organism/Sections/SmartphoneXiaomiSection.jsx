@@ -1,5 +1,5 @@
 import BannerSeeAll from "../../Atoms/BannerSeeAll/index.jsx";
-import ProductCards from "../Cards/ProductCards.jsx";
+import ProductCards from "../../molecule/Cards/ProductCards.jsx";
 import ProductBanner from "../../molecule/Banners/ProductBanner.jsx"
 
 const SmartphoneXiaomiSection = () => {

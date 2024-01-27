@@ -2,10 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useUserContext } from "../context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 import { toast } from 'sonner';
 
 export const useEmailPasswordLogin = () => {
   const { dispatch: dispatchAuth } = useAuthContext();
+  const navigate = useNavigate()
   const { dispatchUser } = useUserContext();
   const [emailPasswordError, setEmailPasswordError] = useState(null);
   const [emailPasswordLoading, setEmailPasswordLoading] = useState(false);
@@ -14,8 +16,8 @@ export const useEmailPasswordLogin = () => {
     toast.success('Login Successful');
 
     setTimeout(() => {
-      window.location.href = "/smartphone"; // Use window.location.href for navigation
-    }, 2000);
+      navigate("/smartphone"); 
+    }, 1500);
   };
 
   const emailPasswordLogin = async (email, password) => {
