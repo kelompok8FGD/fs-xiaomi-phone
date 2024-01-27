@@ -3,11 +3,24 @@ import NoPicture from "../assets/global/no-picture.png"
 import CustomInput from '../components/Atoms/CustomInput';
 import CustomLabel from '../components/Atoms/CustomLabel';
 import CustomButton from '../components/Atoms/Buttons/CustomButton';
+import useEpUserAction  from '../hooks/useEpUserAction';
+
 
 const Profile = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const profilePicture = user.photoURL;
     const Background = "https://i02.appmifile.com/882_operatorx_operatorx_opx/19/12/2022/def9436f6c0aa940d5a6b9c6dd79b49d.jpg"
+    const { deleteEpUser, isLoading, error } = useEpUserAction();
+
+    const handleDeleteAccount = () => {
+      if (window.confirm("Are you sure you want to delete your account?")) {
+        deleteEpUser();
+      }
+    };
+  
+    const epUserEmail = localStorage.getItem("epuserEmail");
+    console.log("epuserEmail:", epUserEmail);
+ 
   return (
     <div className="flex flex-col max-w-full bg-contrast gap-[15px]">
       <div
@@ -66,7 +79,10 @@ const Profile = () => {
         <div>
          <CustomButton text="Save Changes" intent="accent_bg" id="saveChanges" />
         </div>
-      </div>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+      {epUserEmail && (
+        <button onClick={handleDeleteAccount}>Delete My Account</button>
+      )}      </div>
     </div>
   );
 };

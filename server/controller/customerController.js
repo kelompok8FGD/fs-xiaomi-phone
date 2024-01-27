@@ -152,9 +152,65 @@ const loginCustomer = async (req, res) => {
   }
 };
 
+// Delete Customer by Email from localStorage
+
+const deleteepuser = async (req, res, next) => {
+  try {
+    // Retrieve the email from the request body
+    const { userEmail } = req.body;
+
+    // Check if userEmail exists in the request body
+    if (!userEmail) {
+      return res.status(400).json({
+        status: "failed",
+        error: "Email not provided in the request body",
+      });
+    }
+
+    // Find the customer with the given email
+    const customerToDelete = await Customer.findOne({
+      where: { email: userEmail },
+    });
+
+    // Check if customer exists
+    if (!customerToDelete) {
+      return res.status(404).json({
+        status: "failed",
+        error: `Customer with email ${userEmail} not found`,
+      });
+    }
+
+    // Use CustomerModel.destroy with a where clause to delete the customer
+    const customerDeleted = await Customer.destroy({
+      where: { email: userEmail },
+    });
+
+    // Check if any rows were affected (customer deleted)
+    if (customerDeleted === 0) {
+      return res.status(404).json({
+        status: "failed",
+        error: `Customer with email ${userEmail} not found`,
+      });
+    }
+
+    res.json({
+      status: "success",
+      error: "Customer deleted successfully",
+      customerDeleted: customerToDelete,
+    });
+  } catch (error) {
+    console.error(error, "<< Error deleting customer");
+    next(error); // Pass the error to the next middleware (error handler)
+  }
+};
+
+
+
+
 module.exports = {
   findAllCustomers,
   getCustomerById,
   createNewCustomer,
   loginCustomer,
+  deleteepuser,
 };

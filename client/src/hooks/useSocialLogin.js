@@ -46,6 +46,8 @@ export const useSocialLogin = () => {
         localStorage.setItem("user", JSON.stringify(userProfile));
         localStorage.setItem("auth", JSON.stringify(userAuth));
         localStorage.setItem("token", token);
+        
+
   
         // Dispatch 'LOGIN' action with the extracted information
         dispatchAuth({ type: 'LOGIN', payload: userAuth });

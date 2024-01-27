@@ -97,6 +97,14 @@ const Dropdown = () => {
           </a>
         </li>
         <li>
+          <a
+            href="/checkout"
+            className="block px-4 py-2 hover:underline"
+          >
+            Checkout
+          </a>
+        </li>
+        <li>
         <button className='block px-4 py-2 hover:underline' onClick={handleClick}>Log out</button>
         </li>
         
