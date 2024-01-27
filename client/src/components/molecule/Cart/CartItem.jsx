@@ -19,11 +19,9 @@ const CartItem = ({id, name, image, price, quantity=0}) => {
         <p className="text-accent">
           <small>Rp </small>
           <strong>{formattedPrice}</strong>
-        </p></div> {quantity >= 2 && (
-    <p className='text-red-600 block'>Max quantity: 2</p>
-  )}
+        </p></div>
         <div className='flex gap-4 '>
-        <div id='cart-quantity-buttons' className='flex items-center justify-end h-full max-h-10'>
+        <div id='cart-quantity-buttons' className='flex items-center justify-end h-full max-h-10 border border-gray-300'>
         <button className='px-3'
           onClick={() =>  dispatch(decrementQuantity(id))}>
            -
