@@ -3,7 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useUserContext } from "../context/UserContext.jsx";
-import { useNavigate } from "react-router-dom";
+
+
 
 export const useEmailPasswordLogin = () => {
   const { dispatch: dispatchAuth } = useAuthContext();
@@ -11,7 +12,7 @@ export const useEmailPasswordLogin = () => {
   const [emailPasswordError, setEmailPasswordError] = useState(null);
   const [emailPasswordLoading, setEmailPasswordLoading] = useState(false);
   const API_URL = "http://localhost:5000/api/v1/login";
-  const navigate = useNavigate();
+
 
   const emailPasswordLogin = async (email, password) => {
     setEmailPasswordLoading(true);
@@ -51,8 +52,9 @@ export const useEmailPasswordLogin = () => {
 
         // Dispatch to UserContext
         dispatchUser({ type: 'SET_USER', payload: userProfile});
-        
-        navigate("/cart");
+         
+     
+       
       } else {  // Handle unexpected structure in backend response
         setEmailPasswordLoading(false);
         setEmailPasswordError(dataError);

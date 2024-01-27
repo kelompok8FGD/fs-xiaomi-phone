@@ -5,8 +5,11 @@ import { useTranslation } from "react-i18next";
 import { useSocialLogin } from '../../../hooks/useSocialLogin';
 import { useEmailPasswordLogin } from '../../../hooks/useEmailPasswordLogin';
 import { useUserContext } from '../../../context/UserContext';
-
+import {Toaster, toast} from 'sonner'
+import { useNavigate } from "react-router-dom";
+import Icon from '../../Atoms/Icon';
 const LoginForm = () => {  
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { emailPasswordLogin, emailPasswordError, emailPasswordLoading } = useEmailPasswordLogin();
   const { dispatch: dispatchUser } = useUserContext();
@@ -14,20 +17,39 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const inputsNotEmpty = email.trim() !== '' && password.trim() !== '';
-
+ const handleLoginSuccess = async() => toast.success('Login Successful');
   const handleEmailPasswordSubmit = async (e) => {
     e.preventDefault();
     await emailPasswordLogin(email, password);
+
+    await handleLoginSuccess();
+   
+
+    setTimeout(() => {
+      navigate("/smartphone");
+    }, 2000);
   };
 
   const handleGoogleButton = async (e) => {
     e.preventDefault(); // prevent form submission
-    await handleGoogleLogin();
+    await handleGoogleLogin(); 
+    await handleLoginSuccess();
+   
+
+    setTimeout(() => {
+      navigate("/smartphone");
+    }, 2000);
   };
 
   const handleFacebookButton = async (e) => {
     e.preventDefault(); // prevent form submission
     await handleFacebookLogin();
+    await handleLoginSuccess();
+   
+
+    setTimeout(() => {
+      navigate("/smartphone");
+    }, 2000);
   };
 
 
@@ -59,6 +81,7 @@ const LoginForm = () => {
         >
          {t("login")}
         </button>
+        <Toaster  richColors  position="top-center"/>
         {emailPasswordError && <div className='text-red-500'>{emailPasswordError}</div>}
         <button id="google-button" type="submit" onClick={handleGoogleButton}
         className="border w-full text-center flex items-center bg-[#ffffff] text-white">
@@ -78,8 +101,10 @@ const LoginForm = () => {
           <button onClick={handleFacebookButton}>
             <img className='w-[70px] h-[70px] ' src={FB} alt='' />
           </button>
+          
         </div>
       </div>
+      
     </form>
   );
 };

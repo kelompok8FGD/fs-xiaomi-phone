@@ -10,8 +10,9 @@ function Search() {
   const [data, setData] = useState([]);
   const [inputFocused, setInputFocused] = useState(false);
   const predefinedLinks = [
-    { id: 1, title: "Link 1", url: "https://example.com/link1" },
-    { id: 2, title: "Link 2", url: "https://example.com/link2" },
+    { id: 1, title: "Poco", url: "https://xiaomi-website.vercel.app/poco" },
+    { id: 2, title: "Redmi", url: "https://xiaomi-website.vercel.app/redmi" },
+    { id: 2, title: "Xiaomi", url: "https://xiaomi-website.vercel.app/xiaomi" },
     // Add more predefined links as needed
   ];
 
@@ -30,7 +31,7 @@ function Search() {
   }, [inputFocused]);
 
   return (
-    <div className="w-full h-[100vh] flex flex-col justify-center items-center">
+    <div className="w-full bg-contrast h-[100vh] flex flex-col justify-center items-center">
       <div className="relative max-w-lg w-full">
         <input
           className="search-box px-8 py-3 border border-gray-300 rounded w-full"
