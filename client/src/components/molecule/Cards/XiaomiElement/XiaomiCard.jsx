@@ -10,13 +10,13 @@ import LearnMoreButton from "../../../Atoms/Buttons/LearnMoreButton.jsx";
 
 const XiaomiCard = () => {
   const [dataXiaomi, setDataXiaomi] = useState([]);
-  const [currentPage] = useState(17);
-  const [postsPerPage] = useState(19);
+  const [currentPage] = useState(1);
+  const [postsPerPage] = useState(8);
 
   const dispatch = useDispatch();
   // const API_URL = "https://6551cffe5c69a77903291de6.mockapi.io/xiaomi";
   //const API_URL = "http://localhost:5000/api/v1/products";
-  const API_URL = "https://xiaomi-phone-api.onrender.com/api/v1/products";
+  const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products`;
 
   const getApiXiaomi = async () => {
     const response = await axios(API_URL);
@@ -60,7 +60,6 @@ const XiaomiCard = () => {
             />
             <div className="flex flex-row gap-2">
               <CustomButton
-                
                 text="Beli Sekarang"
                 order="text_first"
                 icon=">"

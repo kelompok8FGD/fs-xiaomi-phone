@@ -6,7 +6,7 @@ const ErrorCard = () => {
   const [dataProduct, setDataProduct] = useState([]);
   const [currentPage] = useState(0);
   const [postsPerPage] = useState(20);
-  const API_URL = "https://xiaomi-phone-api.onrender.com/api/v1/products";
+  const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products`;
 
   const getApiProducts = async () => {
     const response = await axios(API_URL);

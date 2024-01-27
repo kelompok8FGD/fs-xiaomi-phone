@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { addToCart } from "../redux/cart/cartSlice.js";
 import axios from "axios";
+import CustomButton from "../components/Atoms/Buttons/CustomButton.jsx";
 
-export default function DetailPoco() {
+export default function ProductDetail() {
   const [dataDetail, setDataDetail] = useState({});
 
   const params = useParams();
+  const dispatch = useDispatch();
 
   const getDetailApiPoco = async () => {
     const response = await axios(
@@ -34,6 +38,26 @@ export default function DetailPoco() {
             <p className="text-gray-700 text-2xl mb-2">
               Mulai Dari Rp.{dataDetail.price}
             </p>
+            <div className="">
+              <CustomButton
+                text="Beli Sekarang"
+                order="text_first"
+                icon=">"
+                intent="accent_nobg"
+                hover="bg_soft"
+                media="mediumDark"
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      id: dataDetail.id_product,
+                      name: dataDetail.name_product,
+                      image: dataDetail.image,
+                      price: dataDetail.price,
+                    })
+                  )
+                }
+              />
+            </div>
           </div>
         </div>
       </div>

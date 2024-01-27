@@ -10,8 +10,8 @@ import ProductTitle from "../../../Atoms/InsideCard/productTitle.jsx";
 
 const XiaomiBanner = () => {
   const [dataXiaomi, setDataXiaomi] = useState([]);
-  const [currentPage] = useState(15);
-  const [postsPerPage] = useState(16);
+  const [currentPage] = useState(1);
+  const [postsPerPage] = useState(2);
 
   const dispatch = useDispatch();
   // const { addToCart } = useContext(CartContext);
@@ -19,7 +19,7 @@ const XiaomiBanner = () => {
   const getApiXiaomi = async () => {
     const response = await axios(
       // "https://6555a21884b36e3a431e0535.mockapi.io/xiaomi"
-      "https://xiaomi-phone-api.onrender.com/api/v1/products"
+      `${import.meta.env.VITE_APP_BASEURL}/products`
     );
 
     setDataXiaomi(response.data);
@@ -58,7 +58,6 @@ const XiaomiBanner = () => {
 
                 <div className="flex flex-row gap-2">
                   <CustomButton
-                    
                     text="Beli Sekarang"
                     intent="dark"
                     rounded="yes"

@@ -12,7 +12,7 @@ import Store from "./pages/Store.jsx";
 import Cart from "./pages/Cart.jsx";
 import Account from "./pages/Account.jsx";
 import Profile from "./pages/Profile.jsx";
-import Support from "./pages/Support.jsx"
+import Support from "./pages/Support.jsx";
 import Error from "./pages/Error.jsx";
 import SmartPhone from "./pages/Smartphone.jsx";
 import About from "./pages/About.jsx";
@@ -22,8 +22,8 @@ import Privacy from "./pages/Privacy.jsx";
 import Poco from "./pages/Poco.jsx";
 import Xiaomi from "./pages/Xiaomi.jsx";
 import Checkout from "./pages/Checkout.jsx";
-import OrderCompleted from "./pages/OrderCompleted.jsx"
-import DetailPoco from "./pages/ProductDetails/Poco/index.jsx";
+import OrderCompleted from "./pages/OrderCompleted.jsx";
+import ProductDetail from "./pages/ProductDetails.jsx";
 import RedmiList from "./pages/Redmi.jsx";
 import Search from "./pages/Search.jsx";
 
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
         path: "/ordercompleted",
         element: <ProtectedRouteHOC element={<OrderCompleted />} />,
       },
-      { path: "/detail/:id", element: <DetailPoco /> },
+      { path: "/detail/:id", element: <ProductDetail /> },
     ],
   },
 ]);
