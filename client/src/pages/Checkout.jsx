@@ -201,7 +201,8 @@ function Checkout() {
       new Date().getTime() + 24 * 60 * 60 * 1000
     ).toString(); // Menambahkan 24 jam ke waktu saat ini
 
-    localStorage.setItem("countdownStartTime", startTime, endTime);
+    localStorage.setItem("countdownStartTime", startTime);
+    localStorage.setItem("countdownEndTime", endTime);
 
     const response = await axios.post(
       `${import.meta.env.VITE_APP_BASEURL}/timers`,
