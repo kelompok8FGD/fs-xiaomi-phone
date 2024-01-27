@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cart/cartSlice.js";
 import axios from "axios";
-import CustomButton from "../../../components/Atoms/Buttons/CustomButton.jsx";
-import LearnMoreButton from "../../../components/Atoms/Buttons/LearnMoreButton.jsx";
-import ProductImgFlagship from "../../../components/Atoms/InsideCard/productImgFlagship.jsx";
-import ProductTitle from "../../..//components/Atoms/InsideCard/productTitle.jsx";
+import CustomButton from "../../Atoms/Buttons/CustomButton.jsx";
+import LearnMoreButton from "../../Atoms/Buttons/LearnMoreButton.jsx";
+import ProductImgFlagship from "../../Atoms/InsideCard/productImgFlagship.jsx";
+import ProductTitle from "../../Atoms/InsideCard/productTitle.jsx";
 
 const ProductBanner = ({ baseURL = "http://localhost:5000", category = "poco", id = 1, phonePicMobile, phonePicDesktop }) => {
   const [product, setProduct] = useState(null);

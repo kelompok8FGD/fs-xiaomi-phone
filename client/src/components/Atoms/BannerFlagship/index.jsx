@@ -17,7 +17,7 @@ const BannerFlagship = (props) => {
     // const { addToCart } = useContext(CartContext);
 
     const getApiXiaomi = async () => {
-        const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products`;
+        const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products/xiaomi`;
         const response = await axios(API_URL);
         // Choose the one that matches the api
         const data = response.data; //for data from API

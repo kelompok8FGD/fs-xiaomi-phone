@@ -2,8 +2,6 @@ import React from "react";
 import XiaomiBanner from "../components/molecule/Home/XiaomiBanner";
 import RedmiBanner from "../components/molecule/Home/RedmiBanner";
 import LatestPhone from "../components/molecule/Home/LatestProducts/LatestPhone";
-// This Banner will be reusable
-import ProductBanner from "../components/molecule/ProductBanner";
 
 
 
@@ -14,7 +12,7 @@ const Home = () => {
   return (
     <div className="flex flex-col max-w-full bg-[#f7f7f7] gap-[15px]">
       <div id="top-banner" className="w-full flex flex-col gap-[16px]">
-        {/** <ProductBanner phonePicMobile = {bgPhone} phonePicDesktop = {bgDesktop} /> **/}
+   
         <XiaomiBanner />
         <RedmiBanner />
       </div>
