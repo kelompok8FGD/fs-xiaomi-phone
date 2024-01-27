@@ -1,9 +1,9 @@
 import React from "react";
-import PocoSection from "../components/organism/Products/PocoSection";
+import PocoSection from "../components/organism/Sections/PocoSection";
 import ProductNavbar from "../components/organism/Navbar/ProductsNavbar";
 
 function Poco() {
-  return (
+   return (
     <>
       <ProductNavbar
         toTitle1="/poco"
@@ -15,6 +15,7 @@ function Poco() {
         title3="Redmi Phones"
       />
       <div>
+
         <PocoSection />
       </div>
     </>

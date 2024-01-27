@@ -1,5 +1,5 @@
-import RedmiSection from "../components/molecule/Smartphone/RedmiSection";
-import SmartphoneXiaomiSection from "../components/molecule/Smartphone/SmartphoneXiaomiSection";
+import RedmiSection from "../components/organism/Sections/RedmiSection";
+import SmartphoneXiaomiSection from "../components/organism/Sections/SmartphoneXiaomiSection";
 import TitleSeeAll from "../components/Atoms/BannerSeeAll/TitleSeeAll";
 import CustomButton from "../components/Atoms/Buttons/CustomButton";
 import ProductCards from "../components/molecule/Cards/ProductCards";

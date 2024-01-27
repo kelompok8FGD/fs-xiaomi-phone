@@ -1,4 +1,4 @@
-import BannerSeeAll from "../../Atoms/BannerSeeAll";
+import BannerSeeAll from "../../Atoms/BannerSeeAll/index.jsx";
 import LongCardRight2 from "../../Atoms/LongCardRight/others.jsx";
 
 const RedmiSection = () => {
