@@ -10,16 +10,17 @@ import ProductTitleSmartphone from "../InsideCard/ProductTitleSmartphone.jsx";
 
 const LongCardRight = (props) => {
     const [dataRedmi, setDataRedmi] = useState([]);
-    const [currentPage] = useState(12);
-    const [postsPerPage] = useState(13);
+    const [currentPage] = useState(7);
+    const [postsPerPage] = useState(8);
 
     const dispatch = useDispatch();
-    // const { addToCart } = useContext(CartContext);
+    const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products`;
 
     const getApiRedmi = async () => {
-        const response = await axios("https://xiaomi-phone-api.onrender.com/api/v1/products");
+        const response = await axios(API_URL);
 
-        setDataRedmi(response.data);
+        const data = response.data;
+        setDataRedmi(data);
     };
 
     useEffect(() => {
