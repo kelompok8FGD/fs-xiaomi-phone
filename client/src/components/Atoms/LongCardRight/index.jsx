@@ -61,7 +61,7 @@ const LongCardRight = (props) => {
                                 />
                                 <button className="bg-[#191919] hover:bg-[#444444] text-white rounded-lg p-2 px-5 md:p-0 text-[12px] font-normal leading-[14px] md:text-[24px] md:leading-[29px]">
                                     <CustomButton
-                                        to="/cart"
+                                        
                                         text="Beli Sekarang"
                                         // intent="dark"
                                         rounded="yes"

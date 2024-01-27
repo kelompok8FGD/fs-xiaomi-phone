@@ -53,7 +53,7 @@ const ShortCard = (props) => {
                                 />
                                 <div className="hidden md:flex md:flex-row md:gap-2">
                                     <CustomButton
-                                        to="/cart"
+                                        
                                         text="Beli Sekarang"
                                         intent="dark"
                                         rounded="yes"
