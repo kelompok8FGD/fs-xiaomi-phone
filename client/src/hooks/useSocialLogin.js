@@ -1,11 +1,10 @@
 import { signInWithGoogle, signInWithFacebook } from "../firebase/firebase";
 import { useUserContext } from '../context/UserContext';
 import { useAuthContext } from "./useAuthContext";
-import { useNavigate } from "react-router-dom";
 export const useSocialLogin = () => {
     const { dispatch: dispatchAuth } = useAuthContext();
     const { dispatchUser } = useUserContext();
-    const navigate = useNavigate();
+
   
     const handleGoogleLogin = async () => {
         try {
@@ -26,7 +25,7 @@ export const useSocialLogin = () => {
           // Dispatch 'LOGIN' action with the extracted information
           dispatchAuth({ type: 'LOGIN', payload: userAuth });
           dispatchUser({ type: 'SET_USER', payload: userProfile });
-          navigate("/cart");
+      
         } catch (error) {
           console.error('Google Login Error:', error);
         }
@@ -52,7 +51,7 @@ export const useSocialLogin = () => {
         // Dispatch 'LOGIN' action with the extracted information
         dispatchAuth({ type: 'LOGIN', payload: userAuth });
         dispatchUser({ type: 'SET_USER', payload: userProfile });
-       navigate("/cart");
+
       } catch (error) {
         console.error('Facebook Login Error:', error);
       }
