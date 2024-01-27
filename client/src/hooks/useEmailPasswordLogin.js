@@ -40,6 +40,7 @@ export const useEmailPasswordLogin = () => {
         localStorage.setItem("auth", JSON.stringify(userAuth));
         localStorage.setItem("user", JSON.stringify(userProfile));
         localStorage.setItem("token", token);
+        localStorage.setItem("epuserEmail", JSON.stringify(userAuth.email));
         const user = JSON.parse(localStorage.getItem("user"));
         const auth = JSON.parse(localStorage.getItem("auth"));
         console.log("User Profile saved:", user);

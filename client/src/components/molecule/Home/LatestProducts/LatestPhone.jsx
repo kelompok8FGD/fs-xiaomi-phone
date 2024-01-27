@@ -26,7 +26,7 @@ const LatestPhone = ({title, subtitle, imgphone, imgmedium, to1, to2,}) => {
       </picture>
       <div
         id="site-banner__info"
-        className="justify-center text-center  w-[500px] absolute z-2 top-[4%] gap-[0px] lg:gap-[0px] flex flex-col left-0 py-[3.9vw] px-0 "
+        className="justify-center text-center  w-[500px] absolute z-2 top-[4%] gap-[0px] lg:gap-[0px] flex flex-col lg:left-[20%] left-0 py-[3.9vw] px-0 "
         >
         <div className="flex flex-col gap-[10px]">
           <h2
