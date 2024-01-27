@@ -33,7 +33,7 @@ const RedmiBanner = () => {
         </picture>
         <div
           id="site-banner__info"
-          className=" w-[500px] absolute z-2 top-[4%] gap-[20px] lg:gap-[50px] flex flex-col left-0 md:left-[15%] w-full py-[3.9vw] px-0 "
+          className=" w-[500px] absolute z-2 top-[4%] gap-[20px] lg:gap-[50px] flex flex-col left-[15%]  md:left-[15%] w-full py-[3.9vw] px-0 "
         >
           <div className="w-full max-w-full flex flex-col items-center text-center md:text-left md:items-start">
             <h2
