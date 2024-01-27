@@ -19,7 +19,7 @@ const XiaomiBanner = () => {
   const getApiXiaomi = async () => {
     const response = await axios(
       // "https://6555a21884b36e3a431e0535.mockapi.io/xiaomi"
-      `${import.meta.env.VITE_APP_BASEURL}/products`
+      `${import.meta.env.VITE_APP_BASEURL}/products/category/xiaomi`
     );
 
     setDataXiaomi(response.data);
@@ -58,6 +58,7 @@ const XiaomiBanner = () => {
 
                 <div className="flex flex-row gap-2">
                   <CustomButton
+                    toastMessage="Item added to cart"
                     text="Beli Sekarang"
                     intent="dark"
                     rounded="yes"

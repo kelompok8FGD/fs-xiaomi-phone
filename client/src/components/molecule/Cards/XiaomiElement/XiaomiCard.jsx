@@ -16,7 +16,7 @@ const XiaomiCard = () => {
   const dispatch = useDispatch();
   // const API_URL = "https://6551cffe5c69a77903291de6.mockapi.io/xiaomi";
   //const API_URL = "http://localhost:5000/api/v1/products";
-  const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products`;
+  const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products/category/xiaomi`;
 
   const getApiXiaomi = async () => {
     const response = await axios(API_URL);
@@ -60,6 +60,7 @@ const XiaomiCard = () => {
             />
             <div className="flex flex-row gap-2">
               <CustomButton
+                toastMessage="Item added to cart"
                 text="Beli Sekarang"
                 order="text_first"
                 icon=">"

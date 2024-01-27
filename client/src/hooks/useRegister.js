@@ -11,7 +11,7 @@ export const useRegister = (navigate) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/register",
+        `${import.meta.env.VITE_APP_BASEURL}/register`,
         { email, password, fullname },
         {
           headers: {

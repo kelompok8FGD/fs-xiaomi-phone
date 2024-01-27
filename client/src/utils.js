@@ -11,4 +11,13 @@ export const calculateTotal = (cart) => {
   
     return { formattedTotalPrice, totalQuantity };
   };
-  
+
+  import { toast } from 'sonner';
+
+export const handleToast = async (toastMessage) => {
+  if (toastMessage) {
+    toast.success(toastMessage);
+  } else {
+    toast.success('Success!');
+  }
+};
