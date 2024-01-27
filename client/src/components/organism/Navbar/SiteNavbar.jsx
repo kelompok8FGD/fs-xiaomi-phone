@@ -8,7 +8,7 @@ import ThemeSwitch from '../../molecule/ThemeSwitch';
 import Dropdown from './Dropdown';
 import { useSelector } from 'react-redux';
 import { useAuthContext } from '../../../hooks/useAuthContext';
-import { calculateTotal } from '../../../redux/cart/cartUtils';
+import { calculateTotal } from '../../../utils';
 import { Link } from 'react-router-dom';
 const SiteNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -60,6 +60,7 @@ const XiaomiCard = () => {
             />
             <div className="flex flex-row gap-2">
               <CustomButton
+                toastMessage="Item added to cart"
                 text="Beli Sekarang"
                 order="text_first"
                 icon=">"

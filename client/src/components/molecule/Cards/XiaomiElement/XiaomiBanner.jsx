@@ -58,6 +58,7 @@ const XiaomiBanner = () => {
 
                 <div className="flex flex-row gap-2">
                   <CustomButton
+                    toastMessage="Item added to cart"
                     text="Beli Sekarang"
                     intent="dark"
                     rounded="yes"
