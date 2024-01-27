@@ -11,8 +11,6 @@ export const useEmailPasswordLogin = () => {
   const { dispatchUser } = useUserContext();
   const [emailPasswordError, setEmailPasswordError] = useState(null);
   const [emailPasswordLoading, setEmailPasswordLoading] = useState(false);
-  const API_URL = "http://localhost:5000/api/v1/login";
-
 
   const emailPasswordLogin = async (email, password) => {
     setEmailPasswordLoading(true);
@@ -20,7 +18,7 @@ export const useEmailPasswordLogin = () => {
 
     try {
       const response = await axios.post(
-        API_URL,
+        `${import.meta.env.VITE_APP_BASEURL}/login`,
         { email, password },
         {
           headers: {

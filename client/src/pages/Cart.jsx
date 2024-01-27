@@ -32,7 +32,7 @@ const Cart = () => {
         };
   
         const response = await axios.post(
-          "http://localhost:5000/api/v1/addToCart",
+          `${import.meta.env.VITE_APP_BASEURL}/addToCart`,
           formattedCartItem,
           {
             headers: {
