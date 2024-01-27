@@ -11,15 +11,17 @@ import ProductLongCardSmartphone from "../../Atoms/InsideCard/ProductLongCardSma
 const LongCard = (props) => {
     const {styling} = props;
     const [dataXiaomi, setDataXiaomi] = useState([]);
-    const [currentPage, setCurrentPage] = useState(11);
-    const [postsPerPage, setPostPerPage] = useState(12);
+    const [currentPage, setCurrentPage] = useState(3);
+    const [postsPerPage, setPostPerPage] = useState(4);
 
     const dispatch = useDispatch();
+    const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products`;
 
     const getApiXiaomi = async () => {
-        const response = await axios("https://xiaomi-phone-api.onrender.com/api/v1/products");
+        const response = await axios(API_URL);
 
-        setDataXiaomi(response.data);
+        const data = response.data;
+        setDataXiaomi(data);
     };
 
     useEffect(() => {
@@ -54,7 +56,6 @@ const LongCard = (props) => {
                             />
                             <div className="md:flex">
                                 <CustomButton
-                                    
                                     text="Beli Sekarang"
                                     order="text_first"
                                     icon=">"
