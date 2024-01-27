@@ -15,6 +15,8 @@ function Checkout() {
   const [isAgreementSelected, setIsAgreementSelected] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [tampilkanCountdown, setTampilkanCountdown] = useState(false);
+  const countdownStartTime = localStorage.getItem("countdownStartTime");
+  const countdownEndTime = localStorage.getItem("countdownEndTime");
 
   const handleSelectMainAddress = (address) => {
     // Your existing logic to set the main address
@@ -62,10 +64,52 @@ function Checkout() {
   const [addressPerPage, setAddressPerPage] = useState(1);
 
   const [dataCartItem, setDataCartItem] = useState([]);
+  const [dataTimer, setDataTimer] = useState([]);
 
   const token = localStorage.getItem("token");
 
   const isPaymentSelected = bankSelection || paymentSelection;
+
+  const getTimer = async () => {
+    try {
+      const response = await axios(
+        `${import.meta.env.VITE_APP_BASEURL}/timers`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setDataTimer(response.data);
+
+      // Pilih alamat utama (contoh: alamat pertama dalam daftar)
+      if (response.data && response.data.startTime) {
+        const elapsed = new Date() - new Date(response.data.startTime);
+        if (elapsed < 24 * 60 * 60 * 1000) {
+          setTampilkanCountdown(true);
+        }
+      }
+      console.log(dataTimer);
+      // Check if dataTimer.data exists before iterating
+      if (response.data.data) {
+        // Convert and store startTime in the local storage
+        response.data.data.forEach((item) => {
+          const startTime = new Date(item.startTime);
+          const endTime = new Date(item.endTime);
+          const formattedStartTime = startTime.toString(); // Change this line for a specific format
+          const formattedEndTime = endTime.toString(); // Change this line for a specific format
+
+          // Store formattedStartTime in local storage, using the item's id as a key
+          localStorage.setItem(`countdownStartTime`, formattedStartTime);
+          localStorage.setItem(`countdownEndTime`, formattedEndTime);
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching timer data:", error);
+    }
+  };
 
   const getApiAddress = async () => {
     const response = await axios(
@@ -106,6 +150,7 @@ function Checkout() {
   useEffect(() => {
     getApiAddress();
     getCartItems();
+    getTimer();
 
     const storedStartTime = localStorage.getItem("countdownStartTime");
 
@@ -152,7 +197,24 @@ function Checkout() {
 
   const handleConfirmPayment = async () => {
     const startTime = new Date().toString();
-    localStorage.setItem("countdownStartTime", startTime);
+    const endTime = new Date(
+      new Date().getTime() + 24 * 60 * 60 * 1000
+    ).toString(); // Menambahkan 24 jam ke waktu saat ini
+
+    localStorage.setItem("countdownStartTime", startTime, endTime);
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_APP_BASEURL}/timers`,
+      {
+        startTime: startTime,
+        endTime: endTime,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     // Your logic when the user confirms the payment
     try {
       // Your logic to prepare data for API
@@ -201,6 +263,7 @@ function Checkout() {
       // Log API responses
       console.log("Payment Response:", responsePembayaran.data);
       console.log("Shipment Response:", responsePengiriman.data);
+      console.log("Payment and Timer Response:", response.data);
 
       // Hide confirmation popup
       setShowConfirmation(false);
@@ -208,6 +271,7 @@ function Checkout() {
     } catch (error) {
       // Handle errors
       console.error("Error during payment or shipment:", error);
+      console.error("Error during payment or creating timer:", error);
     }
   };
 
@@ -490,7 +554,10 @@ function Checkout() {
             <section className="hidden lg:grid lg:order-last text-center">
               {tampilkanCountdown && (
                 <div className="mt-4">
-                  <CountdownTimer />
+                  <CountdownTimer
+                    startTime={countdownStartTime}
+                    endTime={countdownEndTime}
+                  />
                 </div>
               )}
               <div className="items-end lg:bottom-0 lg:right-20 lg:pb-1">
@@ -520,6 +587,12 @@ function Checkout() {
               </div>
             </section>
 
+            <div className="mt-4 text-center bg-white lg:hidden">
+              <CountdownTimer
+                startTime={countdownStartTime}
+                endTime={countdownEndTime}
+              />
+            </div>
             <section className="p-8 mb-4 lg:order-last lg:pb-0 lg:mb-0 lg:mt-0 lg:pt-0">
               <div
                 className="grid grid-cols-9 lg:hover:border-[#FF6900] lg:hover:cursor-pointer "
@@ -532,6 +605,7 @@ function Checkout() {
                     onChange={handleCheckboxChange}
                   />
                 </div>
+
                 <div className="col-span-8">
                   <span className="">
                     Dengan melakukan pemesanan, berarti Anda telah membaca dan

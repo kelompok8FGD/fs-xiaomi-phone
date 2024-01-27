@@ -5,6 +5,7 @@ const CheckoutModel = require("./CheckoutModel");
 const CartModel = require("./CartModel");
 const AddressModel = require("./AddressModel");
 const ShipmentMethodModel = require("./ShipmentMethodModel");
+const SaveTimer = require("./SaveTimer");
 
 module.exports = {
   ProductModel,
@@ -14,4 +15,5 @@ module.exports = {
   CartModel,
   AddressModel,
   ShipmentMethodModel,
+  SaveTimer,
 };
