@@ -14,7 +14,7 @@ const LongCardRight = (props) => {
     const [postsPerPage] = useState(8);
 
     const dispatch = useDispatch();
-    const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products`;
+    const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products/category/xiaomi`;
 
     const getApiRedmi = async () => {
         const response = await axios(API_URL);

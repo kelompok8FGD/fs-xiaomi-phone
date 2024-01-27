@@ -15,7 +15,7 @@ const LongCard = (props) => {
     const [postsPerPage, setPostPerPage] = useState(4);
 
     const dispatch = useDispatch();
-    const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products`;
+    const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products/category/xiaomi`;
 
     const getApiXiaomi = async () => {
         const response = await axios(API_URL);
