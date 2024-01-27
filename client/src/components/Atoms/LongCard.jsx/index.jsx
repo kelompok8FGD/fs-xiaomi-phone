@@ -54,7 +54,7 @@ const LongCard = (props) => {
                             />
                             <div className="md:flex">
                                 <CustomButton
-                                    to="/cart"
+                                    
                                     text="Beli Sekarang"
                                     order="text_first"
                                     icon=">"

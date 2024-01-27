@@ -58,7 +58,7 @@ const XiaomiBanner = () => {
 
                 <div className="flex flex-row gap-2">
                   <CustomButton
-                    to="/cart"
+                    
                     text="Beli Sekarang"
                     intent="dark"
                     rounded="yes"

@@ -49,7 +49,7 @@ export default function PocoBanner() {
                 ></ProductTitleFlagship>
                 <div className="flex flex-row gap-2">
                   <CustomButton
-                    to="/cart"
+                    
                     text="Beli Sekarang"
                     intent="light"
                     rounded="yes"
