@@ -72,6 +72,7 @@ const cvaButton = cva(
 const CustomButton = ({ onClick, toastMessage, to, text, className, ...props }) => {
   const cvaProps = cvaButton(props); // intent, border, hover, etc.
   const isIconFirst = cvaProps.order === "iconFirst";
+  const isAuth = localStorage.getItem("auth");
 
   const handleClick = async (e) => {
     if (onClick) {
@@ -79,7 +80,7 @@ const CustomButton = ({ onClick, toastMessage, to, text, className, ...props }) 
     }
 
     // Conditionally show toast based on showToast prop
-    if (toastMessage) {
+    if (toastMessage && isAuth) {
       // from utils
       await handleToast(toastMessage);
     }
