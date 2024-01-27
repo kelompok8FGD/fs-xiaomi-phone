@@ -2,49 +2,28 @@ import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { useSocialLogin } from '../../../hooks/useSocialLogin';
 import { useEmailPasswordLogin } from '../../../hooks/useEmailPasswordLogin';
-import { useNavigate } from "react-router-dom";
-import {toast} from 'sonner'
 import CustomInput from '../../Atoms/CustomInput';
 import FB from '/account/facebook-svgrepo-com.png';
 const LoginForm = () => {  
-  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { emailPasswordLogin, emailPasswordError, emailPasswordLoading } = useEmailPasswordLogin();
   const { handleGoogleLogin, handleFacebookLogin } = useSocialLogin();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const inputsNotEmpty = email.trim() !== '' && password.trim() !== '';
- const handleLoginSuccess = async() => toast.success('Login Successful');
   const handleEmailPasswordSubmit = async (e) => {
     e.preventDefault();
     await emailPasswordLogin(email, password);
-
-    await handleLoginSuccess();
-    setTimeout(() => {
-      navigate("/smartphone");
-    }, 2000);
   };
 
   const handleGoogleButton = async (e) => {
     e.preventDefault(); // prevent form submission
     await handleGoogleLogin(); 
-    await handleLoginSuccess();
-   
-
-    setTimeout(() => {
-      navigate("/smartphone");
-    }, 2000);
   };
 
   const handleFacebookButton = async (e) => {
     e.preventDefault(); // prevent form submission
     await handleFacebookLogin();
-    await handleLoginSuccess();
-   
-
-    setTimeout(() => {
-      navigate("/smartphone");
-    }, 2000);
   };
 
 
