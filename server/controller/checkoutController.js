@@ -4,6 +4,8 @@ const PaymentMethod = db.PaymentMethodModel;
 const CartModel = db.CartModel;
 const ProductModel = db.ProductModel;
 const AddressModel = db.AddressModel;
+const ShipmentMethodModel = db.ShipmentMethodModel;
+const CheckoutModel = db.CheckoutModel;
 // const flat = require("flat");
 
 const flattenObject = (obj, parentKey = "") => {
@@ -54,6 +56,10 @@ const checkoutController = async (req, res) => {
       where: { id_customer },
       attributes: ["payment_type"],
     });
+    const shipmentMethod = await ShipmentMethodModel.findOne({
+      where: { id_customer },
+      attributes: ["shipment_type"],
+    });
 
     // Menggunakan fungsi yang diimpor untuk mendapatkan item keranjang
     const cartItems = await CartModel.findAll({
@@ -67,7 +73,13 @@ const checkoutController = async (req, res) => {
     });
 
     // Mengecek ketersediaan data sebelum memberikan respons
-    if (!customer || !address || !paymentMethod || !cartItems) {
+    if (
+      !customer ||
+      !address ||
+      !paymentMethod ||
+      !cartItems ||
+      !shipmentMethod
+    ) {
       return res.status(404).json({
         status: "failed",
         message: "Some data not found for the customer.",
@@ -77,6 +89,7 @@ const checkoutController = async (req, res) => {
     // Fungsi untuk melakukan transformasi data
     function transformData(data) {
       return {
+        checkout_id: data.checkout_Id,
         fullname: data.customer.fullname,
         email: data.customer.email,
         address_name: data.address.address_name,
@@ -89,6 +102,7 @@ const checkoutController = async (req, res) => {
         phone_number: data.address.phone_number,
 
         payment_type: data.paymentMethod.payment_type,
+        shipment_type: data.shipmentMethod.shipment_type,
 
         // tambahkan transformasi untuk kunci-kunci lainnya
         // ...
@@ -112,6 +126,7 @@ const checkoutController = async (req, res) => {
       customer: customer.toJSON(),
       address: address.toJSON(),
       paymentMethod: paymentMethod.toJSON(),
+      shipmentMethod: shipmentMethod.toJSON(),
       cartItems: cartItems.map((item) => item.toJSON()),
     });
 
@@ -129,7 +144,52 @@ const checkoutController = async (req, res) => {
   }
 };
 
-module.exports = checkoutController;
+const createNewCheckout = async (req, res) => {
+  try {
+    const {
+      id_checkout,
+      id_address,
+      id_payment_method,
+      id_shipment_method,
+      id_product,
+    } = req.body;
+
+    // Ambil ID pengguna dari token
+    const id_customer = req.id_customer;
+
+    // Pastikan ID pengguna ada
+    if (!id_customer) {
+      return res.status(401).json({
+        status: "failed",
+        message: "User ID not found in the token",
+      });
+    }
+
+    details = {
+      id_customer,
+      id_checkout,
+      id_address,
+      id_payment_method,
+      id_shipment_method,
+      id_product,
+    };
+
+    const newCheckout = await CheckoutModel.create(details);
+
+    res.status(201).json({
+      status: "ok",
+      data: newCheckout,
+    });
+  } catch (error) {
+    console.log(error, "<<<- Error create new address");
+    res.status(500).json({
+      status: "failed",
+      message: "Internal Server Error",
+    });
+  }
+};
+
+module.exports = { checkoutController, createNewCheckout };
 
 // Memberikan respons dengan data yang telah ditemukan
 // return res.json({

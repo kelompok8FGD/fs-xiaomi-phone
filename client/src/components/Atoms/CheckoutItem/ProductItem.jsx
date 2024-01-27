@@ -8,7 +8,7 @@ export default function ProductItem(props) {
 
   return (
     <div className="grid grid-cols-4">
-      <div>
+      <div className="max-w-[100px]">
         <img src={Image} alt="" />
       </div>
       <div className={`col-span-2  ${ClassName}`}>

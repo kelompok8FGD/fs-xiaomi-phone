@@ -4,6 +4,7 @@ const AddressModel = require("./AddressModel");
 const CustomerModel = require("./CustomerModel");
 const PaymentMethodModel = require("./PaymentMethodModel");
 const ProductModel = require("./ProductModel");
+const ShipmentMethodModel = require("./ShipmentMethodModel");
 
 const CheckoutModel = sequelize.define(
   "CheckoutModel",
@@ -22,6 +23,10 @@ const CheckoutModel = sequelize.define(
       allowNull: false,
     },
     id_payment_method: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    id_shipment_method: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -57,6 +62,9 @@ CheckoutModel.belongsTo(AddressModel, { foreignKey: "id_address" });
 CheckoutModel.belongsTo(CustomerModel, { foreignKey: "id_customer" });
 CheckoutModel.belongsTo(PaymentMethodModel, {
   foreignKey: "id_payment_method",
+});
+CheckoutModel.belongsTo(ShipmentMethodModel, {
+  foreignKey: "id_shipment_method",
 });
 CheckoutModel.belongsTo(ProductModel, { foreignKey: "id_product" });
 
