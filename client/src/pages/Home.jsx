@@ -1,6 +1,7 @@
 import React from "react";
 import LatestPhone from "../components/molecule/Cards/LatestProducts/LatestPhone";
 import ProductBanner from "../components/molecule/Banners/ProductBanner";
+import ProductCards from "../components/molecule/Cards/ProductCards";
 
 
 const Home = () => {
@@ -17,27 +18,9 @@ const Home = () => {
       <ProductBanner height="h-[450px] lg:h-[600px]" alignLeft lightTheme hideDiscount hidePrices hideLearnMore baseURL={import.meta.env.VITE_APP_BASEURL} category="xiaomi" id={27} phonePicDesktop={XiaomibgDesktop} phonePicMobile={XiaomibgMobile}/>
       <ProductBanner height="h-[450px] lg:h-[600px]" alignLeft darkTheme hideDiscount baseURL={import.meta.env.VITE_APP_BASEURL} category="redmi" id={1} phonePicDesktop={RedmibgDesktop} phonePicMobile={RedmibgMobile}/>
       </div>
-      <div
-        id="latestproduct"
-        className="max-w-full w-full flex flex-col sm:flex-row sm:space-y-[15px] lg:space-y-[0px] md:space-x-[15px]"
-      >
-        <LatestPhone
-          title="Redmi 10 2022"
-          subtitle="Harga super Hemat"
-          imgmedium="//i02.appmifile.com/67_operator_id/13/06/2023/8f2a3ef42c1fdc7f22980c0e69bb876e.jpg"
-          imgphone="//i02.appmifile.com/67_operator_id/13/06/2023/8f2a3ef42c1fdc7f22980c0e69bb876e.jpg"
-          to1="/redmi"
-          to2="/redmi"
-        />
-        <LatestPhone
-          title="Redmi Note 12"
-          subtitle="50MP triple kamera | Layar AMOLED 120Hz"
-          imgmedium="//i02.appmifile.com/351_operator_id/05/05/2023/19d9489a4da7932901d5535c6bd94c4f.jpg"
-          imgphone="//i02.appmifile.com/351_operator_id/05/05/2023/19d9489a4da7932901d5535c6bd94c4f.jpg"
-          to1="/redmi"
-          to2="/redmi"
-        />
-      </div>
+
+      <ProductCards category="redmi" mdCols={1} lgCols={2} xlCols={2} currentPage={0} postsPerPage={4}/> 
+
     </div>
   );
 };
