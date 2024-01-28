@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <div className="flex flex-col max-w-full bg-[#f7f7f7] gap-[15px]">
       <div id="top-banner" className="w-full flex flex-col gap-[16px]">
-      <ProductBanner height="h-[450px] lg:h-[600px]" alignLeft lightTheme hideDiscount hidePrices hideLearnMore baseURL={import.meta.env.VITE_APP_BASEURL} category="xiaomi" id={27} phonePicDesktop={XiaomibgDesktop} phonePicMobile={XiaomibgMobile}/>
+      <ProductBanner height="h-[450px] lg:h-[600px]" alignLeft lightTheme hideDiscount hidePrices hideLearnMore baseURL={import.meta.env.VITE_APP_BASEURL} category="xiaomi" id={9} phonePicDesktop={XiaomibgDesktop} phonePicMobile={XiaomibgMobile}/>
       <ProductBanner height="h-[450px] lg:h-[600px]" alignLeft darkTheme hideDiscount baseURL={import.meta.env.VITE_APP_BASEURL} category="redmi" id={1} phonePicDesktop={RedmibgDesktop} phonePicMobile={RedmibgMobile}/>
       </div>
 

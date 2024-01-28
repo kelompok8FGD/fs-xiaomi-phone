@@ -9,7 +9,7 @@ export default function PocoSection() {
   return (
     <>
       {/* Banner Flagship */}
-      <ProductBanner alignLeft lightTheme hideDiscount hideLearnMore={false} baseURL={import.meta.env.VITE_APP_BASEURL} category="poco" id={9} 
+      <ProductBanner alignLeft lightTheme hideDiscount hideLearnMore={false} baseURL={import.meta.env.VITE_APP_BASEURL} category="poco" id={8} 
     phonePicDesktop={PocoPhonePicDesktop}
     PocoPhonePicMobile={PocoPhonePicMobile}/>
       <section className="w-full flex flex-col flex-wrap bg-[#F7F7F7]">
