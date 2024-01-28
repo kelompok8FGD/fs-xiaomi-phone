@@ -20,7 +20,7 @@ const ShipmentMethodModel = sequelize.define(
     },
     shipment_price: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { DynamicThemeProvider } from "./context/DynamicThemeContext";
+import { AuthContextProvider } from "./context/AuthContext";
+import { UserContextProvider } from "./context/UserContext";
 {
   /*Delete cart provider only after fully implementing redux*/
 }
@@ -15,6 +18,18 @@ function App() {
   // Use the useLocation hook to get the current location
   const location = useLocation();
 
+
+  const ScrollToTop = () => {
+    const location = useLocation();
+  
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [location.pathname]);
+  
+    return null;
+  };
+  
+
   // Conditionally render the Header and Footer based on the location
   // NavBar and Footer will not be rendered at account page
   const showHeader =
@@ -24,15 +39,20 @@ function App() {
   return (
     <>
       <DynamicThemeProvider>
-        <Provider store={store}>
-          <CartProvider>
-            {showHeader && <Header />}
-            <main>
-              <Outlet />
-            </main>
-            {showFooter && <Footer />}
-          </CartProvider>
-        </Provider>
+        <AuthContextProvider>
+          <UserContextProvider>
+            <Provider store={store}>
+              <CartProvider>
+              <ScrollToTop />
+                {showHeader && <Header />}
+                <main>
+                  <Outlet />
+                </main>
+                {showFooter && <Footer />}
+              </CartProvider>
+            </Provider>
+          </UserContextProvider>
+        </AuthContextProvider>
       </DynamicThemeProvider>
     </>
   );

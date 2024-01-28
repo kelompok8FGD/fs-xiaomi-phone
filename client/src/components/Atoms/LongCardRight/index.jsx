@@ -10,16 +10,17 @@ import ProductTitleSmartphone from "../InsideCard/ProductTitleSmartphone.jsx";
 
 const LongCardRight = (props) => {
     const [dataRedmi, setDataRedmi] = useState([]);
-    const [currentPage] = useState(12);
-    const [postsPerPage] = useState(13);
+    const [currentPage] = useState(7);
+    const [postsPerPage] = useState(8);
 
     const dispatch = useDispatch();
-    // const { addToCart } = useContext(CartContext);
+    const API_URL = `${import.meta.env.VITE_APP_BASEURL}/products/category/xiaomi`;
 
     const getApiRedmi = async () => {
-        const response = await axios("https://xiaomi-phone-api.onrender.com/api/v1/products");
+        const response = await axios(API_URL);
 
-        setDataRedmi(response.data);
+        const data = response.data;
+        setDataRedmi(data);
     };
 
     useEffect(() => {
@@ -61,7 +62,7 @@ const LongCardRight = (props) => {
                                 />
                                 <button className="bg-[#191919] hover:bg-[#444444] text-white rounded-lg p-2 px-5 md:p-0 text-[12px] font-normal leading-[14px] md:text-[24px] md:leading-[29px]">
                                     <CustomButton
-                                        to="/cart"
+                                        
                                         text="Beli Sekarang"
                                         // intent="dark"
                                         rounded="yes"

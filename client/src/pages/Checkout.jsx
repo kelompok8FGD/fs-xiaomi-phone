@@ -1,10 +1,28 @@
 import CheckoutNavbar from "../components/organism/Navbar/CheckoutNavbar";
 import React, { useEffect, useState } from "react";
-import AddressForm from "../components/organism/AddressForm";
+import AddressForm from "../components/organism/Address/AddressForm";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import ProductItem from "../components/Atoms/CheckoutItem/ProductItem";
+import TotalPrice from "../components/Atoms/CheckoutItem/TotalPrice";
+import ConfirmPayment from "../components/Atoms/CheckoutItem/ConfirmPayment";
+import CountdownTimer from "../components/Atoms/CheckoutItem/CountdownTimer";
 
 function Checkout() {
+  const navigate = useNavigate();
   const [tampilkanAddressForm, setTampilkanAddressForm] = useState(false);
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
+  const [isAgreementSelected, setIsAgreementSelected] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [tampilkanCountdown, setTampilkanCountdown] = useState(false);
+  const countdownStartTime = localStorage.getItem("countdownStartTime");
+  const countdownEndTime = localStorage.getItem("countdownEndTime");
+
+  const handleSelectMainAddress = (address) => {
+    // Your existing logic to set the main address
+    setMainAddress(address);
+    setIsAddressSelected(true);
+  };
 
   const handleTambahAlamatClick = () => {
     setTampilkanAddressForm(true);
@@ -16,17 +34,86 @@ function Checkout() {
 
   // metode pengiriman
   const [isChecked, setIsChecked] = useState(false);
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+
+  const handleRadioClick = () => {
+    if (!isChecked) {
+      setIsChecked(true);
+    }
   };
 
-  const [dataCheckout, setDataCheckout] = useState([]);
+  const handleCheckboxChange = (e) => {
+    setIsAgreementSelected(e.target.checked);
+  };
+
+  const [bankSelection, setBankSelection] = useState(false);
+  const [paymentSelection, setPaymentSelection] = useState(false);
+
+  const handleRadioPaymentChange = (group) => {
+    if (group === "bank") {
+      setBankSelection(true);
+      setPaymentSelection(false);
+    } else if (group === "payment") {
+      setBankSelection(false);
+      setPaymentSelection(true);
+    }
+  };
+
+  const [dataAddress, setDataAddress] = useState([]);
+  const [mainAddress, setMainAddress] = useState(null);
+  const [currentAddress, setCurrentAddress] = useState(0);
+  const [addressPerPage, setAddressPerPage] = useState(1);
+
+  const [dataCartItem, setDataCartItem] = useState([]);
+  const [dataTimer, setDataTimer] = useState([]);
 
   const token = localStorage.getItem("token");
 
-  const getApiCheckout = async () => {
+  const isPaymentSelected = bankSelection || paymentSelection;
+
+  const getTimer = async () => {
+    try {
+      const response = await axios(
+        `${import.meta.env.VITE_APP_BASEURL}/timers`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setDataTimer(response.data);
+
+      // Pilih alamat utama (contoh: alamat pertama dalam daftar)
+      if (response.data && response.data.startTime) {
+        const elapsed = new Date() - new Date(response.data.startTime);
+        if (elapsed < 24 * 60 * 60 * 1000) {
+          setTampilkanCountdown(true);
+        }
+      }
+      console.log(dataTimer);
+      // Check if dataTimer.data exists before iterating
+      if (response.data.data) {
+        // Convert and store startTime in the local storage
+        response.data.data.forEach((item) => {
+          const startTime = new Date(item.startTime);
+          const endTime = new Date(item.endTime);
+          const formattedStartTime = startTime.toString(); // Change this line for a specific format
+          const formattedEndTime = endTime.toString(); // Change this line for a specific format
+
+          // Store formattedStartTime in local storage, using the item's id as a key
+          localStorage.setItem(`countdownStartTime`, formattedStartTime);
+          localStorage.setItem(`countdownEndTime`, formattedEndTime);
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching timer data:", error);
+    }
+  };
+
+  const getApiAddress = async () => {
     const response = await axios(
-      "https://xiaomi-phone-api.onrender.com/api/v1/checkout",
+      `${import.meta.env.VITE_APP_BASEURL}/address`,
       {
         method: "GET",
         headers: {
@@ -35,14 +122,166 @@ function Checkout() {
       }
     );
 
-    setDataCheckout(response.data);
-    const dataAll = dataCheckout.data || [];
-    console.log(dataAll);
+    setDataAddress(response.data);
+    // Pilih alamat utama (contoh: alamat pertama dalam daftar)
+    if (response.data.data.length > 0) {
+      setMainAddress(response.data[0]);
+      setIsAddressSelected(true); // Auto select the first address
+    }
+  };
+  const getCartItems = async () => {
+    const response = await axios(
+      `${import.meta.env.VITE_APP_BASEURL}/getCartItems`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setDataCartItem(response.data);
+    // Pilih alamat utama (contoh: alamat pertama dalam daftar)
+    if (response.data.length > 0) {
+      setMainAddress(response.data[0]);
+    }
   };
 
   useEffect(() => {
-    getApiCheckout();
+    getApiAddress();
+    getCartItems();
+    getTimer();
+
+    const storedStartTime = localStorage.getItem("countdownStartTime");
+
+    if (storedStartTime) {
+      const elapsed = new Date() - new Date(storedStartTime);
+      if (elapsed < 24 * 60 * 60 * 1000) {
+        setTampilkanCountdown(true);
+      }
+    }
   }, []);
+
+  const allAddress = dataAddress.data || [];
+  const allCartItem = dataCartItem.data || [];
+
+  // Initialize a counter variable
+  let totalProductItems = 0;
+
+  // Loop through each cart item and check if it has ProductModel
+  allCartItem.forEach((item) => {
+    if (item.ProductModel) {
+      // Increment the counter if ProductModel exists
+      totalProductItems++;
+    }
+  });
+
+  // Initialize a variable to store the total cost
+  let totalCost = 0;
+
+  // Loop through each cart item, calculate the cost (price * qty) for each item, and add it to the total
+  allCartItem.forEach((item) => {
+    const itemCost = item.price * item.qty;
+    totalCost += itemCost;
+  });
+
+  const adress = allAddress.slice(
+    currentAddress,
+    currentAddress + addressPerPage
+  );
+  // Menampilkan data ProductModel dengan console.log
+
+  const handleBayarSekarangClick = async () => {
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmPayment = async () => {
+    const startTime = new Date().toString();
+    const endTime = new Date(
+      new Date().getTime() + 24 * 60 * 60 * 1000
+    ).toString(); // Menambahkan 24 jam ke waktu saat ini
+
+    localStorage.setItem("countdownStartTime", startTime);
+    localStorage.setItem("countdownEndTime", endTime);
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_APP_BASEURL}/timers`,
+      {
+        startTime: startTime,
+        endTime: endTime,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    // Your logic when the user confirms the payment
+    try {
+      // Your logic to prepare data for API
+      const dataPembayaran = {
+        payment_type: bankSelection ? "Bank" : paymentSelection ? "Online" : "",
+        // Add other fields as needed for payment
+      };
+
+      const dataPengiriman = {
+        shipment_type: isChecked ? "Standar" : "Motor",
+        // Add other fields as needed for shipment
+      };
+
+      // Send data to API for shipment
+      const responsePengiriman = await axios.post(
+        `${import.meta.env.VITE_APP_BASEURL}/shipmentMethods`,
+        dataPengiriman,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Send data to API for payment
+      const responsePembayaran = await axios.post(
+        `${import.meta.env.VITE_APP_BASEURL}/paymentMethods`,
+        dataPembayaran,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Display confirmation message or redirect user
+      const isConfirmed = window.confirm("Payment confirmed!");
+
+      if (isConfirmed) {
+        // Redirect user or perform other actions
+        navigate("/ordercompleted");
+      } else {
+        console.log("Payment canceled.");
+      }
+
+      // Log API responses
+      console.log("Payment Response:", responsePembayaran.data);
+      console.log("Shipment Response:", responsePengiriman.data);
+      console.log("Payment and Timer Response:", response.data);
+
+      // Hide confirmation popup
+      setShowConfirmation(false);
+      setTampilkanCountdown(true);
+    } catch (error) {
+      // Handle errors
+      console.error("Error during payment or shipment:", error);
+      console.error("Error during payment or creating timer:", error);
+    }
+  };
+
+  const handleCancelPayment = () => {
+    // Your logic when the user cancels the payment
+    console.log("Payment canceled.");
+    setShowConfirmation(false);
+    setTampilkanKonfirmasi(false);
+  };
 
   return (
     <div>
@@ -63,24 +302,45 @@ function Checkout() {
               </div>
             </section>
             <>
-              <section className="bg-white mt-2 mb-4 px-8 lg:grid lg:grid-cols-2">
-                <div className="max-w-lg py-6 lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:mr-1 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
-                  <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-lg">
-                    {dataCheckout.address_name}
-                  </h2>
-                  <p className="text-lg lg:text-base">Tambah Alamat Baru</p>
-                  <p className="text-lg lg:text-base ">
-                    {dataCheckout.address_line1}
-                    <span> {dataCheckout.address_line2}</span>
-                    <span> {dataCheckout.city}</span>
-                  </p>
+              <section className="bg-white mt-2 mb-4 px-8 gap-5 lg:grid lg:grid-cols-2">
+                {adress.length > 0 ? (
+                  adress.map((address) => (
+                    <div
+                      key={address.id}
+                      className={`max-w-lg py-6 lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:mr-1 lg:hover:border-[#FF6900] lg:hover:cursor-pointer ${
+                        address === mainAddress ? "border-[#FF6900]" : ""
+                      }`}
+                      onClick={() => handleSelectMainAddress(address)}
+                    >
+                      <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-lg">
+                        {address.address_name}
+                      </h2>
+                      <p className="text-lg lg:text-base">
+                        {address.phone_number}
+                      </p>
+                      <p className="text-lg lg:text-base ">
+                        {address.full_address}
+                        <span> {address.villages}</span>
+                        <span> {address.subdistrict}</span>
+                      </p>
+                      <p className="text-lg lg:text-base ">
+                        {address.city}, {address.province} {address.postal_code}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="max-w-lg py-6 lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900]">
+                    <div className="flex justify-center text-center">
+                      <p className="text-lg lg:text-base">
+                        Anda belum menambahkan alamat, silahkan tambahkan alamat
+                        terlebih dahulu{">>"}.
+                      </p>
+                    </div>
+                  </div>
+                )}
 
-                  <p className="text-lg lg:text-base ">
-                    {dataCheckout.region} {dataCheckout.postal_code}
-                  </p>
-                </div>
                 <div
-                  className="hidden max-w-lg py-6 lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900] lg:hover:cursor-pointer"
+                  className=" max-w-lg py-6 items-center lg:block lg:border lg:border-solid lg:rounded-lg lg:p-[10px] lg:ml-1 lg:hover:border-[#FF6900] lg:hover:text-[#FF6900] lg:hover:cursor-pointer"
                   onClick={handleTambahAlamatClick}
                 >
                   <div className="flex justify-center text-center">
@@ -115,9 +375,9 @@ function Checkout() {
             </section>
 
             <section
-              className="p-8 mb-4 bg-white"
+              className="p-4 mb-2 bg-white"
               value={setIsChecked}
-              onChange={handleCheckboxChange}
+              onChange={handleRadioClick}
             >
               <div className="mb-6">
                 <div className="pb-6">
@@ -128,26 +388,34 @@ function Checkout() {
                 <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
               </div>
 
-              <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+              <div className="grid grid-cols-9 border bg-gray-200 border-solid rounded-lg mb-2 lg:hover:cursor-pointer">
                 <div className="text-center my-auto">
                   <input
-                    type="checkbox"
-                    className="form-checkbox text-[#FF6900] h-5 w-5"
+                    type="radio"
+                    className="form-checkbox text-gray-400 h-5 w-5"
+                    name="pengiriman"
+                    disabled
                   />
                 </div>
                 <div className="p-4 col-span-8">
                   <p>Pengiriman Sepeda motor</p>
-                  <p className="text-[#FF6900]">
+                  <p className="text-gray-400">
                     Layanan pengiriman ini tidak didukung
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-9 border border-solid rounded-lg mt-2 mb-3 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+              <div
+                className="grid grid-cols-9 border border-solid rounded-lg mt-2 mb-3 lg:hover:border-[#FF6900] lg:hover:cursor-pointer"
+                onClick={handleRadioClick}
+              >
                 <div className="text-center my-auto">
                   <input
-                    type="checkbox"
+                    type="radio"
                     className="form-checkbox text-[#FF6900] h-5 w-5"
+                    name="pengiriman"
+                    checked={isChecked}
+                    onChange={() => {}}
                   />
                 </div>
                 <div className="p-4 col-span-8" value="shipp">
@@ -161,27 +429,33 @@ function Checkout() {
               <p>
                 Dipengaruhi oleh cuaca dan festival, pengiriman akan tertunda
               </p>
+            </section>
+
+            <section className="p-4 mb-2 bg-white">
               <section className="mt-6 mb-4 bg-white">
                 <div className="">
                   <div className="">
-                    <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
+                    <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl pb-6">
                       Metode Pembayaran
                     </h2>
                   </div>
-                  <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
+                  <div className=" bg-slate-100 h-[1px] max-w-2xl"></div>
                 </div>
               </section>
-            </section>
-
-            <section className="mb-4">
               {/* Shipping with Card section (conditionally rendered) */}
               {isChecked === true && (
                 <>
-                  <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+                  <div
+                    className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer"
+                    onClick={() => handleRadioPaymentChange("bank")}
+                  >
                     <div className="text-center my-auto">
                       <input
-                        type="checkbox"
+                        type="radio"
                         className="form-checkbox text-[#FF6900] h-5 w-5"
+                        name="bankSelection"
+                        checked={bankSelection}
+                        onChange={() => {}}
                       />
                     </div>
                     <div className="p-3 col-span-8 flex">
@@ -194,11 +468,17 @@ function Checkout() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+                  <div
+                    className="grid grid-cols-9 border border-solid rounded-lg mb-2 lg:hover:border-[#FF6900] lg:hover:cursor-pointer"
+                    onClick={() => handleRadioPaymentChange("payment")}
+                  >
                     <div className="text-center my-auto">
                       <input
-                        type="checkbox"
+                        type="radio"
                         className="form-checkbox text-[#FF6900] h-5 w-5"
+                        name="paymentSelection"
+                        checked={paymentSelection}
+                        onChange={() => {}}
                       />
                     </div>
 
@@ -223,24 +503,26 @@ function Checkout() {
               <div className="pb-6">
                 <div className="pb-6">
                   <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
-                    {dataCheckout.qty} item
+                    {totalProductItems} item
                   </h2>
                 </div>
+
                 <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
               </div>
-              <div className="grid grid-cols-4">
+
+              {allCartItem.map((cart) => (
                 <div>
-                  <img src={dataCheckout.image} alt="" />
+                  <ProductItem
+                    className="grid grid-cols-4"
+                    Image={cart.ProductModel.image}
+                    Tittle={cart.ProductModel.name_product}
+                    Qty={cart.qty}
+                    Price={cart.price}
+                  />
                 </div>
-                <div className="col-span-2">
-                  <p>{dataCheckout.name_product}</p>
-                  <p>Jumlah: {dataCheckout.qty}</p>
-                </div>
-                <div>
-                  <p>Rp. {dataCheckout.price}</p>
-                </div>
-              </div>
+              ))}
             </section>
+
             <section className="p-8 mb-4 bg-white lg:order-1 lg:pb-0 lg:mb-0">
               <div>
                 <div className="pb-6">
@@ -256,7 +538,7 @@ function Checkout() {
                   <p>Subtotal</p>
                 </div>
                 <div className="text-right">
-                  <p>Rp 6.499.000</p>
+                  <TotalPrice TotalPrice={totalCost} />
                 </div>
               </div>
               <div className="bg-slate-100 h-[1px] max-w-2xl"></div>
@@ -269,52 +551,74 @@ function Checkout() {
                 </div>
               </div>
             </section>
-            <section className="p-8 bg-white lg:order-5 lg:pb-0 lg:mb-0 lg:mt-0 lg:pt-0">
-              <div className="grid grid-cols-2">
-                <div>
-                  <h2 className="font-Inter font-semibold text-3xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl">
-                    Kupon
-                  </h2>
-                  <h4 className="p-1">0 Kupon Tersedia</h4>
-                  <h4 className="p-1">Tidak Ada Kupon Yang Digunakan</h4>
-                </div>
-                <div className="text-right">
-                  <p className="lg:text-[#FF6900]">Gunakan Kupon</p>
-                </div>
-              </div>
-            </section>
 
             <section className="hidden lg:grid lg:order-last text-center">
+              {tampilkanCountdown && (
+                <div className="mt-4">
+                  <CountdownTimer
+                    startTime={countdownStartTime}
+                    endTime={countdownEndTime}
+                  />
+                </div>
+              )}
               <div className="items-end lg:bottom-0 lg:right-20 lg:pb-1">
-                <button className="w-[241px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end lg:w-[400px]">
-                  <h1 className="text-white font-Inter text-2xl z-50">
+                <button
+                  disabled={
+                    !isAddressSelected ||
+                    !isChecked ||
+                    !isPaymentSelected ||
+                    !isAgreementSelected ||
+                    allAddress.length === 0
+                  }
+                  onClick={handleBayarSekarangClick}
+                  className={`w-[201px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end xsml:w-[241px] lg:w-[400px] ${
+                    !isAddressSelected ||
+                    !isChecked ||
+                    !isPaymentSelected ||
+                    !isAgreementSelected ||
+                    allAddress.length === 0
+                      ? "cursor-not-allowed bg-gray-400"
+                      : ""
+                  }`}
+                >
+                  <h1 className="text-white font-Inter text-xl xsml:text-2x1">
                     Bayar Sekarang
                   </h1>
                 </button>
               </div>
             </section>
 
+            <div className="mt-4 text-center bg-white lg:hidden">
+              <CountdownTimer
+                startTime={countdownStartTime}
+                endTime={countdownEndTime}
+              />
+            </div>
             <section className="p-8 mb-4 lg:order-last lg:pb-0 lg:mb-0 lg:mt-0 lg:pt-0">
-              <div className="grid grid-cols-9 lg:hover:border-[#FF6900] lg:hover:cursor-pointer">
+              <div
+                className="grid grid-cols-9 lg:hover:border-[#FF6900] lg:hover:cursor-pointer "
+                onChange={handleCheckboxChange}
+              >
                 <div className="text-center m-auto">
                   <input
                     type="checkbox"
                     className="form-checkbox text-[#FF6900] h-5 w-5"
+                    onChange={handleCheckboxChange}
                   />
                 </div>
+
                 <div className="col-span-8">
                   <span className="">
                     Dengan melakukan pemesanan, berarti Anda telah membaca dan
-                    menyetujui
+                    menyetujui{" "}
                     <span className="text-[#FF6900]">
-                      Ketentuan Penggunaandan
+                      Ketentuan Penggunaandan{" "}
                     </span>
-                    dan
-                    <span className="text-[#FF6900]">
-                      Kebijakan Privasi{" "}
-                    </span>{" "}
+                    dan{" "}
+                    <span className="text-[#FF6900]">Kebijakan Privasi </span>{" "}
                     Mi.com. Saya telah membaca dan menyetujui
                     <span className="text-[#FF6900]">
+                      {" "}
                       Kebijakan Pengembalian.
                     </span>
                   </span>
@@ -332,11 +636,29 @@ function Checkout() {
                   </div>
                   <div className="justify-self-start mx-auto my-auto lg:text-right lg:mr-2">
                     <h1 className="font-Inter text-2xl xsml:w-3xl font-bold text-[#FF6900] sm:text-3xl lg:text-2xl">
-                      Rp 6.499.000
+                      <TotalPrice TotalPrice={totalCost} />
                     </h1>
                   </div>
                   <div className="items-end lg:absolute lg:bottom-0 lg:right-20 lg:pb-10 lg:hidden">
-                    <button className="w-[201px] h-[56px] rounded-lg bg-black opacity-1 text-center justify-self-end xsml:w-[241px]">
+                    <button
+                      disabled={
+                        !isAddressSelected ||
+                        !isChecked ||
+                        !isPaymentSelected ||
+                        !isAgreementSelected ||
+                        allAddress.length === 0
+                      }
+                      onClick={handleBayarSekarangClick}
+                      className={`w-[201px] h-[56px] rounded-lg bg-black opacity-1  text-white text-center justify-self-end xsml:w-[241px] ${
+                        !isAddressSelected ||
+                        !isChecked ||
+                        !isPaymentSelected ||
+                        !isAgreementSelected ||
+                        allAddress.length === 0
+                          ? "cursor-not-allowed bg-gray-400"
+                          : ""
+                      }`}
+                    >
                       <h1 className="text-white font-Inter text-xl xsml:text-2x1">
                         Bayar Sekarang
                       </h1>
@@ -348,6 +670,12 @@ function Checkout() {
           </div>
         </aside>
       </main>
+      {showConfirmation && (
+        <ConfirmPayment
+          onConfirm={handleConfirmPayment}
+          onCancel={handleCancelPayment}
+        />
+      )}
       {/* Checkout End */}
     </div>
   );

@@ -7,6 +7,7 @@ router.get('/customers', customer.findAllCustomers);
 router.get("/customers/:id", customer.getCustomerById);
 router.post('/register', customer.createNewCustomer);
 router.post('/login', customer.loginCustomer);
+router.delete("/deleteepuser", customer.deleteepuser);
 
 
 module.exports = router;

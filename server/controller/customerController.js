@@ -42,34 +42,46 @@ const getCustomerById = async (req, res) => {
   }
 };
 
-const isStrongPasswordCustom = (password) => {
-  return password.length >= 6;
+const isStrongPassword = (password) => {
+  // Check if the password has at least 8 characters and at most 16 characters
+  return validator.isLength(password, { min: 8, max: 16 });
 };
 
+const isAlphanumericPassword = (password) => {
+  // Check if the password contains both letters and numbers
+  return /[a-zA-Z]/.test(password) && /\d/.test(password);
+};
 const createNewCustomer = async (req, res) => {
   try {
     const { email, password, fullname } = req.body;
 
     // Check emptiness of the incoming data
     if (!email || !password || !fullname) {
-      return res.json({ message: "Please enter all the details" });
+      return res.json({ error: "One or more missing details" });
     }
 
     // Check if the email is valid
     if (!validator.isEmail(email)) {
-      return res.status(400).json({ message: "Email is not valid" });
+      return res.status(400).json({ error: "Email is not valid" });
     }
-    if (!isStrongPasswordCustom(password)) {
+    if (!isStrongPassword(password)) {
       return res.status(400).json({
-        message: "Password is not strong enough.",
+        error: "Password must be 8 to 16 characters long",
       });
     }
+
+    if (!isAlphanumericPassword(password)) {
+      return res.status(400).json({
+        error: "Password must include both numbers and letters.",
+      });
+    }
+
     // Check if the user already exists
     const userExists = await Customer.findOne({ where: { email } });
 
     if (userExists) {
       return res.status(400).json({
-        message: "This email is already in use. Use a different one.",
+        error: "This email is already in use. Use a different one.",
       });
     }
 
@@ -101,7 +113,7 @@ const loginCustomer = async (req, res) => {
 
     // Check emptiness of the incoming data
     if (!email || !password) {
-      return res.json({ message: "Please enter all the details" });
+      return res.json({ error: "Please enter all the details" });
     }
 
     // Check email match
@@ -140,9 +152,65 @@ const loginCustomer = async (req, res) => {
   }
 };
 
+// Delete Customer by Email from localStorage
+
+const deleteepuser = async (req, res, next) => {
+  try {
+    // Retrieve the email from the request body
+    const { userEmail } = req.body;
+
+    // Check if userEmail exists in the request body
+    if (!userEmail) {
+      return res.status(400).json({
+        status: "failed",
+        error: "Email not provided in the request body",
+      });
+    }
+
+    // Find the customer with the given email
+    const customerToDelete = await Customer.findOne({
+      where: { email: userEmail },
+    });
+
+    // Check if customer exists
+    if (!customerToDelete) {
+      return res.status(404).json({
+        status: "failed",
+        error: `Customer with email ${userEmail} not found`,
+      });
+    }
+
+    // Use CustomerModel.destroy with a where clause to delete the customer
+    const customerDeleted = await Customer.destroy({
+      where: { email: userEmail },
+    });
+
+    // Check if any rows were affected (customer deleted)
+    if (customerDeleted === 0) {
+      return res.status(404).json({
+        status: "failed",
+        error: `Customer with email ${userEmail} not found`,
+      });
+    }
+
+    res.json({
+      status: "success",
+      error: "Customer deleted successfully",
+      customerDeleted: customerToDelete,
+    });
+  } catch (error) {
+    console.error(error, "<< Error deleting customer");
+    next(error); // Pass the error to the next middleware (error handler)
+  }
+};
+
+
+
+
 module.exports = {
   findAllCustomers,
   getCustomerById,
   createNewCustomer,
   loginCustomer,
+  deleteepuser,
 };

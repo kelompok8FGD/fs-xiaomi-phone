@@ -4,13 +4,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
 import App from "./App.jsx";
 import ProtectedRouteHOC from "./components/ProtectedRouteHOC.jsx";
+import {Toaster} from 'sonner'
 import "./index.css";
+import "./i18.js";
 //import pages
 import Home from "./pages/Home.jsx";
 import Store from "./pages/Store.jsx";
 import Cart from "./pages/Cart.jsx";
 import Account from "./pages/Account.jsx";
-import Support from "./pages/Support.jsx"
+import Profile from "./pages/Profile.jsx";
+import Support from "./pages/Support.jsx";
 import Error from "./pages/Error.jsx";
 import SmartPhone from "./pages/Smartphone.jsx";
 import About from "./pages/About.jsx";
@@ -20,7 +23,8 @@ import Privacy from "./pages/Privacy.jsx";
 import Poco from "./pages/Poco.jsx";
 import Xiaomi from "./pages/Xiaomi.jsx";
 import Checkout from "./pages/Checkout.jsx";
-import DetailPoco from "./pages/ProductDetails/Poco/index.jsx";
+import OrderCompleted from "./pages/OrderCompleted.jsx";
+import ProductDetail from "./pages/ProductDetails.jsx";
 import RedmiList from "./pages/Redmi.jsx";
 import Search from "./pages/Search.jsx";
 
@@ -37,6 +41,10 @@ const router = createBrowserRouter([
         path: "/account",
         element: <ProtectedRouteHOC element={<Account />} />,
       },
+      {
+        path: "/profile",
+        element: <ProtectedRouteHOC element={<Profile />} />,
+      },
       { path: "/smartphone", element: <SmartPhone /> },
       { path: "/About", element: <About /> },
       { path: "/Agreement", element: <Agreement /> },
@@ -51,7 +59,11 @@ const router = createBrowserRouter([
         path: "/checkout",
         element: <ProtectedRouteHOC element={<Checkout />} />,
       },
-      { path: "/detail/:id", element: <DetailPoco /> },
+      {
+        path: "/ordercompleted",
+        element: <ProtectedRouteHOC element={<OrderCompleted />} />,
+      },
+      { path: "/detail/:id", element: <ProductDetail /> },
     ],
   },
 ]);
@@ -60,6 +72,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>
       <RouterProvider router={router} />
+      <Toaster invert="true" richColors  position="top-center"/>
     </AuthContextProvider>
   </React.StrictMode>
 );

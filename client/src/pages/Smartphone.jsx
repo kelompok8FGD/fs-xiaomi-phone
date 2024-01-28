@@ -1,13 +1,13 @@
-import RedmiSection from "../components/molecule/Smartphone/RedmiSection";
-import XiaomiSection from "../components/molecule/Smartphone/XiaomiSection";
-import PocoSection from "../components/organism/Products/PocoSection";
+import RedmiSection from "../components/organism/Sections/RedmiSection";
+import SmartphoneXiaomiSection from "../components/organism/Sections/SmartphoneXiaomiSection";
 import TitleSeeAll from "../components/Atoms/BannerSeeAll/TitleSeeAll";
 import CustomButton from "../components/Atoms/Buttons/CustomButton";
+import ProductCards from "../components/molecule/Cards/ProductCards";
 
 const SmartPhone = () => {
   return (
     <>
-      <XiaomiSection />
+      <SmartphoneXiaomiSection />
       <RedmiSection />
       <section className="bg-[#F7F7F7] h-60 flex flex-col items-center justify-center z-0 md:gap-2 md:p-5">
         <TitleSeeAll
@@ -26,7 +26,8 @@ const SmartPhone = () => {
           />
         </div>
       </section>
-      <PocoSection />
+          
+          <ProductCards category="poco" mdCols={2} lgCols={3} startfromproduct={4} endatproduct={7} />
     </>
   );
 };

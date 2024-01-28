@@ -1,57 +1,85 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../redux/cart/cartSlice";
-import { useDispatch } from "react-redux";
 import CartItem from "../components/molecule/Cart/CartItem";
 import CheckoutNavbar from "../components/organism/Navbar/CheckoutNavbar";
 import EmptyCart from "../components/molecule/Cart/EmptyCart";
 import CustomButton from "../components/Atoms/Buttons/CustomButton";
-import { calculateTotal } from "../redux/cart/cartUtils";
+import { calculateTotal } from "../utils";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Cart = () => {
+  const token = localStorage.getItem("token");
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { formattedTotalPrice, totalQuantity } = calculateTotal(cart);
+  const [isError, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleCart = async () => {
-    setCheckoutLoading(true);
-
+  const handleCart = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+  
     try {
-      // Transform the cartItems in the expected format
-      const formattedCartItems = cartItems.map((item) => ({
-        id_product: item.id,
-        id_customer: item.id,
-        qty: item.quantity,
-        price: item.price,
-      }));
-
-      // Make an API request to initiate the checkout process
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ cartItems: formattedCartItems }),
-        // Add any necessary authentication headers if required
-      });
-
-      if (response.ok) {
-        // If checkout is successful, clear the local cart
-        clearCart();
-        alert("Checkout successful!");
-      } else {
-        // Handle errors or show appropriate messages
-        alert("Checkout failed. Please try again.");
+      for (const item of cart) {
+        console.log("works")
+        const formattedCartItem = {
+          id_product: item.id,
+          qty: item.quantity,
+          price: item.price,
+        };
+  
+        const response = await axios.post(
+          `${import.meta.env.VITE_APP_BASEURL}/addToCart`,
+          formattedCartItem,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // Make sure 'token' is defined
+            },
+          }
+        );
+  
+        const data = response.data;
+        const dataError = data.error || "An error occurred before checkout.";
+  
+        if (response.status === 200) {
+          // Handle successful backend response for each item
+          // Optionally, you can do something here if needed
+        } else {
+          // Handle unexpected structure in backend response
+          setIsLoading(false);
+          setError(dataError);
+          console.error(dataError);
+          return; // Stop processing further items on error
+        }
       }
+  
+      //  execute after all items are processed
+      dispatch(clearCart());
+      navigate("/checkout");
     } catch (error) {
-      console.error("Error during checkout:", error.message);
-      // Handle errors or show appropriate messages
-      alert("An error occurred during checkout. Please try again.");
+      setIsLoading(false);
+      const serverError = error.response?.data?.message;
+  
+      if (serverError) {
+        setError(serverError);
+        console.error("Server error before checkout:", serverError);
+      } else {
+        setError("An unexpected error occurred before checkout.");
+        console.error("Unexpected error in server:", error.response?.data);
+      }
     } finally {
-      setCheckoutLoading(false);
+      setIsLoading(false);
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div className="flex flex-col max-w-[100vw] h-full bg-white">
       <CheckoutNavbar activeStep={1} />
@@ -93,7 +121,7 @@ const Cart = () => {
                 total ({totalQuantity} items) :{" "}
                 <strong>Rp {formattedTotalPrice}</strong>
               </p>
-              <CustomButton to="/checkout" text="Bayar" intent="accent_bg" />
+              <CustomButton onClick={handleCart} text="Bayar" intent="accent_bg" />
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import XiaomiSection from "../components/organism/Products/XiaomiSection";
+import XiaomiSection from "../components/organism/Sections/XiaomiSection";
 import ProductNavbar from "../components/organism/Navbar/ProductsNavbar";
 
 const Xiaomi = () => {

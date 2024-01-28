@@ -67,24 +67,27 @@ const getPaymentMethodByPaymentType = async (req, res) => {
 // Create a payment method
 const createNewPaymentMethod = async (req, res) => {
   try {
-    const { id_customer: id_customer, payment_type } = req.body;
+    const { payment_type } = req.body;
+
+    // Ambil ID pengguna dari token
+    const id_customer = req.id_customer;
+    if (!id_customer) {
+      return res.status(401).json({
+        status: "failed",
+        message: "User ID not found in the token",
+      });
+    }
 
     details = {
       id_customer,
       payment_type,
     };
 
-    const newPaymentMethod = await PaymentMethod.create(details, {
-      where: { id_customer: id_customer },
+    const newPaymentMethod = await PaymentMethod.create(details);
+    res.status(201).json({
+      status: "ok",
+      data: newPaymentMethod,
     });
-
-    if (newPaymentMethod) {
-      res.status(201).json({
-        status: "ok",
-        message: "Create Payment Method Succesfully",
-        data: newPaymentMethod,
-      });
-    }
   } catch (error) {
     console.log(error, "<<<- Error create new product");
     res.status(500).json({

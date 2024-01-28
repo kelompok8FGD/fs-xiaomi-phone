@@ -14,18 +14,12 @@ const EmptyCart = () => {
       </p>
      
       
-     <div className='hidden lg:block py-4'>
-       
-      <CustomButton to="/store" text="Belanja sekarang" intent="accent_bg" icon=">" order="textFirst"/>
-   
-    </div>
-
-    <div className='block lg:hidden py-4'>
-       
-       <CustomButton to="/store" text="Belanja sekarang" intent="accent_nobg" icon=">" order="textFirst"/>
+     <div className='flex flex-col gap-4 items-center py-4'>
+         <CustomButton to="/checkout" text="Checkout >" intent="accent_nobg" icon=">" order="textFirst"/>
+      <CustomButton to="/smartphone" text="Belanja sekarang" intent="accent_bg" icon=">" order="textFirst"/>
+  
     
     </div>
-
     </section>
   </div>
   )

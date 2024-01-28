@@ -23,28 +23,6 @@ const Support = () => {
               </a>
               <h1 className="text-[28px] text-text">Contact Support</h1>
             </div>
-
-            <div className="hidden md:block w-[50%]">
-              <nav id="account-top-nav">
-                <ul className="text-text">
-                  <li>
-                    <a href="">Perjanjian Pengguna</a>
-                  </li>
-                  <li>
-                    <a href="">Kebijakan Privasi</a>
-                  </li>
-                  <li>
-                    <a href="">Butuh Bantuan?</a>
-                  </li>
-                  <li>
-                    <span>|</span>
-                  </li>
-                  <li>
-                    <a href="">Pilih Bahasa Anda</a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
           </header>
           <div
             className="p-8 w-[500px] relative bg-contrast text-left m-auto py-[20px]">

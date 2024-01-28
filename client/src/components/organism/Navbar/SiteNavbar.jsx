@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import Icon from '../../Atoms/Icon';
 import Logo from '../../Atoms/Logo';
-import List from '../../Atoms/Global/ListItem';
+import List from '../../Atoms/List/ListItem';
 import SearchButton from '../../Atoms/Buttons/SearchButton';
 import { useLogout } from '../../../hooks/useLogout';
 import ThemeSwitch from '../../molecule/ThemeSwitch';
+import Dropdown from './Dropdown';
 import { useSelector } from 'react-redux';
 import { useAuthContext } from '../../../hooks/useAuthContext';
-import { calculateTotal } from '../../../redux/cart/cartUtils';
+import { calculateTotal } from '../../../utils';
 import { Link } from 'react-router-dom';
 const SiteNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +21,7 @@ const SiteNavbar = () => {
   const { totalQuantity } = calculateTotal(cart);
 
   const { logout } = useLogout()
-  const { user } = useAuthContext()
+  const { auth } = useAuthContext()
   const handleClick = () => {
     logout()
   }
@@ -40,27 +41,17 @@ const SiteNavbar = () => {
         <div className="grow h-full"></div>
         <div className='only-medium'>
         <List redirect="/support" text="Support" className="h-full px-[8px] lg:px-[16px]" title="Support" />
-        </div>
+        </div>     {/* User login/logout */}   
+      <Dropdown/>
         <SearchButton />
         <div id='cartamount' className='relative'>
           <Icon redirect="/cart" classname="shopping-cart" />
           <div className="absolute top-[-10px] right-0 h-auto bg-accent px-2 py-1 rounded-full">
-  <p className="mx-auto text-text text-xs">{user ? totalQuantity : 0}</p>
+  <p className="mx-auto text-text text-xs">{auth ? totalQuantity : 0}</p>
 </div>
         </div>  
         <ThemeSwitch />
-          {/* User login/logout */}   
-          <div className="flex justify-center items-center gap-4">
-          {!user ? (
-        <Icon redirect="/account" classname="account only-medium" />
-      ) : (
-        <>
-          <button className='only-medium' onClick={handleClick}>Log out</button>
-        </>
-      )}
-      </div>
-        
-      
+     
         {/* Toggle button for the menu */}
         <button
           className="relative ml-4 text-text p-2 focus:outline-none  flex md:hidden z-[1001]"
@@ -77,16 +68,16 @@ const SiteNavbar = () => {
               <div className='text-text relative mt-10'>
                 <div className='px-[16px]  py-[16px] gap-4 flex justify-between' >
                   <div className='w-max rounded-lg bg-neutral-300 text-white flex items-center justify-center'>
-                <Icon redirect="/account" classname="account" /></div>
-                {user ? (
+                <Icon redirect="/account?activeTab=login" classname="account" /></div>
+                {auth ? (
         <div className='flex flex-col items-start w-full'>
-          <span>{user.email}</span>
+          <span>{auth.email}</span>
           <button onClick={handleClick}>Log out</button>
         </div>
       ) : (
         <List
           className="w-full justify-start  mr-10 inline-block text-text px-[8px] lg:px-[16px]"
-          redirect="/account"
+          redirect="/account?activeTab=login"
           text="Account"
           title="Login/Register"
         />
