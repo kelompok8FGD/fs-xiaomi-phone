@@ -68,6 +68,7 @@ const ProductBanner = ({
 
           <div className="flex flex-row justify-center md:justify-start gap-2">
             <CustomButton
+              toastMessage={"Item added to cart"}
               text="Beli Sekarang"
               intent={lightTheme ? 'light' : 'dark'}
               rounded="yes"
