@@ -9,45 +9,52 @@ import ConfirmPayment from "../components/Atoms/CheckoutItem/ConfirmPayment";
 import CountdownTimer from "../components/Atoms/CheckoutItem/CountdownTimer";
 
 function Checkout() {
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
+
+  const [mainAddress, setMainAddress] = useState(null);
   const [tampilkanAddressForm, setTampilkanAddressForm] = useState(false);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
   const [isAgreementSelected, setIsAgreementSelected] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [tampilkanCountdown, setTampilkanCountdown] = useState(false);
-  const countdownStartTime = localStorage.getItem("countdownStartTime");
-  const countdownEndTime = localStorage.getItem("countdownEndTime");
-
-  const handleSelectMainAddress = (address) => {
-    // Your existing logic to set the main address
-    setMainAddress(address);
-    setIsAddressSelected(true);
-  };
-
-  const handleTambahAlamatClick = () => {
-    setTampilkanAddressForm(true);
-  };
-
-  const handleCloseAddressForm = () => {
-    setTampilkanAddressForm(false);
-  };
+  const [dataAddress, setDataAddress] = useState([]);
+  const [currentAddress, setCurrentAddress] = useState(0);
+  const [addressPerPage, setAddressPerPage] = useState(1);
 
   // metode pengiriman
   const [isChecked, setIsChecked] = useState(false);
 
+  const [bankSelection, setBankSelection] = useState(false);
+  const [paymentSelection, setPaymentSelection] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const [dataCartItem, setDataCartItem] = useState([]);
+  const [dataTimer, setDataTimer] = useState([]);
+
+  const [tampilkanCountdown, setTampilkanCountdown] = useState(false);
+  const countdownStartTime = localStorage.getItem("countdownStartTime");
+  const countdownEndTime = localStorage.getItem("countdownEndTime");
+
+  // Address Form handle
+  const handleSelectMainAddress = (address) => {
+    setMainAddress(address);
+    setIsAddressSelected(true);
+  };
+  const handleTambahAlamatClick = () => {
+    setTampilkanAddressForm(true);
+  };
+  const handleCloseAddressForm = () => {
+    setTampilkanAddressForm(false);
+  };
+
+  // handle shiping method dan payment method
   const handleRadioClick = () => {
+    ``;
     if (!isChecked) {
       setIsChecked(true);
     }
   };
 
-  const handleCheckboxChange = (e) => {
-    setIsAgreementSelected(e.target.checked);
-  };
-
-  const [bankSelection, setBankSelection] = useState(false);
-  const [paymentSelection, setPaymentSelection] = useState(false);
-
+  //payment method
   const handleRadioPaymentChange = (group) => {
     if (group === "bank") {
       setBankSelection(true);
@@ -58,17 +65,48 @@ function Checkout() {
     }
   };
 
-  const [dataAddress, setDataAddress] = useState([]);
-  const [mainAddress, setMainAddress] = useState(null);
-  const [currentAddress, setCurrentAddress] = useState(0);
-  const [addressPerPage, setAddressPerPage] = useState(1);
-
-  const [dataCartItem, setDataCartItem] = useState([]);
-  const [dataTimer, setDataTimer] = useState([]);
-
-  const token = localStorage.getItem("token");
+  const handleCheckboxChange = (e) => {
+    setIsAgreementSelected(e.target.checked);
+  };
 
   const isPaymentSelected = bankSelection || paymentSelection;
+
+  const getApiAddress = async () => {
+    const response = await axios(
+      `${import.meta.env.VITE_APP_BASEURL}/address`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setDataAddress(response.data);
+    // Pilih alamat utama (contoh: alamat pertama dalam daftar)
+    if (response.data.data.length > 0) {
+      setMainAddress(response.data[0]);
+      setIsAddressSelected(true); // Auto select the first address
+    }
+  };
+
+  const getCartItems = async () => {
+    const response = await axios(
+      `${import.meta.env.VITE_APP_BASEURL}/getCartItems`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setDataCartItem(response.data);
+    // Pilih alamat utama (contoh: alamat pertama dalam daftar)
+    if (response.data.length > 0) {
+      setMainAddress(response.data[0]);
+    }
+  };
 
   const getTimer = async () => {
     try {
@@ -108,42 +146,6 @@ function Checkout() {
       }
     } catch (error) {
       console.error("Error fetching timer data:", error);
-    }
-  };
-
-  const getApiAddress = async () => {
-    const response = await axios(
-      `${import.meta.env.VITE_APP_BASEURL}/address`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    setDataAddress(response.data);
-    // Pilih alamat utama (contoh: alamat pertama dalam daftar)
-    if (response.data.data.length > 0) {
-      setMainAddress(response.data[0]);
-      setIsAddressSelected(true); // Auto select the first address
-    }
-  };
-  const getCartItems = async () => {
-    const response = await axios(
-      `${import.meta.env.VITE_APP_BASEURL}/getCartItems`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    setDataCartItem(response.data);
-    // Pilih alamat utama (contoh: alamat pertama dalam daftar)
-    if (response.data.length > 0) {
-      setMainAddress(response.data[0]);
     }
   };
 
@@ -216,9 +218,9 @@ function Checkout() {
         },
       }
     );
-    // Your logic when the user confirms the payment
+    // user confirms the payment
     try {
-      // Your logic to prepare data for API
+      // prepare data for API
       const dataPembayaran = {
         payment_type: bankSelection ? "Bank" : paymentSelection ? "Online" : "",
         // Add other fields as needed for payment
@@ -264,7 +266,7 @@ function Checkout() {
       // Log API responses
       console.log("Payment Response:", responsePembayaran.data);
       console.log("Shipment Response:", responsePengiriman.data);
-      console.log("Payment and Timer Response:", response.data);
+      console.log("Timer Response:", response.data);
 
       // Hide confirmation popup
       setShowConfirmation(false);
