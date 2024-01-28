@@ -17,13 +17,11 @@ Note: jika ingin melakukan update pada frontend masuk terlebih dahulu ke dalam d
    -- Melakukan update pada backend (jangan lupa cek apakah direktori sudah benar di /server) 
       note: Sebelum run buatlah dahulu databasenya di mysql masing2 dengan nama xiaomi_dev
    1. install NPN package dengan cara >> npm Install
-   2. Koneksi dengan database mysql pada direktori config/config.json
-"development": {
-"username": "root", >> gunakan username root
-"password": null, >> password bisa disesuaikan
-"database": "xiaomi_dev", >> nama database harus disamakan xiaomi_dev
-"host": "127.0.0.1", >> ip mysql server default 127.0.0.1
-"dialect": "mysql" >> secara default tapi nanti jika perlu menggunakan mysql2 perlu dirubah ke mysql2
-},
+   2. siapkan database dengan nama database, username, password yang sama yang tertera di .env
+   3. Koneksi dengan database mysql edit pada .env
+      DB_NAME="xiaomi_dev"
+      DB_USERNAME="root"
+      DB_PASSWORD="12345678"
+      DB_HOST="127.0.0.1"
    4. test dengan cara >> npm run dev
    5. jika saat run atau melakukan update pada backend terdapat error maka cek pada error apakah ada error pada framework atau plugin maka solusinya bisa coba install framework atau plugin tersebut,, seperti contoh express, sequelize dll.
